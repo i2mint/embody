@@ -1,0 +1,1 @@
+"""Generate templated objects"""
