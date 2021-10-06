@@ -1,0 +1,4 @@
+embody
+======
+.. automodule:: embody
+   :members:
