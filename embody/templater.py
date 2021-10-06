@@ -155,7 +155,7 @@ def templated_list_func(template: List[T]) -> TemplateFunc[List[T]]:
 
     # How is this used?
     def template_func(**kwargs):
-        print(kwargs)
+        # print(kwargs)
         return [
             item_template_func(**{arg: kwargs[arg] for arg in args})
             for item_template_func, args in entries

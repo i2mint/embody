@@ -2,12 +2,13 @@
 
 from functools import partial
 import operator as o
-from verb import Command
 
 
 def example():
     # ------------------------The new syntax, essentially all you need to change on
     # your side------------------------------------------
+    from verb import Command
+
     class PlaceHolder:
         pass
 
@@ -219,7 +220,7 @@ def format_multi_iterable(
 
     >>> t = (1, 'a', ph_1, 2, ph_2)
     >>> format_multi_iterable(t)
-    (1, 'a', 'NEW', 2, 'EVEN_NEWER')
+    (1, 'a', 'NEW_TUPLE', 2, 'EVEN_NEWER_TUPLE')
 
     """
 
