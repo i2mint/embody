@@ -2,6 +2,7 @@
 # embody
 Generate templated objects
 
+[Documentation here](https://i2mint.github.io/embody).
 
 To install:	```pip install embody```
 

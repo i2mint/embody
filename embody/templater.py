@@ -1,7 +1,9 @@
 """Base objects for definding templates
 
-Born from a [stackoverflow Q&A](https://stackoverflow.com/questions/69383734/templated
--object-generation-in-python/69384846)
+Born from a
+`stackoverflow Q&A <https://stackoverflow.com/questions/69383734/templated
+-object-generation-in-python/69384846>`_.
+
 
 >>> from embody.templater import Templater
 >>> # the following template has templated dicts, strings, and lists
@@ -27,6 +29,8 @@ T = TypeVar('T')
 U = TypeVar('U')
 K = TypeVar('K')
 V = TypeVar('V')
+
+# TODO: Make these things picklable
 
 
 def get_generator_return(gen: Generator[T, Any, U]) -> Tuple[Generator[T, Any, U], U]:
