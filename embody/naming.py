@@ -106,7 +106,7 @@ def validate_kwargs(
                 ):  # if you have a validation check for it
                     if not validation_funs[check](val, check_val):  # check it's valid
                         raise AssertionError(
-                            '{} must {} {}'.format(var, check, check_val)
+                            f'{var} must {check} {check_val}'
                         )  # and raise an error if not
                 elif (
                     not ignore_misunderstood_validation_instructions
@@ -402,7 +402,7 @@ def _mk(self, *args, **kwargs):
 from dol.trans import add_wrapper_method
 
 # @add_wrapper_method
-class StrTupleDict(object):
+class StrTupleDict:
     def __init__(
         self,
         template: (str, tuple, list),
@@ -646,7 +646,7 @@ class StrTupleDict(object):
         for k, v in kv.items():
             if hasattr(v, 'pattern'):
                 v = v.pattern
-            s += '  * {}: {}\n'.format(k, v)
+            s += f'  * {k}: {v}\n'
 
         return s
 

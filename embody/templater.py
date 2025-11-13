@@ -22,7 +22,8 @@ import string
 from functools import partial
 from inspect import Signature, Parameter
 from operator import itemgetter
-from typing import Callable, Any, TypeVar, Generator, Tuple, Dict, List, Iterable
+from typing import Any, TypeVar, Tuple, Dict, List
+from collections.abc import Callable, Generator, Iterable
 from collections import namedtuple
 
 T = TypeVar('T')
@@ -33,7 +34,7 @@ V = TypeVar('V')
 # TODO: Make these things picklable
 
 
-def get_generator_return(gen: Generator[T, Any, U]) -> Tuple[Generator[T, Any, U], U]:
+def get_generator_return(gen: Generator[T, Any, U]) -> tuple[Generator[T, Any, U], U]:
     return_value = None
 
     def inner():
@@ -63,7 +64,7 @@ TemplateFunc = Generator[str, None, Callable[..., T]]
 
 
 class Templater:
-    templater_registry: Dict[type, Callable[[Any], TemplateFunc]] = {}
+    templater_registry: dict[type, Callable[[Any], TemplateFunc]] = {}
 
     @classmethod
     def register(cls, handles_type: type):
@@ -109,11 +110,11 @@ def templated_string_func(template: str) -> TemplateFunc[str]:
 
 
 @Templater.register(dict)
-def templated_dict_func(template: Dict[K, V]) -> TemplateFunc[Dict[K, V]]:
+def templated_dict_func(template: dict[K, V]) -> TemplateFunc[dict[K, V]]:
     DictEntryInfo = namedtuple(
         'DictEntryInfo', ['key_func', 'value_func', 'key_args', 'value_args']
     )
-    entries: List[DictEntryInfo] = []
+    entries: list[DictEntryInfo] = []
     for key, value in template.items():
         key_params, key_template_func = get_generator_return(
             Templater.template_func_generator(key)
@@ -146,7 +147,7 @@ def templated_dict_func(template: Dict[K, V]) -> TemplateFunc[Dict[K, V]]:
 
 
 @Templater.register(list)
-def templated_list_func(template: List[T]) -> TemplateFunc[List[T]]:
+def templated_list_func(template: list[T]) -> TemplateFunc[list[T]]:
     entries = []
     for item in template:
         params, item_template_func = get_generator_return(
