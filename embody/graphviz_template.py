@@ -1,4 +1,5 @@
 """Graphviz templates"""
+
 from contextlib import suppress
 
 with suppress(ImportError, ModuleNotFoundError):
@@ -15,17 +16,17 @@ with suppress(ImportError, ModuleNotFoundError):
                 if isinstance(v, str):
                     yield f'{k}="{v}"'
                 else:
-                    yield f'{k}={v}'
+                    yield f"{k}={v}"
 
-        return '[' + ', '.join(gen()) + ']'
+        return "[" + ", ".join(gen()) + "]"
 
     class graph_template:
         def __init__(
-            self, name_attrs_str='[shape=rectangle style=filled color=lightgrey]'
+            self, name_attrs_str="[shape=rectangle style=filled color=lightgrey]"
         ):
             self.name_attrs_str = name_attrs_str
 
-        def one_to_one(self, name='one_to_one', in_='in', out_='out', label='1-to-1'):
+        def one_to_one(self, name="one_to_one", in_="in", out_="out", label="1-to-1"):
             return f'''
         subgraph cluster_{name} {{
             label = "{label}";
@@ -37,11 +38,11 @@ with suppress(ImportError, ModuleNotFoundError):
 
         def one_to_many(
             self,
-            name='one_to_many',
-            in_='in',
-            out_1='out_1',
-            out_n='out_n',
-            label='1-to-many',
+            name="one_to_many",
+            in_="in",
+            out_1="out_1",
+            out_n="out_n",
+            label="1-to-many",
         ):
             return f'''
         subgraph cluster_{name} {{
@@ -55,11 +56,11 @@ with suppress(ImportError, ModuleNotFoundError):
 
         def many_to_one(
             self,
-            name='many_to_one',
-            in_1='in_1',
-            in_n='in_n',
-            out_='out',
-            label='many-to-1',
+            name="many_to_one",
+            in_1="in_1",
+            in_n="in_n",
+            out_="out",
+            label="many-to-1",
         ):
             return f'''
         subgraph cluster_{name} {{
@@ -76,19 +77,19 @@ with suppress(ImportError, ModuleNotFoundError):
     def mk_graph_source(graph_template=dflt_graph_template, attrs=None, **name_kind):
         attrs = attrs or {}
         template = (
-            'digraph G {{\n'
-            + 'graph {}\n'.format(graphviz_attrs(**attrs.get('graph', {})))
-            + 'node {}\n'.format(graphviz_attrs(**attrs.get('node', {})))
-            + 'edge {}\n'.format(graphviz_attrs(**attrs.get('edge', {})))
-            + '{}'.format('\t\t{}\n' * len(name_kind))
-            + '}}'
+            "digraph G {{\n"
+            + "graph {}\n".format(graphviz_attrs(**attrs.get("graph", {})))
+            + "node {}\n".format(graphviz_attrs(**attrs.get("node", {})))
+            + "edge {}\n".format(graphviz_attrs(**attrs.get("edge", {})))
+            + "{}".format("\t\t{}\n" * len(name_kind))
+            + "}}"
         )
 
         def format_specs():
             for name, kind in name_kind.items():
                 if isinstance(kind, dict):
                     kind = dict(**kind)  # make a copy
-                    method_name = kind.pop('kind')
+                    method_name = kind.pop("kind")
                     method_kwargs = dict(name=name, **kind)
                     method = getattr(graph_template, method_name)
                     yield method(**method_kwargs)
@@ -111,64 +112,64 @@ with suppress(ImportError, ModuleNotFoundError):
         )
 
     def example():
-        """You really need to use this code in a notebook, or capture """
+        """You really need to use this code in a notebook, or capture"""
         import graphviz
 
         gt = graph_template()
 
         graph = [
-            mk_graph(gt, function='one_to_one', wf_source='one_to_many'),
+            mk_graph(gt, function="one_to_one", wf_source="one_to_many"),
             mk_graph(
-                gt, **{k: 'one_to_many' for k in ('generator', 'wf_source', 'chunker')}
+                gt, **{k: "one_to_many" for k in ("generator", "wf_source", "chunker")}
             ),
             mk_graph(
                 gt,
-                generator=dict(kind='one_to_many'),
+                generator=dict(kind="one_to_many"),
                 wf_source=dict(
-                    kind='one_to_many', in_='source', out_1='wf_1', out_n='wf_n'
+                    kind="one_to_many", in_="source", out_1="wf_1", out_n="wf_n"
                 ),
                 chunker=dict(
-                    kind='one_to_many', in_='wf', out_1='chk_1', out_n='chk_n'
+                    kind="one_to_many", in_="wf", out_1="chk_1", out_n="chk_n"
                 ),
             ),
             mk_graph(
                 gt,
-                function=dict(kind='one_to_one'),
-                featurizer=dict(kind='one_to_one', in_='chk', out_='fv'),
-                quantizer=dict(kind='one_to_one', in_='fv', out_='snip'),
-                snip_stats=dict(kind='one_to_one', in_='snip', out_='stats'),
+                function=dict(kind="one_to_one"),
+                featurizer=dict(kind="one_to_one", in_="chk", out_="fv"),
+                quantizer=dict(kind="one_to_one", in_="fv", out_="snip"),
+                snip_stats=dict(kind="one_to_one", in_="snip", out_="stats"),
             ),
             mk_graph(
                 gt,
-                aggregator=dict(kind='many_to_one'),
+                aggregator=dict(kind="many_to_one"),
                 model_output=dict(
-                    kind='many_to_one',
-                    in_1='stats_1',
-                    in_n='stats_n',
-                    out_='detection_info',
+                    kind="many_to_one",
+                    in_1="stats_1",
+                    in_n="stats_n",
+                    out_="detection_info",
                 ),
             ),
             mk_graph(
-                attrs={'graph': dict(size='9,9!'), 'node': dict(size=3)},
-                **{k: 'one_to_many' for k in ('wf_source', 'chunker')},
+                attrs={"graph": dict(size="9,9!"), "node": dict(size=3)},
+                **{k: "one_to_many" for k in ("wf_source", "chunker")},
             ),
             mk_graph(
                 attrs={
-                    'graph': dict(size='6,6!', fontsize=20),
-                    'node': dict(
-                        shape='circle',
-                        style='filled',
-                        color='black',
-                        fixedsize='true',
-                        width='1.1',
-                        height='1.1',
+                    "graph": dict(size="6,6!", fontsize=20),
+                    "node": dict(
+                        shape="circle",
+                        style="filled",
+                        color="black",
+                        fixedsize="true",
+                        width="1.1",
+                        height="1.1",
                         fontsize=15,
                     ),
                 },
-                **{k: 'one_to_many' for k in ('wf_source', 'chunker')},
+                **{k: "one_to_many" for k in ("wf_source", "chunker")},
             ),
         ]
 
         import os
 
-        graph[3].render(filename=os.path.expanduser('~/example_graph.pdf'))
+        graph[3].render(filename=os.path.expanduser("~/example_graph.pdf"))
