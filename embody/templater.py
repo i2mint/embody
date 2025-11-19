@@ -26,10 +26,10 @@ from typing import Any, TypeVar, Tuple, Dict, List
 from collections.abc import Callable, Generator, Iterable
 from collections import namedtuple
 
-T = TypeVar('T')
-U = TypeVar('U')
-K = TypeVar('K')
-V = TypeVar('V')
+T = TypeVar("T")
+U = TypeVar("U")
+K = TypeVar("K")
+V = TypeVar("V")
 
 # TODO: Make these things picklable
 
@@ -112,7 +112,7 @@ def templated_string_func(template: str) -> TemplateFunc[str]:
 @Templater.register(dict)
 def templated_dict_func(template: dict[K, V]) -> TemplateFunc[dict[K, V]]:
     DictEntryInfo = namedtuple(
-        'DictEntryInfo', ['key_func', 'value_func', 'key_args', 'value_args']
+        "DictEntryInfo", ["key_func", "value_func", "key_args", "value_args"]
     )
     entries: list[DictEntryInfo] = []
     for key, value in template.items():
