@@ -1,0 +1,398 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>embody.scrap.ca_templating &mdash; embody 0.1.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=59fadc99"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            embody
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/embody.html">embody</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/embody/graphviz_template.html">embody.graphviz_template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/embody/naming.html">embody.naming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/embody/scrap/ca_templating.html">embody.scrap.ca_templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/embody/templater.html">embody.templater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/embody/templating.html">embody.templating</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">embody</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">embody.scrap.ca_templating</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for embody.scrap.ca_templating</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;CA templating&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">operator</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">o</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">example</span><span class="p">():</span>
+    <span class="c1"># ------------------------The new syntax, essentially all you need to change on</span>
+    <span class="c1"># your side------------------------------------------</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">verb</span><span class="w"> </span><span class="kn">import</span> <span class="n">Command</span>
+
+    <span class="k">class</span><span class="w"> </span><span class="nc">PlaceHolder</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="n">ph</span> <span class="o">=</span> <span class="n">PlaceHolder</span><span class="p">()</span>
+
+    <span class="c1"># This is how Andie defined the conditions:</span>
+    <span class="c1"># phase_definitions = [{&#39;phase_name&#39;: &#39;phase_1&#39;, &#39;tag_filters&#39;: [{&#39;tag&#39;:</span>
+    <span class="c1"># &#39;temperature&#39;, &#39;operator&#39;: &#39;&lt;&#39;, &#39;value&#39;: 80},</span>
+    <span class="c1">#                                                                {&#39;tag&#39;:</span>
+    <span class="c1">#                                                                &#39;temperature&#39;,</span>
+    <span class="c1">#                                                                &#39;operator&#39;: &#39;&gt;&#39;,</span>
+    <span class="c1">#                                                                &#39;value&#39;: 60}]},</span>
+    <span class="c1">#                      {&#39;phase_name&#39;: &#39;phase_2&#39;, &#39;tag_filters&#39;: [{&#39;tag&#39;:</span>
+    <span class="c1">#                      &#39;temperature&#39;, &#39;operator&#39;: &#39;&gt;&#39;, &#39;value&#39;: 0}]}]</span>
+
+    <span class="c1"># The same translated in Thor&#39;s language</span>
+    <span class="n">thored_phase_definitions</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;phase_name&#39;</span><span class="p">:</span> <span class="s1">&#39;phase_1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;tag_filters&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;&amp;&#39;</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="p">{</span><span class="s1">&#39;&lt;&#39;</span><span class="p">:</span> <span class="p">({</span><span class="s1">&#39;[]&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">ph</span><span class="p">,</span> <span class="s1">&#39;temperature&#39;</span><span class="p">)},</span> <span class="mi">80</span><span class="p">)},</span>
+                    <span class="p">{</span><span class="s1">&#39;&gt;&#39;</span><span class="p">:</span> <span class="p">({</span><span class="s1">&#39;[]&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">ph</span><span class="p">,</span> <span class="s1">&#39;temperature&#39;</span><span class="p">)},</span> <span class="mi">60</span><span class="p">)},</span>
+                <span class="p">)</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;phase_name&#39;</span><span class="p">:</span> <span class="s1">&#39;phase_2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;tag_filters&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;&lt;&#39;</span><span class="p">:</span> <span class="p">({</span><span class="s1">&#39;[]&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">ph</span><span class="p">,</span> <span class="s1">&#39;temperature&#39;</span><span class="p">)},</span> <span class="mi">80</span><span class="p">)},</span>
+        <span class="p">},</span>
+    <span class="p">]</span>
+
+    <span class="c1"># ------------------------How to write and execute a command to test a phase</span>
+    <span class="c1"># condition, basically copy that code------------------------------------------</span>
+
+    <span class="kn">from</span><span class="w"> </span><span class="nn">verb</span><span class="w"> </span><span class="kn">import</span> <span class="n">Literal</span>
+
+    <span class="c1"># then say you want to test if a certain event satisfies the condition:</span>
+    <span class="n">event_to_test</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;temperature&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+    <span class="c1"># for a somewhat technical reason, you need at the moment to add that Literal to</span>
+    <span class="c1"># your event_to_test, Thor is/worked at removing that so it most likely will not</span>
+    <span class="c1"># be needed by the time you get that, if you pull verb</span>
+    <span class="n">event_to_test</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">(</span><span class="n">event_to_test</span><span class="p">)</span>
+    <span class="c1"># I pick for the demo the conditions defining the first phase in the</span>
+    <span class="c1"># thored_phase_definitions</span>
+    <span class="n">condition_to_test</span> <span class="o">=</span> <span class="n">thored_phase_definitions</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;tag_filters&#39;</span><span class="p">]</span>
+    <span class="c1"># we then can translate the conditions into a dictionary which Command can understand</span>
+    <span class="n">command_dict</span> <span class="o">=</span> <span class="n">recursive_format_iterable</span><span class="p">(</span>
+        <span class="n">condition_to_test</span><span class="p">,</span>
+        <span class="p">{</span>
+            <span class="nb">dict</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;replace_dict&#39;</span><span class="p">:</span> <span class="p">{</span><span class="n">PlaceHolder</span><span class="p">:</span> <span class="n">event_to_test</span><span class="p">},</span>
+                <span class="s1">&#39;init_func&#39;</span><span class="p">:</span> <span class="n">dict_init_func</span><span class="p">,</span>
+                <span class="s1">&#39;search_func&#39;</span><span class="p">:</span> <span class="n">dict_search_func</span><span class="p">,</span>
+                <span class="s1">&#39;set_func&#39;</span><span class="p">:</span> <span class="n">set_in_dict</span><span class="p">,</span>
+                <span class="s1">&#39;post_process_output&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="nb">tuple</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;replace_dict&#39;</span><span class="p">:</span> <span class="p">{</span><span class="n">PlaceHolder</span><span class="p">:</span> <span class="n">event_to_test</span><span class="p">},</span>
+                <span class="s1">&#39;init_func&#39;</span><span class="p">:</span> <span class="n">tuple_init_func</span><span class="p">,</span>
+                <span class="s1">&#39;search_func&#39;</span><span class="p">:</span> <span class="n">tuple_search_func</span><span class="p">,</span>
+                <span class="s1">&#39;set_func&#39;</span><span class="p">:</span> <span class="n">set_in_tuple</span><span class="p">,</span>
+                <span class="s1">&#39;post_process_output&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="c1"># and finally, we can execute the command, returning whether or not event_to_test satisfies the conditions to belong to phase 1</span>
+    <span class="n">Command</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">command_dict</span><span class="p">,</span> <span class="n">func_of_key</span><span class="p">)()</span>
+
+
+<span class="n">func_of_key</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;&amp;&#39;</span><span class="p">:</span> <span class="n">o</span><span class="o">.</span><span class="n">and_</span><span class="p">,</span>
+    <span class="s1">&#39;&gt;&#39;</span><span class="p">:</span> <span class="n">o</span><span class="o">.</span><span class="n">gt</span><span class="p">,</span>
+    <span class="s1">&#39;&lt;&#39;</span><span class="p">:</span> <span class="n">o</span><span class="o">.</span><span class="n">lt</span><span class="p">,</span>
+    <span class="s1">&#39;&gt;=&#39;</span><span class="p">:</span> <span class="n">o</span><span class="o">.</span><span class="n">ge</span><span class="p">,</span>
+    <span class="s1">&#39;&lt;=&#39;</span><span class="p">:</span> <span class="n">o</span><span class="o">.</span><span class="n">le</span><span class="p">,</span>
+    <span class="s1">&#39;==&#39;</span><span class="p">:</span> <span class="n">o</span><span class="o">.</span><span class="n">eq</span><span class="p">,</span>
+    <span class="s1">&#39;[]&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">d</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="n">tag</span><span class="p">],</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">dict_search_func</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">iterable</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">set_in_dict</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+    <span class="n">iterable</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">dict_init_func</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">()</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">PlaceHolder_1</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">PlaceHolder_2</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+
+<span class="n">ph_1</span> <span class="o">=</span> <span class="n">PlaceHolder_1</span><span class="p">()</span>
+<span class="n">ph_2</span> <span class="o">=</span> <span class="n">PlaceHolder_2</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="format_iterable">
+<a class="viewcode-back" href="../../../module_docs/embody/scrap/ca_templating.html#embody.scrap.ca_templating.format_iterable">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">format_iterable</span><span class="p">(</span>
+    <span class="n">iterable</span><span class="p">,</span>
+    <span class="n">replace_dict</span><span class="o">=</span><span class="p">{</span><span class="n">PlaceHolder_1</span><span class="p">:</span> <span class="s1">&#39;NEW&#39;</span><span class="p">,</span> <span class="n">PlaceHolder_2</span><span class="p">:</span> <span class="s1">&#39;EVEN_NEWER&#39;</span><span class="p">},</span>
+    <span class="n">init_func</span><span class="o">=</span><span class="n">dict_init_func</span><span class="p">,</span>
+    <span class="n">search_func</span><span class="o">=</span><span class="n">dict_search_func</span><span class="p">,</span>
+    <span class="n">set_func</span><span class="o">=</span><span class="n">set_in_dict</span><span class="p">,</span>
+    <span class="n">post_process_output</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    :param iterable:</span>
+<span class="sd">    :param replace_dict:</span>
+<span class="sd">    :param init_func:</span>
+<span class="sd">    :param search_func:</span>
+<span class="sd">    :param set_func:</span>
+<span class="sd">    :param post_process_output:</span>
+<span class="sd">    :return:</span>
+
+<span class="sd">    Works by default for dicts</span>
+<span class="sd">    &gt;&gt;&gt; d = {&#39;a&#39;: 1, &#39;b&#39;: (1,2), &#39;c&#39;: ph_1, &#39;d&#39;: ph_2}</span>
+<span class="sd">    &gt;&gt;&gt; format_iterable(d)</span>
+<span class="sd">    {&#39;a&#39;: 1, &#39;b&#39;: (1, 2), &#39;c&#39;: &#39;NEW&#39;, &#39;d&#39;: &#39;EVEN_NEWER&#39;}</span>
+
+<span class="sd">    &gt;&gt;&gt; # And we can adapt to other iterables</span>
+<span class="sd">    &gt;&gt;&gt; def tuple_search_func(item, iterable):</span>
+<span class="sd">    ...    return item</span>
+
+<span class="sd">    &gt;&gt;&gt; def set_in_tuple(iterable, item, val):</span>
+<span class="sd">    ...    iterable.append(val)</span>
+
+<span class="sd">    &gt;&gt;&gt; def tuple_init_func(iterable):</span>
+<span class="sd">    ...    return list()</span>
+
+<span class="sd">    &gt;&gt;&gt; t = (1, &#39;a&#39;, ph_1, 2, ph_2)</span>
+<span class="sd">    &gt;&gt;&gt; format_iterable(t,</span>
+<span class="sd">    ...                 init_func=tuple_init_func,</span>
+<span class="sd">    ...                 search_func=tuple_search_func,</span>
+<span class="sd">    ...                 set_func=set_in_tuple,</span>
+<span class="sd">    ...                 post_process_output=lambda x: tuple(x))</span>
+<span class="sd">    (1, &#39;a&#39;, &#39;NEW&#39;, 2, &#39;EVEN_NEWER&#39;)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">iterable_search_for_type</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">search_func</span><span class="p">,</span> <span class="n">iterable</span><span class="o">=</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="n">new_iterable</span> <span class="o">=</span> <span class="n">init_func</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">iterable_search_for_type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="n">replace_dict</span><span class="p">:</span>
+            <span class="n">set_func</span><span class="p">(</span><span class="n">new_iterable</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">replace_dict</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">set_func</span><span class="p">(</span><span class="n">new_iterable</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">post_process_output</span><span class="p">(</span><span class="n">new_iterable</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">tuple_search_func</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">item</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">set_in_tuple</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+    <span class="n">iterable</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">tuple_init_func</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="TypeNotKnown">
+<a class="viewcode-back" href="../../../module_docs/embody/scrap/ca_templating.html#embody.scrap.ca_templating.TypeNotKnown">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TypeNotKnown</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="format_multi_iterable">
+<a class="viewcode-back" href="../../../module_docs/embody/scrap/ca_templating.html#embody.scrap.ca_templating.format_multi_iterable">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">format_multi_iterable</span><span class="p">(</span>
+    <span class="n">iterable</span><span class="p">,</span>
+    <span class="n">recipe</span><span class="o">=</span><span class="p">{</span>
+        <span class="nb">dict</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;replace_dict&#39;</span><span class="p">:</span> <span class="p">{</span><span class="n">PlaceHolder_1</span><span class="p">:</span> <span class="s1">&#39;NEW&#39;</span><span class="p">,</span> <span class="n">PlaceHolder_2</span><span class="p">:</span> <span class="s1">&#39;EVEN_NEWER&#39;</span><span class="p">},</span>
+            <span class="s1">&#39;init_func&#39;</span><span class="p">:</span> <span class="n">dict_init_func</span><span class="p">,</span>
+            <span class="s1">&#39;search_func&#39;</span><span class="p">:</span> <span class="n">dict_search_func</span><span class="p">,</span>
+            <span class="s1">&#39;set_func&#39;</span><span class="p">:</span> <span class="n">set_in_dict</span><span class="p">,</span>
+            <span class="s1">&#39;post_process_output&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="nb">tuple</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;replace_dict&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="n">PlaceHolder_1</span><span class="p">:</span> <span class="s1">&#39;NEW_TUPLE&#39;</span><span class="p">,</span>
+                <span class="n">PlaceHolder_2</span><span class="p">:</span> <span class="s1">&#39;EVEN_NEWER_TUPLE&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;init_func&#39;</span><span class="p">:</span> <span class="n">tuple_init_func</span><span class="p">,</span>
+            <span class="s1">&#39;search_func&#39;</span><span class="p">:</span> <span class="n">tuple_search_func</span><span class="p">,</span>
+            <span class="s1">&#39;set_func&#39;</span><span class="p">:</span> <span class="n">set_in_tuple</span><span class="p">,</span>
+            <span class="s1">&#39;post_process_output&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Same as format_iterable but can handle several types of iterables</span>
+<span class="sd">    :param iterable:</span>
+<span class="sd">    :param recipe:</span>
+<span class="sd">    :return:</span>
+
+<span class="sd">    &gt;&gt;&gt; d = {&#39;a&#39;: 1, &#39;b&#39;: (1,2), &#39;c&#39;: ph_1, &#39;d&#39;: ph_2}</span>
+<span class="sd">    &gt;&gt;&gt; format_multi_iterable(d)</span>
+<span class="sd">    {&#39;a&#39;: 1, &#39;b&#39;: (1, 2), &#39;c&#39;: &#39;NEW&#39;, &#39;d&#39;: &#39;EVEN_NEWER&#39;}</span>
+
+<span class="sd">    &gt;&gt;&gt; t = (1, &#39;a&#39;, ph_1, 2, ph_2)</span>
+<span class="sd">    &gt;&gt;&gt; format_multi_iterable(t)</span>
+<span class="sd">    (1, &#39;a&#39;, &#39;NEW_TUPLE&#39;, 2, &#39;EVEN_NEWER_TUPLE&#39;)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">iterable_type</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">iterable_type</span> <span class="ow">in</span> <span class="n">recipe</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">format_iterable</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="o">**</span><span class="n">recipe</span><span class="p">[</span><span class="n">iterable_type</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">TypeNotKnown</span><span class="p">(</span><span class="s1">&#39;The type of your iterable is not in your recipe&#39;</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">recursive_format_iterable</span><span class="p">(</span>
+    <span class="n">iterable</span><span class="p">,</span>
+    <span class="n">recipe</span><span class="o">=</span><span class="p">{</span>
+        <span class="nb">dict</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;replace_dict&#39;</span><span class="p">:</span> <span class="p">{</span><span class="n">PlaceHolder_1</span><span class="p">:</span> <span class="s1">&#39;NEW&#39;</span><span class="p">,</span> <span class="n">PlaceHolder_2</span><span class="p">:</span> <span class="s1">&#39;EVEN_NEWER&#39;</span><span class="p">},</span>
+            <span class="s1">&#39;init_func&#39;</span><span class="p">:</span> <span class="n">dict_init_func</span><span class="p">,</span>
+            <span class="s1">&#39;search_func&#39;</span><span class="p">:</span> <span class="n">dict_search_func</span><span class="p">,</span>
+            <span class="s1">&#39;set_func&#39;</span><span class="p">:</span> <span class="n">set_in_dict</span><span class="p">,</span>
+            <span class="s1">&#39;post_process_output&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="nb">tuple</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;replace_dict&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="n">PlaceHolder_1</span><span class="p">:</span> <span class="s1">&#39;NEWTUPLE&#39;</span><span class="p">,</span>
+                <span class="n">PlaceHolder_2</span><span class="p">:</span> <span class="s1">&#39;EVEN_NEWER_TUPLE&#39;</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;init_func&#39;</span><span class="p">:</span> <span class="n">tuple_init_func</span><span class="p">,</span>
+            <span class="s1">&#39;search_func&#39;</span><span class="p">:</span> <span class="n">tuple_search_func</span><span class="p">,</span>
+            <span class="s1">&#39;set_func&#39;</span><span class="p">:</span> <span class="n">set_in_tuple</span><span class="p">,</span>
+            <span class="s1">&#39;post_process_output&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">):</span>
+    <span class="n">iterable_type</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">iterable_type</span> <span class="ow">in</span> <span class="n">recipe</span><span class="p">:</span>
+        <span class="n">recipe_for_type</span> <span class="o">=</span> <span class="n">recipe</span><span class="p">[</span><span class="n">iterable_type</span><span class="p">]</span>
+        <span class="n">new_iterable</span> <span class="o">=</span> <span class="n">recipe_for_type</span><span class="p">[</span><span class="s1">&#39;init_func&#39;</span><span class="p">](</span><span class="n">iterable</span><span class="o">=</span><span class="n">iterable</span><span class="p">)</span>
+        <span class="n">default_set_func</span> <span class="o">=</span> <span class="n">recipe_for_type</span><span class="p">[</span><span class="s1">&#39;set_func&#39;</span><span class="p">]</span>
+        <span class="n">default_search_func</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">recipe_for_type</span><span class="p">[</span><span class="s1">&#39;search_func&#39;</span><span class="p">],</span> <span class="n">iterable</span><span class="o">=</span><span class="n">iterable</span><span class="p">)</span>
+        <span class="n">default_post_process</span> <span class="o">=</span> <span class="n">recipe_for_type</span><span class="p">[</span><span class="s1">&#39;post_process_output&#39;</span><span class="p">]</span>
+        <span class="n">default_replace_dict</span> <span class="o">=</span> <span class="n">recipe_for_type</span><span class="p">[</span><span class="s1">&#39;replace_dict&#39;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">TypeNotKnown</span><span class="p">(</span><span class="s1">&#39;The type of your iterable is not in your recipe&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">default_search_func</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="n">value_type</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value_type</span> <span class="ow">in</span> <span class="n">recipe</span><span class="p">:</span>
+            <span class="n">new_value</span> <span class="o">=</span> <span class="n">recursive_format_iterable</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">recipe</span><span class="o">=</span><span class="n">recipe</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">value_type</span> <span class="ow">in</span> <span class="n">default_replace_dict</span><span class="p">:</span>
+            <span class="n">new_value</span> <span class="o">=</span> <span class="n">default_replace_dict</span><span class="p">[</span><span class="n">value_type</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">default_set_func</span><span class="p">(</span><span class="n">new_iterable</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">new_value</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">default_post_process</span><span class="p">(</span><span class="n">new_iterable</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

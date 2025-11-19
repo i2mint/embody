@@ -1,0 +1,195 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>embody.scrap.ca_templating &mdash; embody 0.1.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=59fadc99"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="embody.templater" href="../templater.html" />
+    <link rel="prev" title="embody.naming" href="../naming.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            embody
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../embody.html">embody</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../graphviz_template.html">embody.graphviz_template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../naming.html">embody.naming</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">embody.scrap.ca_templating</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#embody.scrap.ca_templating.TypeNotKnown"><code class="docutils literal notranslate"><span class="pre">TypeNotKnown</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.scrap.ca_templating.format_iterable"><code class="docutils literal notranslate"><span class="pre">format_iterable()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.scrap.ca_templating.format_multi_iterable"><code class="docutils literal notranslate"><span class="pre">format_multi_iterable()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../templater.html">embody.templater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../templating.html">embody.templating</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">embody</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">embody.scrap.ca_templating</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/module_docs/embody/scrap/ca_templating.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-embody.scrap.ca_templating">
+<span id="embody-scrap-ca-templating"></span><h1>embody.scrap.ca_templating<a class="headerlink" href="#module-embody.scrap.ca_templating" title="Link to this heading"></a></h1>
+<p>CA templating</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="embody.scrap.ca_templating.TypeNotKnown">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">embody.scrap.ca_templating.</span></span><span class="sig-name descname"><span class="pre">TypeNotKnown</span></span><a class="reference internal" href="../../../_modules/embody/scrap/ca_templating.html#TypeNotKnown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.scrap.ca_templating.TypeNotKnown" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.scrap.ca_templating.format_iterable">
+<span class="sig-prename descclassname"><span class="pre">embody.scrap.ca_templating.</span></span><span class="sig-name descname"><span class="pre">format_iterable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace_dict={&lt;class</span> <span class="pre">'embody.scrap.ca_templating.PlaceHolder_1'&gt;:</span> <span class="pre">'NEW'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'embody.scrap.ca_templating.PlaceHolder_2'&gt;:</span> <span class="pre">'EVEN_NEWER'}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_func=&lt;function</span> <span class="pre">dict_init_func&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_func=&lt;function</span> <span class="pre">dict_search_func&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_func=&lt;function</span> <span class="pre">set_in_dict&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">post_process_output=&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/embody/scrap/ca_templating.html#format_iterable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.scrap.ca_templating.format_iterable" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>iterable</strong></p></li>
+<li><p><strong>replace_dict</strong></p></li>
+<li><p><strong>init_func</strong></p></li>
+<li><p><strong>search_func</strong></p></li>
+<li><p><strong>set_func</strong></p></li>
+<li><p><strong>post_process_output</strong></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+<p>Works by default for dicts
+&gt;&gt;&gt; d = {‘a’: 1, ‘b’: (1,2), ‘c’: ph_1, ‘d’: ph_2}
+&gt;&gt;&gt; format_iterable(d)
+{‘a’: 1, ‘b’: (1, 2), ‘c’: ‘NEW’, ‘d’: ‘EVEN_NEWER’}</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># And we can adapt to other iterables</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">tuple_search_func</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="k">return</span> <span class="n">item</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">set_in_tuple</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="n">iterable</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">tuple_init_func</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="k">return</span> <span class="nb">list</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">ph_1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">ph_2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">format_iterable</span><span class="p">(</span><span class="n">t</span><span class="p">,</span>
+<span class="gp">... </span>                <span class="n">init_func</span><span class="o">=</span><span class="n">tuple_init_func</span><span class="p">,</span>
+<span class="gp">... </span>                <span class="n">search_func</span><span class="o">=</span><span class="n">tuple_search_func</span><span class="p">,</span>
+<span class="gp">... </span>                <span class="n">set_func</span><span class="o">=</span><span class="n">set_in_tuple</span><span class="p">,</span>
+<span class="gp">... </span>                <span class="n">post_process_output</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="go">(1, &#39;a&#39;, &#39;NEW&#39;, 2, &#39;EVEN_NEWER&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.scrap.ca_templating.format_multi_iterable">
+<span class="sig-prename descclassname"><span class="pre">embody.scrap.ca_templating.</span></span><span class="sig-name descname"><span class="pre">format_multi_iterable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recipe={&lt;class</span> <span class="pre">'dict'&gt;:</span> <span class="pre">{'init_func':</span> <span class="pre">&lt;function</span> <span class="pre">dict_init_func&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'post_process_output':</span> <span class="pre">&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'replace_dict':</span> <span class="pre">{&lt;class</span> <span class="pre">'embody.scrap.ca_templating.PlaceHolder_1'&gt;:</span> <span class="pre">'NEW'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'embody.scrap.ca_templating.PlaceHolder_2'&gt;:</span> <span class="pre">'EVEN_NEWER'}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'search_func':</span> <span class="pre">&lt;function</span> <span class="pre">dict_search_func&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'set_func':</span> <span class="pre">&lt;function</span> <span class="pre">set_in_dict&gt;}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'tuple'&gt;:</span> <span class="pre">{'init_func':</span> <span class="pre">&lt;function</span> <span class="pre">tuple_init_func&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'post_process_output':</span> <span class="pre">&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'replace_dict':</span> <span class="pre">{&lt;class</span> <span class="pre">'embody.scrap.ca_templating.PlaceHolder_1'&gt;:</span> <span class="pre">'NEW_TUPLE'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'embody.scrap.ca_templating.PlaceHolder_2'&gt;:</span> <span class="pre">'EVEN_NEWER_TUPLE'}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'search_func':</span> <span class="pre">&lt;function</span> <span class="pre">tuple_search_func&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'set_func':</span> <span class="pre">&lt;function</span> <span class="pre">set_in_tuple&gt;}}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/embody/scrap/ca_templating.html#format_multi_iterable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.scrap.ca_templating.format_multi_iterable" title="Link to this definition"></a></dt>
+<dd><p>Same as format_iterable but can handle several types of iterables
+:param iterable:
+:param recipe:
+:return:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="n">ph_1</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="n">ph_2</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">format_multi_iterable</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="go">{&#39;a&#39;: 1, &#39;b&#39;: (1, 2), &#39;c&#39;: &#39;NEW&#39;, &#39;d&#39;: &#39;EVEN_NEWER&#39;}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">ph_1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">ph_2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">format_multi_iterable</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="go">(1, &#39;a&#39;, &#39;NEW_TUPLE&#39;, 2, &#39;EVEN_NEWER_TUPLE&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../naming.html" class="btn btn-neutral float-left" title="embody.naming" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../templater.html" class="btn btn-neutral float-right" title="embody.templater" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
