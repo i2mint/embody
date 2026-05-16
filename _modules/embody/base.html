@@ -1,0 +1,539 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>embody.base &mdash; embody 0.1.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=ca7ad2ea"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            embody
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody.html">embody</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/base.html">embody.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/graphviz_template.html">embody.graphviz_template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/mappings.html">embody.mappings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/naming.html">embody.naming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/paths.html">embody.paths</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/scrap/ca_templating.html">embody.scrap.ca_templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/strategies.html">embody.strategies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/substitution.html">embody.substitution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/templater.html">embody.templater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/templating.html">embody.templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/util.html">embody.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">embody</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">embody.base</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for embody.base</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Core classes for embody: Context, Template, and Embodier.</span>
+
+<span class="sd">This module provides the foundational classes for the embody framework,</span>
+<span class="sd">implementing the pattern: obj = embody(template, parameters).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mapping</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">embody.substitution</span><span class="w"> </span><span class="kn">import</span> <span class="n">substitute</span><span class="p">,</span> <span class="n">extract_template_vars</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">embody.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">detect_cycle</span><span class="p">,</span> <span class="n">CycleError</span>
+
+
+<div class="viewcode-block" id="MissingParameterError">
+<a class="viewcode-back" href="../../module_docs/embody/base.html#embody.MissingParameterError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MissingParameterError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raised when a required template parameter is missing.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="Context">
+<a class="viewcode-back" href="../../module_docs/embody/base.html#embody.Context">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Context</span><span class="p">(</span><span class="n">Mapping</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parameter store for template embodiment with support for resolvers.</span>
+
+<span class="sd">    The Context holds parameters for substitution and supports:</span>
+<span class="sd">    - Hierarchical scoping (global → local overrides)</span>
+<span class="sd">    - Resolver functions (lazy evaluation)</span>
+<span class="sd">    - Callable values that are invoked on access</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; ctx = Context({&#39;name&#39;: &#39;Alice&#39;, &#39;age&#39;: 30})</span>
+<span class="sd">        &gt;&gt;&gt; ctx[&#39;name&#39;]</span>
+<span class="sd">        &#39;Alice&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; import datetime</span>
+<span class="sd">        &gt;&gt;&gt; ctx = Context({&#39;now&#39;: lambda: datetime.datetime.now()})</span>
+<span class="sd">        &gt;&gt;&gt; ctx[&#39;now&#39;]  # doctest: +SKIP</span>
+<span class="sd">        datetime.datetime(...)</span>
+
+<span class="sd">        &gt;&gt;&gt; ctx = Context({&#39;base&#39;: 10}, parent={&#39;base&#39;: 5, &#39;other&#39;: 20})</span>
+<span class="sd">        &gt;&gt;&gt; ctx[&#39;base&#39;]  # Local overrides parent</span>
+<span class="sd">        10</span>
+<span class="sd">        &gt;&gt;&gt; ctx[&#39;other&#39;]  # Falls back to parent</span>
+<span class="sd">        20</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">parent</span><span class="p">:</span> <span class="s1">&#39;Context&#39;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">resolvers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">auto_call</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize a Context.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            params: Dictionary of parameters</span>
+<span class="sd">            parent: Parent context for hierarchical scoping</span>
+<span class="sd">            resolvers: Named resolver functions</span>
+<span class="sd">            auto_call: If True, automatically call callable values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_params</span> <span class="o">=</span> <span class="n">params</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_resolvers</span> <span class="o">=</span> <span class="n">resolvers</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_auto_call</span> <span class="o">=</span> <span class="n">auto_call</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a parameter value with resolver and parent fallback.&quot;&quot;&quot;</span>
+        <span class="c1"># Try local params first</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="c1"># Auto-call if it&#39;s a callable and auto_call is True</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_auto_call</span> <span class="ow">and</span> <span class="nb">callable</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">value</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">value</span>
+
+        <span class="c1"># Try parent context</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="c1"># Try resolvers</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolvers</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolvers</span><span class="p">[</span><span class="n">key</span><span class="p">]()</span>
+
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parameter not found: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Iterate over all keys (including parent).&quot;&quot;&quot;</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">:</span>
+            <span class="n">keys</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">keys</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_resolvers</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return number of unique keys.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+<div class="viewcode-block" id="Context.get">
+<a class="viewcode-back" href="../../module_docs/embody/base.html#embody.Context.get">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a parameter with a default value.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">default</span></div>
+
+
+<div class="viewcode-block" id="Context.update">
+<a class="viewcode-back" href="../../module_docs/embody/base.html#embody.Context.update">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;Context&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a new context with updated parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            params: Parameters to add/override</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            New Context with updated parameters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_params</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">Context</span><span class="p">(</span>
+            <span class="n">new_params</span><span class="p">,</span>
+            <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">,</span>
+            <span class="n">resolvers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_resolvers</span><span class="p">,</span>
+            <span class="n">auto_call</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_auto_call</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Context.register_resolver">
+<a class="viewcode-back" href="../../module_docs/embody/base.html#embody.Context.register_resolver">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">register_resolver</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Register a named resolver function.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: Name of the resolver</span>
+<span class="sd">            func: Callable that returns the resolved value</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; import os</span>
+<span class="sd">            &gt;&gt;&gt; ctx = Context()</span>
+<span class="sd">            &gt;&gt;&gt; ctx.register_resolver(&#39;env&#39;, lambda: os.environ.get(&#39;USER&#39;, &#39;unknown&#39;))</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_resolvers</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span></div>
+
+
+<div class="viewcode-block" id="Context.child">
+<a class="viewcode-back" href="../../module_docs/embody/base.html#embody.Context.child">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Context&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a child context with this context as parent.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            params: Parameters for the child context</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            New Context with this as parent</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Context</span><span class="p">(</span><span class="n">params</span> <span class="ow">or</span> <span class="p">{},</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Context.to_dict">
+<a class="viewcode-back" href="../../module_docs/embody/base.html#embody.Context.to_dict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert to a plain dictionary (resolving all values).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary with all parameters resolved</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TemplateWrapper">
+<a class="viewcode-back" href="../../module_docs/embody/base.html#embody.TemplateWrapper">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TemplateWrapper</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Wrapper for template data with introspection capabilities.</span>
+
+<span class="sd">    This class wraps template data and provides methods to:</span>
+<span class="sd">    - Extract variable dependencies</span>
+<span class="sd">    - Detect cycles</span>
+<span class="sd">    - Parse and validate the template structure</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; template = TemplateWrapper({&#39;name&#39;: &#39;${user}&#39;, &#39;age&#39;: &#39;${years}&#39;})</span>
+<span class="sd">        &gt;&gt;&gt; template.get_dependencies()</span>
+<span class="sd">        {&#39;user&#39;, &#39;years&#39;}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">template</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+        <span class="n">syntax</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;dollar_brace&#39;</span><span class="p">,</span>
+        <span class="n">check_cycles</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize a TemplateWrapper.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            template: The template data</span>
+<span class="sd">            syntax: Variable syntax to use</span>
+<span class="sd">            check_cycles: If True, check for circular references</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            CycleError: If circular reference detected</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="n">template</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">syntax</span> <span class="o">=</span> <span class="n">syntax</span>
+
+        <span class="k">if</span> <span class="n">check_cycles</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">detect_cycle</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">CycleError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">CycleError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Template contains circular reference: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TemplateWrapper.get_dependencies">
+<a class="viewcode-back" href="../../module_docs/embody/base.html#embody.TemplateWrapper.get_dependencies">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_dependencies</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract all template variables from the template.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Set of variable names used in the template</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dependencies</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_extract_dependencies</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="p">,</span> <span class="n">dependencies</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dependencies</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_dependencies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">deps</span><span class="p">:</span> <span class="nb">set</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Recursively extract dependencies from nested structure.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">vars_in_str</span> <span class="o">=</span> <span class="n">extract_template_vars</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">syntax</span><span class="p">)</span>
+            <span class="n">deps</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">vars_in_str</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_extract_dependencies</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">deps</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_extract_dependencies</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">deps</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_extract_dependencies</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">deps</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TemplateWrapper.validate_params">
+<a class="viewcode-back" href="../../module_docs/embody/base.html#embody.TemplateWrapper.validate_params">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">Context</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check which template dependencies are missing from params.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            params: Parameters to check against</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of missing parameter names</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">required</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dependencies</span><span class="p">()</span>
+        <span class="n">available</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">missing</span> <span class="o">=</span> <span class="n">required</span> <span class="o">-</span> <span class="n">available</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">missing</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Embodier">
+<a class="viewcode-back" href="../../module_docs/embody/base.html#embody.Embodier">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Embodier</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Main class for embodying templates with parameters.</span>
+
+<span class="sd">    This is the primary API for the embody framework. It supports:</span>
+<span class="sd">    - Multiple traversal strategies (recursive, compiled, auto)</span>
+<span class="sd">    - Multiple syntax styles</span>
+<span class="sd">    - Strict or lenient parameter checking</span>
+<span class="sd">    - Cycle detection</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; template = {&#39;greeting&#39;: &#39;Hello ${name}&#39;, &#39;age&#39;: &#39;${age}&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; embodier = Embodier(template)</span>
+<span class="sd">        &gt;&gt;&gt; embodier({&#39;name&#39;: &#39;Alice&#39;, &#39;age&#39;: 30})</span>
+<span class="sd">        {&#39;greeting&#39;: &#39;Hello Alice&#39;, &#39;age&#39;: 30}</span>
+
+<span class="sd">        &gt;&gt;&gt; template = {&#39;count&#39;: &#39;${num}&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; embodier = Embodier(template)</span>
+<span class="sd">        &gt;&gt;&gt; embodier({&#39;num&#39;: 42})  # Type preserved</span>
+<span class="sd">        {&#39;count&#39;: 42}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">template</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+        <span class="n">strategy</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+        <span class="n">syntax</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;dollar_brace&#39;</span><span class="p">,</span>
+        <span class="n">strict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">check_cycles</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">key_collision</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;error&#39;</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize an Embodier.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            template: The template to embody</span>
+<span class="sd">            strategy: &#39;recursive&#39;, &#39;compiled&#39;, or &#39;auto&#39;</span>
+<span class="sd">            syntax: Variable syntax (&#39;dollar_brace&#39;, &#39;brace&#39;, &#39;double_bracket&#39;)</span>
+<span class="sd">            strict: If True, raise errors for missing parameters</span>
+<span class="sd">            check_cycles: If True, check for circular references</span>
+<span class="sd">            key_collision: How to handle key collisions: &#39;error&#39;, &#39;last_wins&#39;, &#39;namespace&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">template_wrapper</span> <span class="o">=</span> <span class="n">TemplateWrapper</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">syntax</span><span class="p">,</span> <span class="n">check_cycles</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="n">template</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span> <span class="o">=</span> <span class="n">strategy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">syntax</span> <span class="o">=</span> <span class="n">syntax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strict</span> <span class="o">=</span> <span class="n">strict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">key_collision</span> <span class="o">=</span> <span class="n">key_collision</span>
+
+        <span class="c1"># Select strategy (will be implemented in strategies.py)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_strategy_impl</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">strategy</span> <span class="o">==</span> <span class="s1">&#39;compiled&#39;</span><span class="p">:</span>
+            <span class="c1"># Will use CompiledPathEngine</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">strategy</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
+            <span class="c1"># Auto-select based on template characteristics</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">embody.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">max_depth</span><span class="p">,</span> <span class="n">count_template_markers</span>
+            <span class="n">depth</span> <span class="o">=</span> <span class="n">max_depth</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+            <span class="n">marker_count</span> <span class="o">=</span> <span class="n">count_template_markers</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">syntax</span><span class="p">)</span>
+            <span class="c1"># Use compiled strategy if deep or many markers</span>
+            <span class="k">if</span> <span class="n">depth</span> <span class="o">&gt;</span> <span class="mi">5</span> <span class="ow">or</span> <span class="n">marker_count</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span> <span class="o">=</span> <span class="s1">&#39;compiled&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span> <span class="o">=</span> <span class="s1">&#39;recursive&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">Context</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Embody the template with the given parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            params: Parameters as dict or Context</span>
+<span class="sd">            **kwargs: Additional parameters (merged with params)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Embodied object with parameters substituted</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            MissingParameterError: If strict=True and parameters are missing</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Combine params and kwargs</span>
+        <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="n">kwargs</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">params</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">}</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">Context</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+                <span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># Convert Context to dict if needed (for now)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">Context</span><span class="p">):</span>
+            <span class="n">param_dict</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">param_dict</span> <span class="o">=</span> <span class="n">params</span>
+
+        <span class="c1"># Check for missing parameters if strict</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">strict</span><span class="p">:</span>
+            <span class="n">missing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">template_wrapper</span><span class="o">.</span><span class="n">validate_params</span><span class="p">(</span><span class="n">param_dict</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">missing</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">MissingParameterError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Missing required parameters: </span><span class="si">{</span><span class="n">missing</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+        <span class="c1"># Use the recursive visitor strategy (strategies.py will provide more options)</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">embody.strategies</span><span class="w"> </span><span class="kn">import</span> <span class="n">RecursiveVisitorEngine</span>
+
+        <span class="n">engine</span> <span class="o">=</span> <span class="n">RecursiveVisitorEngine</span><span class="p">(</span>
+            <span class="n">syntax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">syntax</span><span class="p">,</span>
+            <span class="n">strict</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strict</span><span class="p">,</span>
+            <span class="n">key_collision</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">key_collision</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">engine</span><span class="o">.</span><span class="n">embody</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="p">,</span> <span class="n">param_dict</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Embodier.get_signature">
+<a class="viewcode-back" href="../../module_docs/embody/base.html#embody.Embodier.get_signature">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_signature</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the list of parameters required by the template.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of parameter names</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">template_wrapper</span><span class="o">.</span><span class="n">get_dependencies</span><span class="p">())</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="embody">
+<a class="viewcode-back" href="../../module_docs/embody/base.html#embody.embody">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">embody</span><span class="p">(</span><span class="n">template</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">Context</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convenience function for template embodiment.</span>
+
+<span class="sd">    This is the main entry point for simple embodiment use cases.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        template: The template to embody</span>
+<span class="sd">        params: Parameters for substitution</span>
+<span class="sd">        **kwargs: Additional parameters or config options</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Embodied object</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; embody({&#39;name&#39;: &#39;${name}&#39;}, {&#39;name&#39;: &#39;Alice&#39;})</span>
+<span class="sd">        {&#39;name&#39;: &#39;Alice&#39;}</span>
+
+<span class="sd">        &gt;&gt;&gt; embody({&#39;count&#39;: &#39;${n}&#39;}, {&#39;n&#39;: 42})</span>
+<span class="sd">        {&#39;count&#39;: 42}</span>
+
+<span class="sd">        &gt;&gt;&gt; embody([&#39;${a}&#39;, &#39;${b}&#39;], {&#39;a&#39;: 1, &#39;b&#39;: 2})</span>
+<span class="sd">        [1, 2]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Extract config kwargs</span>
+    <span class="n">config_keys</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;syntax&#39;</span><span class="p">,</span> <span class="s1">&#39;strict&#39;</span><span class="p">,</span> <span class="s1">&#39;strategy&#39;</span><span class="p">,</span> <span class="s1">&#39;check_cycles&#39;</span><span class="p">,</span> <span class="s1">&#39;key_collision&#39;</span><span class="p">}</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">config_keys</span><span class="p">}</span>
+    <span class="n">params_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config_keys</span><span class="p">}</span>
+
+    <span class="n">embodier</span> <span class="o">=</span> <span class="n">Embodier</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">embodier</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="o">**</span><span class="n">params_kwargs</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

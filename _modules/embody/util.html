@@ -1,0 +1,558 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>embody.util &mdash; embody 0.1.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=ca7ad2ea"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            embody
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody.html">embody</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/base.html">embody.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/graphviz_template.html">embody.graphviz_template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/mappings.html">embody.mappings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/naming.html">embody.naming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/paths.html">embody.paths</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/scrap/ca_templating.html">embody.scrap.ca_templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/strategies.html">embody.strategies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/substitution.html">embody.substitution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/templater.html">embody.templater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/templating.html">embody.templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/util.html">embody.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">embody</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">embody.util</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for embody.util</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Utility functions for embody: flattening, unflattening, and cycle detection.</span>
+
+<span class="sd">This module provides helper functions for working with nested data structures,</span>
+<span class="sd">including path-based operations and cycle detection for safe traversal.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Set</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Sequence</span>
+
+
+<div class="viewcode-block" id="CycleError">
+<a class="viewcode-back" href="../../module_docs/embody/util.html#embody.CycleError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CycleError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raised when a circular reference is detected in a data structure.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="PathNotFoundError">
+<a class="viewcode-back" href="../../module_docs/embody/util.html#embody.PathNotFoundError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PathNotFoundError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raised when a path doesn&#39;t exist in a data structure.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="detect_cycle">
+<a class="viewcode-back" href="../../module_docs/embody/util.html#embody.detect_cycle">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">detect_cycle</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">visited</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect cycles in a nested data structure.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        obj: The object to check for cycles</span>
+<span class="sd">        visited: Set of object IDs already visited</span>
+<span class="sd">        path: Current path in the structure (for error reporting)</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        CycleError: If a cycle is detected</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; d = {&#39;a&#39;: 1, &#39;b&#39;: [2, 3]}</span>
+<span class="sd">        &gt;&gt;&gt; detect_cycle(d)  # No cycle, returns None</span>
+
+<span class="sd">        &gt;&gt;&gt; circular = {&#39;a&#39;: 1}</span>
+<span class="sd">        &gt;&gt;&gt; circular[&#39;self&#39;] = circular</span>
+<span class="sd">        &gt;&gt;&gt; try:</span>
+<span class="sd">        ...     detect_cycle(circular)</span>
+<span class="sd">        ... except CycleError as e:</span>
+<span class="sd">        ...     print(&quot;Cycle detected&quot;)</span>
+<span class="sd">        Cycle detected</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">visited</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">obj_id</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+    <span class="c1"># Only check for cycles in container types</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">obj_id</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+            <span class="n">path_str</span> <span class="o">=</span> <span class="s1">&#39; -&gt; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">if</span> <span class="n">path</span> <span class="k">else</span> <span class="s1">&#39;root&#39;</span>
+            <span class="k">raise</span> <span class="n">CycleError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Circular reference detected at path: </span><span class="si">{</span><span class="n">path_str</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">obj_id</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">detect_cycle</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">visited</span><span class="p">,</span> <span class="n">path</span> <span class="o">+</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)])</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+                    <span class="n">detect_cycle</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">visited</span><span class="p">,</span> <span class="n">path</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">]&#39;</span><span class="p">])</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="c1"># Remove from visited after checking (allows diamond structures)</span>
+            <span class="n">visited</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">obj_id</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="flatten_dict">
+<a class="viewcode-back" href="../../module_docs/embody/util.html#embody.flatten_dict">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">flatten_dict</span><span class="p">(</span>
+    <span class="n">nested_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="n">separator</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span>
+    <span class="n">parent_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Flatten a nested dictionary into a single-level dictionary with path keys.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        nested_dict: Nested dictionary to flatten</span>
+<span class="sd">        separator: String to use for separating path components</span>
+<span class="sd">        parent_key: Key of the parent (used in recursion)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Flattened dictionary with path keys</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; d = {&#39;a&#39;: {&#39;b&#39;: {&#39;c&#39;: 1}}, &#39;d&#39;: 2}</span>
+<span class="sd">        &gt;&gt;&gt; flatten_dict(d)</span>
+<span class="sd">        {&#39;a.b.c&#39;: 1, &#39;d&#39;: 2}</span>
+
+<span class="sd">        &gt;&gt;&gt; d = {&#39;user&#39;: {&#39;name&#39;: &#39;Alice&#39;, &#39;age&#39;: 30}}</span>
+<span class="sd">        &gt;&gt;&gt; flatten_dict(d)</span>
+<span class="sd">        {&#39;user.name&#39;: &#39;Alice&#39;, &#39;user.age&#39;: 30}</span>
+
+<span class="sd">        &gt;&gt;&gt; d = {&#39;items&#39;: [1, 2, 3]}</span>
+<span class="sd">        &gt;&gt;&gt; flatten_dict(d)</span>
+<span class="sd">        {&#39;items.0&#39;: 1, &#39;items.1&#39;: 2, &#39;items.2&#39;: 3}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">nested_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">new_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">parent_key</span><span class="si">}{</span><span class="n">separator</span><span class="si">}{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">parent_key</span> <span class="k">else</span> <span class="n">key</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">flatten_dict</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">new_key</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+                <span class="n">list_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">new_key</span><span class="si">}{</span><span class="n">separator</span><span class="si">}{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">flatten_dict</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">list_key</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">list_key</span><span class="p">,</span> <span class="n">item</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">new_key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">items</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="flatten_to_tuples">
+<a class="viewcode-back" href="../../module_docs/embody/util.html#embody.flatten_to_tuples">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">flatten_to_tuples</span><span class="p">(</span>
+    <span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="n">parent_path</span><span class="p">:</span> <span class="n">Tuple</span> <span class="o">=</span> <span class="p">()</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Tuple</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Flatten a nested structure using tuple paths (unambiguous).</span>
+
+<span class="sd">    This avoids the ambiguity of string separators. A tuple path like</span>
+<span class="sd">    (&#39;a&#39;, &#39;b&#39;, 0) is unambiguous, while &#39;a.b.0&#39; could mean multiple things</span>
+<span class="sd">    if keys contain dots.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        obj: Object to flatten</span>
+<span class="sd">        parent_path: Current path as tuple</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary mapping tuple paths to values</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; d = {&#39;a&#39;: {&#39;b&#39;: [1, 2]}}</span>
+<span class="sd">        &gt;&gt;&gt; flatten_to_tuples(d)</span>
+<span class="sd">        {(&#39;a&#39;, &#39;b&#39;, 0): 1, (&#39;a&#39;, &#39;b&#39;, 1): 2}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">current_path</span> <span class="o">=</span> <span class="n">parent_path</span> <span class="o">+</span> <span class="p">(</span><span class="n">key</span><span class="p">,)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+                <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">flatten_to_tuples</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">current_path</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">current_path</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+            <span class="n">current_path</span> <span class="o">=</span> <span class="n">parent_path</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span><span class="p">,)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+                <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">flatten_to_tuples</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">current_path</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">current_path</span><span class="p">,</span> <span class="n">item</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Scalar value</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">parent_path</span><span class="p">:</span> <span class="n">obj</span><span class="p">}</span> <span class="k">if</span> <span class="n">parent_path</span> <span class="k">else</span> <span class="p">{}</span></div>
+
+
+
+<div class="viewcode-block" id="unflatten_dict">
+<a class="viewcode-back" href="../../module_docs/embody/util.html#embody.unflatten_dict">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">unflatten_dict</span><span class="p">(</span>
+    <span class="n">flat_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="n">separator</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Unflatten a dictionary with path keys into a nested structure.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        flat_dict: Flattened dictionary with path keys</span>
+<span class="sd">        separator: String used for separating path components</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Nested dictionary structure</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; flat = {&#39;a.b.c&#39;: 1, &#39;d&#39;: 2}</span>
+<span class="sd">        &gt;&gt;&gt; unflatten_dict(flat)</span>
+<span class="sd">        {&#39;a&#39;: {&#39;b&#39;: {&#39;c&#39;: 1}}, &#39;d&#39;: 2}</span>
+
+<span class="sd">        &gt;&gt;&gt; flat = {&#39;items.0&#39;: &#39;a&#39;, &#39;items.1&#39;: &#39;b&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; unflatten_dict(flat)</span>
+<span class="sd">        {&#39;items&#39;: [&#39;a&#39;, &#39;b&#39;]}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">flat_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">separator</span><span class="p">)</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">result</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">part</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parts</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="c1"># Check if next part is a number (indicates list)</span>
+            <span class="n">next_part</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">is_next_numeric</span> <span class="o">=</span> <span class="n">next_part</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">part</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">current</span><span class="p">:</span>
+                <span class="c1"># Create list or dict based on next part</span>
+                <span class="n">current</span><span class="p">[</span><span class="n">part</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">is_next_numeric</span> <span class="k">else</span> <span class="p">{}</span>
+
+            <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="n">part</span><span class="p">]</span>
+
+        <span class="c1"># Set the final value</span>
+        <span class="n">final_key</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="c1"># Extend list if necessary</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">final_key</span><span class="p">)</span>
+            <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">current</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">idx</span><span class="p">:</span>
+                <span class="n">current</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="n">current</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">current</span><span class="p">[</span><span class="n">final_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="unflatten_from_tuples">
+<a class="viewcode-back" href="../../module_docs/embody/util.html#embody.unflatten_from_tuples">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">unflatten_from_tuples</span><span class="p">(</span><span class="n">flat_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Tuple</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Unflatten a dictionary with tuple paths into a nested structure.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        flat_dict: Dictionary with tuple paths as keys</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Nested structure (dict or list)</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; flat = {(&#39;a&#39;, &#39;b&#39;, 0): 1, (&#39;a&#39;, &#39;b&#39;, 1): 2}</span>
+<span class="sd">        &gt;&gt;&gt; unflatten_from_tuples(flat)</span>
+<span class="sd">        {&#39;a&#39;: {&#39;b&#39;: [1, 2]}}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">flat_dict</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{}</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">flat_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="n">current</span> <span class="o">=</span> <span class="n">result</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">path</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="c1"># Determine if next level should be list or dict</span>
+            <span class="n">next_key</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">is_next_numeric</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">next_key</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">current</span><span class="p">:</span>
+                <span class="n">current</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">is_next_numeric</span> <span class="k">else</span> <span class="p">{}</span>
+
+            <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+        <span class="c1"># Set final value</span>
+        <span class="n">final_key</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">final_key</span>
+            <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">current</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">idx</span><span class="p">:</span>
+                <span class="n">current</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="n">current</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">current</span><span class="p">[</span><span class="n">final_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="get_by_path">
+<a class="viewcode-back" href="../../module_docs/embody/util.html#embody.get_by_path">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_by_path</span><span class="p">(</span>
+    <span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">],</span>
+    <span class="n">separator</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span>
+    <span class="n">default</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a value from a nested structure by path.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        obj: Nested structure</span>
+<span class="sd">        path: Path as string or tuple</span>
+<span class="sd">        separator: Separator for string paths</span>
+<span class="sd">        default: Default value if path not found</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Value at the path, or default if not found</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; d = {&#39;a&#39;: {&#39;b&#39;: {&#39;c&#39;: 42}}}</span>
+<span class="sd">        &gt;&gt;&gt; get_by_path(d, &#39;a.b.c&#39;)</span>
+<span class="sd">        42</span>
+<span class="sd">        &gt;&gt;&gt; get_by_path(d, (&#39;a&#39;, &#39;b&#39;, &#39;c&#39;))</span>
+<span class="sd">        42</span>
+<span class="sd">        &gt;&gt;&gt; get_by_path(d, &#39;a.b.x&#39;, default=&#39;not found&#39;)</span>
+<span class="sd">        &#39;not found&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">separator</span><span class="p">))</span>
+
+    <span class="n">current</span> <span class="o">=</span> <span class="n">obj</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">)):</span>
+                <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">)):</span>
+                <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">default</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">default</span>
+
+    <span class="k">return</span> <span class="n">current</span></div>
+
+
+
+<div class="viewcode-block" id="set_by_path">
+<a class="viewcode-back" href="../../module_docs/embody/util.html#embody.set_by_path">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_by_path</span><span class="p">(</span>
+    <span class="n">obj</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span>
+    <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">],</span>
+    <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="n">separator</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span>
+    <span class="n">create_intermediate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a value in a nested structure by path (modifies in place).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        obj: Nested structure to modify</span>
+<span class="sd">        path: Path as string or tuple</span>
+<span class="sd">        value: Value to set</span>
+<span class="sd">        separator: Separator for string paths</span>
+<span class="sd">        create_intermediate: If True, create intermediate dicts/lists as needed</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; d = {}</span>
+<span class="sd">        &gt;&gt;&gt; set_by_path(d, &#39;a.b.c&#39;, 42)</span>
+<span class="sd">        &gt;&gt;&gt; d</span>
+<span class="sd">        {&#39;a&#39;: {&#39;b&#39;: {&#39;c&#39;: 42}}}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">separator</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Path cannot be empty&quot;</span><span class="p">)</span>
+
+    <span class="n">current</span> <span class="o">=</span> <span class="n">obj</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">path</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">current</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">create_intermediate</span><span class="p">:</span>
+                <span class="n">current</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">PathNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Path not found: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+    <span class="n">current</span><span class="p">[</span><span class="n">path</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">value</span></div>
+
+
+
+<div class="viewcode-block" id="max_depth">
+<a class="viewcode-back" href="../../module_docs/embody/util.html#embody.max_depth">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">max_depth</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">current_depth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the maximum depth of a nested structure.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        obj: Object to measure</span>
+<span class="sd">        current_depth: Current depth (used in recursion)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Maximum depth</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; max_depth({&#39;a&#39;: 1})</span>
+<span class="sd">        1</span>
+<span class="sd">        &gt;&gt;&gt; max_depth({&#39;a&#39;: {&#39;b&#39;: {&#39;c&#39;: 1}}})</span>
+<span class="sd">        3</span>
+<span class="sd">        &gt;&gt;&gt; max_depth([1, [2, [3, 4]]])</span>
+<span class="sd">        3</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">obj</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">current_depth</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_depth</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">current_depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">obj</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">current_depth</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_depth</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">current_depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">current_depth</span></div>
+
+
+
+<div class="viewcode-block" id="count_template_markers">
+<a class="viewcode-back" href="../../module_docs/embody/util.html#embody.count_template_markers">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">count_template_markers</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">syntax</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;dollar_brace&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Count the number of template markers in a nested structure.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        obj: Object to count markers in</span>
+<span class="sd">        syntax: Template syntax to look for</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Number of template markers found</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; count_template_markers({&#39;a&#39;: &#39;${x}&#39;, &#39;b&#39;: &#39;${y}&#39;})</span>
+<span class="sd">        2</span>
+<span class="sd">        &gt;&gt;&gt; count_template_markers([&#39;${a}&#39;, &#39;literal&#39;, &#39;${b} and ${c}&#39;])</span>
+<span class="sd">        3</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">embody.substitution</span><span class="w"> </span><span class="kn">import</span> <span class="n">extract_template_vars</span>
+
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">extract_template_vars</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">syntax</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="n">count_template_markers</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">syntax</span><span class="p">)</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="n">count_template_markers</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">syntax</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="n">count_template_markers</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">syntax</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">count</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

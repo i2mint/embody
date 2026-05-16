@@ -1,0 +1,346 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>embody.strategies &mdash; embody 0.1.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=ca7ad2ea"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="embody.substitution" href="substitution.html" />
+    <link rel="prev" title="embody.scrap.ca_templating" href="scrap/ca_templating.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            embody
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../embody.html">embody</a></li>
+<li class="toctree-l1"><a class="reference internal" href="base.html">embody.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphviz_template.html">embody.graphviz_template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mappings.html">embody.mappings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="naming.html">embody.naming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="paths.html">embody.paths</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scrap/ca_templating.html">embody.scrap.ca_templating</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">embody.strategies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#embody.strategies.BaseEmbodimentEngine"><code class="docutils literal notranslate"><span class="pre">BaseEmbodimentEngine</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embody.strategies.BaseEmbodimentEngine.embody"><code class="docutils literal notranslate"><span class="pre">BaseEmbodimentEngine.embody()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.strategies.CompiledPathEngine"><code class="docutils literal notranslate"><span class="pre">CompiledPathEngine</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embody.strategies.CompiledPathEngine.compile"><code class="docutils literal notranslate"><span class="pre">CompiledPathEngine.compile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embody.strategies.CompiledPathEngine.embody"><code class="docutils literal notranslate"><span class="pre">CompiledPathEngine.embody()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embody.strategies.CompiledPathEngine.embody_compiled"><code class="docutils literal notranslate"><span class="pre">CompiledPathEngine.embody_compiled()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.strategies.IterativeStackEngine"><code class="docutils literal notranslate"><span class="pre">IterativeStackEngine</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embody.strategies.IterativeStackEngine.embody"><code class="docutils literal notranslate"><span class="pre">IterativeStackEngine.embody()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.strategies.KeyCollisionError"><code class="docutils literal notranslate"><span class="pre">KeyCollisionError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.strategies.RecursiveVisitorEngine"><code class="docutils literal notranslate"><span class="pre">RecursiveVisitorEngine</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embody.strategies.RecursiveVisitorEngine.embody"><code class="docutils literal notranslate"><span class="pre">RecursiveVisitorEngine.embody()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.strategies.get_engine"><code class="docutils literal notranslate"><span class="pre">get_engine()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="substitution.html">embody.substitution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="templater.html">embody.templater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="templating.html">embody.templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util.html">embody.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">embody</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">embody.strategies</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/embody/strategies.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-embody.strategies">
+<span id="embody-strategies"></span><h1>embody.strategies<a class="headerlink" href="#module-embody.strategies" title="Link to this heading"></a></h1>
+<p>Traversal strategies for template embodiment.</p>
+<p>This module provides different strategies for traversing and embodying templates:
+- RecursiveVisitorEngine: Dynamic traversal using the Visitor pattern
+- CompiledPathEngine: Pre-compiled path-based traversal for performance</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.strategies.BaseEmbodimentEngine">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.strategies.</span></span><span class="sig-name descname"><span class="pre">BaseEmbodimentEngine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">syntax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dollar_brace'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_collision</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'error'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/embody/strategies.html#BaseEmbodimentEngine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.strategies.BaseEmbodimentEngine" title="Link to this definition"></a></dt>
+<dd><p>Base class for embodiment engines.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.strategies.BaseEmbodimentEngine.embody">
+<span class="sig-name descname"><span class="pre">embody</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../_modules/embody/strategies.html#BaseEmbodimentEngine.embody"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.strategies.BaseEmbodimentEngine.embody" title="Link to this definition"></a></dt>
+<dd><p>Embody a template with parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>template</strong> – The template to embody</p></li>
+<li><p><strong>params</strong> – Parameters for substitution</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Embodied object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.strategies.CompiledPathEngine">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.strategies.</span></span><span class="sig-name descname"><span class="pre">CompiledPathEngine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/embody/strategies.html#CompiledPathEngine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.strategies.CompiledPathEngine" title="Link to this definition"></a></dt>
+<dd><p>Pre-compiled path-based traversal strategy.</p>
+<p>This engine flattens the template into a path map, performs substitutions,
+and then reconstructs the structure. It’s best for:
+- Templates embodied repeatedly (e.g., API responses)
+- Static templates with known structure
+- Performance-critical paths</p>
+<p>The compilation happens once, then embodiment is a linear scan.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">CompiledPathEngine</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">template</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{x}</span><span class="s1">&#39;</span><span class="p">},</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{y}</span><span class="s1">&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">compiled</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span><span class="o">.</span><span class="n">embody_compiled</span><span class="p">(</span><span class="n">compiled</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+<span class="go">{&#39;a&#39;: {&#39;b&#39;: 1}, &#39;c&#39;: 2}</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.strategies.CompiledPathEngine.compile">
+<span class="sig-name descname"><span class="pre">compile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../../_modules/embody/strategies.html#CompiledPathEngine.compile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.strategies.CompiledPathEngine.compile" title="Link to this definition"></a></dt>
+<dd><p>Compile a template into a flat path map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>template</strong> – Template to compile</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Compiled template data</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">CompiledPathEngine</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">template</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{x}</span><span class="s1">&#39;</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">compiled</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">compiled</span><span class="p">[</span><span class="s1">&#39;flat&#39;</span><span class="p">]</span>
+<span class="go">{(&#39;a&#39;, &#39;b&#39;): &#39;${x}&#39;}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.strategies.CompiledPathEngine.embody">
+<span class="sig-name descname"><span class="pre">embody</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../_modules/embody/strategies.html#CompiledPathEngine.embody"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.strategies.CompiledPathEngine.embody" title="Link to this definition"></a></dt>
+<dd><p>Embody a template (compiles on first use, caches compilation).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>template</strong> – Template to embody</p></li>
+<li><p><strong>params</strong> – Parameters for substitution</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Embodied object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.strategies.CompiledPathEngine.embody_compiled">
+<span class="sig-name descname"><span class="pre">embody_compiled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">compiled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../_modules/embody/strategies.html#CompiledPathEngine.embody_compiled"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.strategies.CompiledPathEngine.embody_compiled" title="Link to this definition"></a></dt>
+<dd><p>Embody a pre-compiled template.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>compiled</strong> – Compiled template from compile()</p></li>
+<li><p><strong>params</strong> – Parameters for substitution</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Embodied object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.strategies.IterativeStackEngine">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.strategies.</span></span><span class="sig-name descname"><span class="pre">IterativeStackEngine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">syntax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dollar_brace'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_collision</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'error'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/embody/strategies.html#IterativeStackEngine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.strategies.IterativeStackEngine" title="Link to this definition"></a></dt>
+<dd><p>Iterative stack-based traversal strategy.</p>
+<p>This engine uses an explicit stack instead of recursion, which is more
+memory-efficient for very deep structures and avoids Python’s recursion limit.</p>
+<p>Best for:
+- Very deeply nested structures (&gt;100 levels)
+- When recursion depth is a concern</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.strategies.IterativeStackEngine.embody">
+<span class="sig-name descname"><span class="pre">embody</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../_modules/embody/strategies.html#IterativeStackEngine.embody"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.strategies.IterativeStackEngine.embody" title="Link to this definition"></a></dt>
+<dd><p>Embody using iterative stack-based traversal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>template</strong> – Template to embody</p></li>
+<li><p><strong>params</strong> – Parameters for substitution</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Embodied object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="embody.strategies.KeyCollisionError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.strategies.</span></span><span class="sig-name descname"><span class="pre">KeyCollisionError</span></span><a class="reference internal" href="../../_modules/embody/strategies.html#KeyCollisionError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.strategies.KeyCollisionError" title="Link to this definition"></a></dt>
+<dd><p>Raised when dynamic keys resolve to the same value.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.strategies.RecursiveVisitorEngine">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.strategies.</span></span><span class="sig-name descname"><span class="pre">RecursiveVisitorEngine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">syntax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dollar_brace'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_collision</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'error'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/embody/strategies.html#RecursiveVisitorEngine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.strategies.RecursiveVisitorEngine" title="Link to this definition"></a></dt>
+<dd><p>Dynamic traversal strategy using the Visitor pattern.</p>
+<p>This engine recursively walks the template structure at runtime,
+visiting each node and performing substitutions. It’s best for:
+- One-off templates
+- Dynamic templates with conditional logic
+- Templates where structure changes based on parameters</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">RecursiveVisitorEngine</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">template</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;greeting&#39;</span><span class="p">:</span> <span class="s1">&#39;Hello $</span><span class="si">{name}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{num}</span><span class="s1">&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span><span class="o">.</span><span class="n">embody</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;num&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">})</span>
+<span class="go">{&#39;greeting&#39;: &#39;Hello Alice&#39;, &#39;count&#39;: 42}</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.strategies.RecursiveVisitorEngine.embody">
+<span class="sig-name descname"><span class="pre">embody</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../_modules/embody/strategies.html#RecursiveVisitorEngine.embody"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.strategies.RecursiveVisitorEngine.embody" title="Link to this definition"></a></dt>
+<dd><p>Recursively embody a template.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>template</strong> – Template to embody</p></li>
+<li><p><strong>params</strong> – Parameters for substitution</p></li>
+<li><p><strong>visited</strong> – Set of visited object IDs (for cycle detection)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Embodied object</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../embody.html#embody.CycleError" title="embody.CycleError"><strong>CycleError</strong></a> – If a circular reference is detected</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.strategies.get_engine">
+<span class="sig-prename descclassname"><span class="pre">embody.strategies.</span></span><span class="sig-name descname"><span class="pre">get_engine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'recursive'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#embody.strategies.BaseEmbodimentEngine" title="embody.strategies.BaseEmbodimentEngine"><span class="pre">BaseEmbodimentEngine</span></a></span></span><a class="reference internal" href="../../_modules/embody/strategies.html#get_engine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.strategies.get_engine" title="Link to this definition"></a></dt>
+<dd><p>Get an embodiment engine by name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strategy</strong> – Name of strategy (‘recursive’, ‘compiled’, ‘iterative’)</p></li>
+<li><p><strong>**kwargs</strong> – Arguments to pass to engine constructor</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Embodiment engine instance</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">get_engine</span><span class="p">(</span><span class="s1">&#39;recursive&#39;</span><span class="p">,</span> <span class="n">syntax</span><span class="o">=</span><span class="s1">&#39;brace&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">RecursiveVisitorEngine</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="scrap/ca_templating.html" class="btn btn-neutral float-left" title="embody.scrap.ca_templating" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="substitution.html" class="btn btn-neutral float-right" title="embody.substitution" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,400 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>embody.paths &mdash; embody 0.1.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=ca7ad2ea"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="embody.scrap.ca_templating" href="scrap/ca_templating.html" />
+    <link rel="prev" title="embody.naming" href="naming.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            embody
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../embody.html">embody</a></li>
+<li class="toctree-l1"><a class="reference internal" href="base.html">embody.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphviz_template.html">embody.graphviz_template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mappings.html">embody.mappings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="naming.html">embody.naming</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">embody.paths</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#embody.paths.DotPath"><code class="docutils literal notranslate"><span class="pre">DotPath</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embody.paths.DotPath.resolve"><code class="docutils literal notranslate"><span class="pre">DotPath.resolve()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embody.paths.DotPath.to_json_pointer"><code class="docutils literal notranslate"><span class="pre">DotPath.to_json_pointer()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.paths.InvalidPathError"><code class="docutils literal notranslate"><span class="pre">InvalidPathError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.paths.JSONPointer"><code class="docutils literal notranslate"><span class="pre">JSONPointer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embody.paths.JSONPointer.from_parts"><code class="docutils literal notranslate"><span class="pre">JSONPointer.from_parts()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embody.paths.JSONPointer.resolve"><code class="docutils literal notranslate"><span class="pre">JSONPointer.resolve()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embody.paths.JSONPointer.set"><code class="docutils literal notranslate"><span class="pre">JSONPointer.set()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.paths.TuplePath"><code class="docutils literal notranslate"><span class="pre">TuplePath</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embody.paths.TuplePath.resolve"><code class="docutils literal notranslate"><span class="pre">TuplePath.resolve()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embody.paths.TuplePath.to_json_pointer"><code class="docutils literal notranslate"><span class="pre">TuplePath.to_json_pointer()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.paths.parse_path"><code class="docutils literal notranslate"><span class="pre">parse_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.paths.resolve_path"><code class="docutils literal notranslate"><span class="pre">resolve_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.paths.set_path"><code class="docutils literal notranslate"><span class="pre">set_path()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="scrap/ca_templating.html">embody.scrap.ca_templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="strategies.html">embody.strategies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="substitution.html">embody.substitution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="templater.html">embody.templater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="templating.html">embody.templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util.html">embody.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">embody</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">embody.paths</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/embody/paths.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-embody.paths">
+<span id="embody-paths"></span><h1>embody.paths<a class="headerlink" href="#module-embody.paths" title="Link to this heading"></a></h1>
+<p>Path addressing for nested data structures.</p>
+<p>This module provides utilities for working with paths in nested structures,
+supporting:
+- JSON Pointer (RFC 6901)
+- Dot notation
+- Tuple paths
+- Path parsing and resolution</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.paths.DotPath">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.paths.</span></span><span class="sig-name descname"><span class="pre">DotPath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/embody/paths.html#DotPath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.paths.DotPath" title="Link to this definition"></a></dt>
+<dd><p>Dot notation path handler (e.g., ‘user.address.city’).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s1">&#39;NYC&#39;</span><span class="p">}}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span> <span class="o">=</span> <span class="n">DotPath</span><span class="p">(</span><span class="s1">&#39;user.address.city&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">&#39;NYC&#39;</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.paths.DotPath.resolve">
+<span class="sig-name descname"><span class="pre">resolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../_modules/embody/paths.html#DotPath.resolve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.paths.DotPath.resolve" title="Link to this definition"></a></dt>
+<dd><p>Resolve the path against data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Data to resolve against</p></li>
+<li><p><strong>default</strong> – Default value if resolution fails</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Resolved value or default</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.paths.DotPath.to_json_pointer">
+<span class="sig-name descname"><span class="pre">to_json_pointer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#embody.paths.JSONPointer" title="embody.paths.JSONPointer"><span class="pre">JSONPointer</span></a></span></span><a class="reference internal" href="../../_modules/embody/paths.html#DotPath.to_json_pointer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.paths.DotPath.to_json_pointer" title="Link to this definition"></a></dt>
+<dd><p>Convert to a JSON Pointer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSONPointer instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="embody.paths.InvalidPathError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.paths.</span></span><span class="sig-name descname"><span class="pre">InvalidPathError</span></span><a class="reference internal" href="../../_modules/embody/paths.html#InvalidPathError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.paths.InvalidPathError" title="Link to this definition"></a></dt>
+<dd><p>Raised when a path is malformed or invalid.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.paths.JSONPointer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.paths.</span></span><span class="sig-name descname"><span class="pre">JSONPointer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pointer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/embody/paths.html#JSONPointer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.paths.JSONPointer" title="Link to this definition"></a></dt>
+<dd><p>JSON Pointer implementation (RFC 6901).</p>
+<p>JSON Pointer defines a string syntax for identifying a specific value
+within a JSON document. Example: /foo/bar/0 refers to the first element
+of the ‘bar’ array in the ‘foo’ object.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;foo&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;bar&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ptr</span> <span class="o">=</span> <span class="n">JSONPointer</span><span class="p">(</span><span class="s1">&#39;/foo/bar/0&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ptr</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">JSONPointer</span><span class="p">(</span><span class="s1">&#39;/user/name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">&#39;Alice&#39;</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.paths.JSONPointer.from_parts">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_parts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#embody.paths.JSONPointer" title="embody.paths.JSONPointer"><span class="pre">JSONPointer</span></a></span></span><a class="reference internal" href="../../_modules/embody/paths.html#JSONPointer.from_parts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.paths.JSONPointer.from_parts" title="Link to this definition"></a></dt>
+<dd><p>Create a JSON Pointer from path components.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parts</strong> – List of path components</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSONPointer instance</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ptr</span> <span class="o">=</span> <span class="n">JSONPointer</span><span class="o">.</span><span class="n">from_parts</span><span class="p">([</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ptr</span><span class="o">.</span><span class="n">pointer</span>
+<span class="go">&#39;/foo/bar/0&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.paths.JSONPointer.resolve">
+<span class="sig-name descname"><span class="pre">resolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../_modules/embody/paths.html#JSONPointer.resolve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.paths.JSONPointer.resolve" title="Link to this definition"></a></dt>
+<dd><p>Resolve the pointer against data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Data to resolve against</p></li>
+<li><p><strong>default</strong> – Default value if resolution fails</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Resolved value or default</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">JSONPointer</span><span class="p">(</span><span class="s1">&#39;/a/b/1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">JSONPointer</span><span class="p">(</span><span class="s1">&#39;/a/x&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;not found&#39;</span><span class="p">)</span>
+<span class="go">&#39;not found&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.paths.JSONPointer.set">
+<span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_intermediate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/embody/paths.html#JSONPointer.set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.paths.JSONPointer.set" title="Link to this definition"></a></dt>
+<dd><p>Set a value at the pointer location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Data to modify (in place)</p></li>
+<li><p><strong>value</strong> – Value to set</p></li>
+<li><p><strong>create_intermediate</strong> – If True, create intermediate structures</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#embody.paths.InvalidPathError" title="embody.paths.InvalidPathError"><strong>InvalidPathError</strong></a> – If path cannot be set</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">{}}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">JSONPointer</span><span class="p">(</span><span class="s1">&#39;/a/b/c&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span>
+<span class="go">{&#39;a&#39;: {&#39;b&#39;: {&#39;c&#39;: 42}}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.paths.TuplePath">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.paths.</span></span><span class="sig-name descname"><span class="pre">TuplePath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/embody/paths.html#TuplePath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.paths.TuplePath" title="Link to this definition"></a></dt>
+<dd><p>Tuple-based path (unambiguous, e.g., (‘user’, ‘address’, ‘city’)).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s1">&#39;NYC&#39;</span><span class="p">}}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span> <span class="o">=</span> <span class="n">TuplePath</span><span class="p">((</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;address&#39;</span><span class="p">,</span> <span class="s1">&#39;city&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">&#39;NYC&#39;</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.paths.TuplePath.resolve">
+<span class="sig-name descname"><span class="pre">resolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../_modules/embody/paths.html#TuplePath.resolve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.paths.TuplePath.resolve" title="Link to this definition"></a></dt>
+<dd><p>Resolve the path against data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.paths.TuplePath.to_json_pointer">
+<span class="sig-name descname"><span class="pre">to_json_pointer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#embody.paths.JSONPointer" title="embody.paths.JSONPointer"><span class="pre">JSONPointer</span></a></span></span><a class="reference internal" href="../../_modules/embody/paths.html#TuplePath.to_json_pointer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.paths.TuplePath.to_json_pointer" title="Link to this definition"></a></dt>
+<dd><p>Convert to a JSON Pointer.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.paths.parse_path">
+<span class="sig-prename descclassname"><span class="pre">embody.paths.</span></span><span class="sig-name descname"><span class="pre">parse_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#embody.paths.JSONPointer" title="embody.paths.JSONPointer"><span class="pre">JSONPointer</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#embody.paths.DotPath" title="embody.paths.DotPath"><span class="pre">DotPath</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#embody.paths.TuplePath" title="embody.paths.TuplePath"><span class="pre">TuplePath</span></a></span></span><a class="reference internal" href="../../_modules/embody/paths.html#parse_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.paths.parse_path" title="Link to this definition"></a></dt>
+<dd><p>Parse a path in various formats.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – Path in any supported format</p></li>
+<li><p><strong>format</strong> – Format hint (‘auto’, ‘json_pointer’, ‘dot’, ‘tuple’)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path object</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parse_path</span><span class="p">(</span><span class="s1">&#39;/user/name&#39;</span><span class="p">)</span>
+<span class="go">&lt;embody.paths.JSONPointer object at ...&gt;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parse_path</span><span class="p">(</span><span class="s1">&#39;user.name&#39;</span><span class="p">)</span>
+<span class="go">&lt;embody.paths.DotPath object at ...&gt;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parse_path</span><span class="p">((</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">))</span>
+<span class="go">&lt;embody.paths.TuplePath object at ...&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.paths.resolve_path">
+<span class="sig-prename descclassname"><span class="pre">embody.paths.</span></span><span class="sig-name descname"><span class="pre">resolve_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../_modules/embody/paths.html#resolve_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.paths.resolve_path" title="Link to this definition"></a></dt>
+<dd><p>Resolve a path against data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Data to resolve against</p></li>
+<li><p><strong>path</strong> – Path in any supported format</p></li>
+<li><p><strong>default</strong> – Default value if resolution fails</p></li>
+<li><p><strong>format</strong> – Format hint</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Resolved value or default</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">resolve_path</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;/user/name&#39;</span><span class="p">)</span>
+<span class="go">&#39;Alice&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">resolve_path</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;user.age&#39;</span><span class="p">)</span>
+<span class="go">30</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">resolve_path</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">))</span>
+<span class="go">&#39;Alice&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.paths.set_path">
+<span class="sig-prename descclassname"><span class="pre">embody.paths.</span></span><span class="sig-name descname"><span class="pre">set_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_intermediate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/embody/paths.html#set_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.paths.set_path" title="Link to this definition"></a></dt>
+<dd><p>Set a value at a path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Data to modify</p></li>
+<li><p><strong>path</strong> – Path in any supported format</p></li>
+<li><p><strong>value</strong> – Value to set</p></li>
+<li><p><strong>format</strong> – Format hint</p></li>
+<li><p><strong>create_intermediate</strong> – If True, create intermediate structures</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">set_path</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;/user/name&#39;</span><span class="p">,</span> <span class="s1">&#39;Alice&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span>
+<span class="go">{&#39;user&#39;: {&#39;name&#39;: &#39;Alice&#39;}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="naming.html" class="btn btn-neutral float-left" title="embody.naming" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="scrap/ca_templating.html" class="btn btn-neutral float-right" title="embody.scrap.ca_templating" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

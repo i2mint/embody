@@ -1,0 +1,4 @@
+embody.base
+===========
+.. automodule:: embody.base
+   :members:

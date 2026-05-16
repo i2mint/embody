@@ -1,0 +1,4 @@
+embody.mappings
+===============
+.. automodule:: embody.mappings
+   :members:

@@ -1,0 +1,595 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>embody.paths &mdash; embody 0.1.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=ca7ad2ea"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            embody
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody.html">embody</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/base.html">embody.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/graphviz_template.html">embody.graphviz_template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/mappings.html">embody.mappings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/naming.html">embody.naming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/paths.html">embody.paths</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/scrap/ca_templating.html">embody.scrap.ca_templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/strategies.html">embody.strategies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/substitution.html">embody.substitution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/templater.html">embody.templater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/templating.html">embody.templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/util.html">embody.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">embody</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">embody.paths</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for embody.paths</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Path addressing for nested data structures.</span>
+
+<span class="sd">This module provides utilities for working with paths in nested structures,</span>
+<span class="sd">supporting:</span>
+<span class="sd">- JSON Pointer (RFC 6901)</span>
+<span class="sd">- Dot notation</span>
+<span class="sd">- Tuple paths</span>
+<span class="sd">- Path parsing and resolution</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">urllib.parse</span><span class="w"> </span><span class="kn">import</span> <span class="n">unquote</span>
+
+
+<div class="viewcode-block" id="InvalidPathError">
+<a class="viewcode-back" href="../../module_docs/embody/paths.html#embody.InvalidPathError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">InvalidPathError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raised when a path is malformed or invalid.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="JSONPointer">
+<a class="viewcode-back" href="../../module_docs/embody/paths.html#embody.JSONPointer">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">JSONPointer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;JSON Pointer implementation (RFC 6901).</span>
+
+<span class="sd">    JSON Pointer defines a string syntax for identifying a specific value</span>
+<span class="sd">    within a JSON document. Example: /foo/bar/0 refers to the first element</span>
+<span class="sd">    of the &#39;bar&#39; array in the &#39;foo&#39; object.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; data = {&#39;foo&#39;: {&#39;bar&#39;: [1, 2, 3]}}</span>
+<span class="sd">        &gt;&gt;&gt; ptr = JSONPointer(&#39;/foo/bar/0&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; ptr.resolve(data)</span>
+<span class="sd">        1</span>
+
+<span class="sd">        &gt;&gt;&gt; data = {&#39;user&#39;: {&#39;name&#39;: &#39;Alice&#39;, &#39;age&#39;: 30}}</span>
+<span class="sd">        &gt;&gt;&gt; JSONPointer(&#39;/user/name&#39;).resolve(data)</span>
+<span class="sd">        &#39;Alice&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pointer</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize a JSON Pointer.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pointer: JSON Pointer string (must start with /)</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            InvalidPathError: If pointer doesn&#39;t start with /</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">pointer</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pointer</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidPathError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;JSON Pointer must start with &#39;/&#39;: </span><span class="si">{</span><span class="n">pointer</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pointer</span> <span class="o">=</span> <span class="n">pointer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse</span><span class="p">(</span><span class="n">pointer</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse</span><span class="p">(</span><span class="n">pointer</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse a JSON Pointer string into path components.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pointer: JSON Pointer string</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of path components</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; JSONPointer._parse(&#39;/foo/bar&#39;)</span>
+<span class="sd">            [&#39;foo&#39;, &#39;bar&#39;]</span>
+<span class="sd">            &gt;&gt;&gt; JSONPointer._parse(&#39;&#39;)</span>
+<span class="sd">            []</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">pointer</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="c1"># Remove leading /</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">pointer</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Unescape according to RFC 6901</span>
+        <span class="c1"># ~1 becomes /, ~0 becomes ~</span>
+        <span class="n">decoded_parts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">:</span>
+            <span class="c1"># URL decode first (in case of %XX encoding)</span>
+            <span class="n">part</span> <span class="o">=</span> <span class="n">unquote</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+            <span class="c1"># Then unescape ~1 and ~0</span>
+            <span class="n">part</span> <span class="o">=</span> <span class="n">part</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;~1&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;~0&#39;</span><span class="p">,</span> <span class="s1">&#39;~&#39;</span><span class="p">)</span>
+            <span class="n">decoded_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">decoded_parts</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_escape</span><span class="p">(</span><span class="n">part</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Escape a path component for JSON Pointer.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            part: Path component to escape</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Escaped component</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Must escape ~ first, then /</span>
+        <span class="k">return</span> <span class="n">part</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,</span> <span class="s1">&#39;~0&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;~1&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="JSONPointer.from_parts">
+<a class="viewcode-back" href="../../module_docs/embody/paths.html#embody.JSONPointer.from_parts">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_parts</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parts</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;JSONPointer&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a JSON Pointer from path components.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parts: List of path components</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            JSONPointer instance</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; ptr = JSONPointer.from_parts([&#39;foo&#39;, &#39;bar&#39;, &#39;0&#39;])</span>
+<span class="sd">            &gt;&gt;&gt; ptr.pointer</span>
+<span class="sd">            &#39;/foo/bar/0&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">parts</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">escaped_parts</span> <span class="o">=</span> <span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">_escape</span><span class="p">(</span><span class="n">part</span><span class="p">)</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">]</span>
+        <span class="n">pointer</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">escaped_parts</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">pointer</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="JSONPointer.resolve">
+<a class="viewcode-back" href="../../module_docs/embody/paths.html#embody.JSONPointer.resolve">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">resolve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Resolve the pointer against data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data: Data to resolve against</span>
+<span class="sd">            default: Default value if resolution fails</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Resolved value or default</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; data = {&#39;a&#39;: {&#39;b&#39;: [1, 2, 3]}}</span>
+<span class="sd">            &gt;&gt;&gt; JSONPointer(&#39;/a/b/1&#39;).resolve(data)</span>
+<span class="sd">            2</span>
+<span class="sd">            &gt;&gt;&gt; JSONPointer(&#39;/a/x&#39;).resolve(data, default=&#39;not found&#39;)</span>
+<span class="sd">            &#39;not found&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">data</span>
+
+        <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parts</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="n">part</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+                    <span class="c1"># Array index</span>
+                    <span class="k">if</span> <span class="n">part</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+                        <span class="c1"># &quot;-&quot; refers to position after last element (for append)</span>
+                        <span class="k">return</span> <span class="n">default</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+                        <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+                    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">):</span>
+                        <span class="k">return</span> <span class="n">default</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">default</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">default</span>
+
+        <span class="k">return</span> <span class="n">current</span></div>
+
+
+<div class="viewcode-block" id="JSONPointer.set">
+<a class="viewcode-back" href="../../module_docs/embody/paths.html#embody.JSONPointer.set">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">create_intermediate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set a value at the pointer location.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data: Data to modify (in place)</span>
+<span class="sd">            value: Value to set</span>
+<span class="sd">            create_intermediate: If True, create intermediate structures</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            InvalidPathError: If path cannot be set</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; data = {&#39;a&#39;: {&#39;b&#39;: {}}}</span>
+<span class="sd">            &gt;&gt;&gt; JSONPointer(&#39;/a/b/c&#39;).set(data, 42)</span>
+<span class="sd">            &gt;&gt;&gt; data</span>
+<span class="sd">            {&#39;a&#39;: {&#39;b&#39;: {&#39;c&#39;: 42}}}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">parts</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidPathError</span><span class="p">(</span><span class="s2">&quot;Cannot set at root&quot;</span><span class="p">)</span>
+
+        <span class="n">current</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">part</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parts</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">part</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">current</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">create_intermediate</span><span class="p">:</span>
+                        <span class="c1"># Determine if next level should be list or dict</span>
+                        <span class="n">next_part</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parts</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="nb">int</span><span class="p">(</span><span class="n">next_part</span><span class="p">)</span>
+                            <span class="n">current</span><span class="p">[</span><span class="n">part</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                            <span class="n">current</span><span class="p">[</span><span class="n">part</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">InvalidPathError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Path not found: </span><span class="si">{</span><span class="n">part</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="n">part</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+                <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="n">InvalidPathError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid array index: </span><span class="si">{</span><span class="n">part</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">InvalidPathError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot traverse through </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">current</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Set the final value</span>
+        <span class="n">final_part</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">current</span><span class="p">[</span><span class="n">final_part</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">final_part</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">current</span><span class="p">):</span>
+                    <span class="c1"># Append</span>
+                    <span class="n">current</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">current</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">InvalidPathError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid array index: </span><span class="si">{</span><span class="n">final_part</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidPathError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot set on </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">current</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="DotPath">
+<a class="viewcode-back" href="../../module_docs/embody/paths.html#embody.DotPath">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DotPath</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Dot notation path handler (e.g., &#39;user.address.city&#39;).</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; data = {&#39;user&#39;: {&#39;address&#39;: {&#39;city&#39;: &#39;NYC&#39;}}}</span>
+<span class="sd">        &gt;&gt;&gt; path = DotPath(&#39;user.address.city&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; path.resolve(data)</span>
+<span class="sd">        &#39;NYC&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">separator</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize a DotPath.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path: Dot-separated path string</span>
+<span class="sd">            separator: Path separator (default: &#39;.&#39;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">separator</span> <span class="o">=</span> <span class="n">separator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parts</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">separator</span><span class="p">)</span> <span class="k">if</span> <span class="n">path</span> <span class="k">else</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="DotPath.resolve">
+<a class="viewcode-back" href="../../module_docs/embody/paths.html#embody.DotPath.resolve">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">resolve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Resolve the path against data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data: Data to resolve against</span>
+<span class="sd">            default: Default value if resolution fails</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Resolved value or default</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">data</span>
+
+        <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parts</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="n">part</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+                    <span class="c1"># Try to parse as integer index</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+                        <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+                    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">):</span>
+                        <span class="k">return</span> <span class="n">default</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">default</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">default</span>
+
+        <span class="k">return</span> <span class="n">current</span></div>
+
+
+<div class="viewcode-block" id="DotPath.to_json_pointer">
+<a class="viewcode-back" href="../../module_docs/embody/paths.html#embody.DotPath.to_json_pointer">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_json_pointer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JSONPointer</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert to a JSON Pointer.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            JSONPointer instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">JSONPointer</span><span class="o">.</span><span class="n">from_parts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parts</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TuplePath">
+<a class="viewcode-back" href="../../module_docs/embody/paths.html#embody.TuplePath">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TuplePath</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Tuple-based path (unambiguous, e.g., (&#39;user&#39;, &#39;address&#39;, &#39;city&#39;)).</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; data = {&#39;user&#39;: {&#39;address&#39;: {&#39;city&#39;: &#39;NYC&#39;}}}</span>
+<span class="sd">        &gt;&gt;&gt; path = TuplePath((&#39;user&#39;, &#39;address&#39;, &#39;city&#39;))</span>
+<span class="sd">        &gt;&gt;&gt; path.resolve(data)</span>
+<span class="sd">        &#39;NYC&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parts</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize a TuplePath.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parts: Tuple of path components</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parts</span> <span class="o">=</span> <span class="n">parts</span>
+
+<div class="viewcode-block" id="TuplePath.resolve">
+<a class="viewcode-back" href="../../module_docs/embody/paths.html#embody.TuplePath.resolve">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">resolve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Resolve the path against data.&quot;&quot;&quot;</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">data</span>
+
+        <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parts</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="n">part</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+                    <span class="c1"># part should be an integer</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="n">part</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">default</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">default</span>
+
+        <span class="k">return</span> <span class="n">current</span></div>
+
+
+<div class="viewcode-block" id="TuplePath.to_json_pointer">
+<a class="viewcode-back" href="../../module_docs/embody/paths.html#embody.TuplePath.to_json_pointer">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_json_pointer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JSONPointer</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert to a JSON Pointer.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">JSONPointer</span><span class="o">.</span><span class="n">from_parts</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parts</span><span class="p">])</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="parse_path">
+<a class="viewcode-back" href="../../module_docs/embody/paths.html#embody.parse_path">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_path</span><span class="p">(</span>
+    <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span><span class="p">],</span>
+    <span class="nb">format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">JSONPointer</span><span class="p">,</span> <span class="n">DotPath</span><span class="p">,</span> <span class="n">TuplePath</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse a path in various formats.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path: Path in any supported format</span>
+<span class="sd">        format: Format hint (&#39;auto&#39;, &#39;json_pointer&#39;, &#39;dot&#39;, &#39;tuple&#39;)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Path object</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; parse_path(&#39;/user/name&#39;)</span>
+<span class="sd">        &lt;embody.paths.JSONPointer object at ...&gt;</span>
+
+<span class="sd">        &gt;&gt;&gt; parse_path(&#39;user.name&#39;)</span>
+<span class="sd">        &lt;embody.paths.DotPath object at ...&gt;</span>
+
+<span class="sd">        &gt;&gt;&gt; parse_path((&#39;user&#39;, &#39;name&#39;))</span>
+<span class="sd">        &lt;embody.paths.TuplePath object at ...&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">format</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="n">TuplePath</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">JSONPointer</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">DotPath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidPathError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot parse path: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">format</span> <span class="o">==</span> <span class="s1">&#39;json_pointer&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">JSONPointer</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidPathError</span><span class="p">(</span><span class="s2">&quot;JSON Pointer must be a string&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">format</span> <span class="o">==</span> <span class="s1">&#39;dot&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">DotPath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidPathError</span><span class="p">(</span><span class="s2">&quot;Dot path must be a string&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">format</span> <span class="o">==</span> <span class="s1">&#39;tuple&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="n">TuplePath</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidPathError</span><span class="p">(</span><span class="s2">&quot;Tuple path must be a tuple or list&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InvalidPathError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown path format: </span><span class="si">{</span><span class="nb">format</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="resolve_path">
+<a class="viewcode-back" href="../../module_docs/embody/paths.html#embody.resolve_path">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">resolve_path</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span><span class="p">],</span>
+    <span class="n">default</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="nb">format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Resolve a path against data.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data: Data to resolve against</span>
+<span class="sd">        path: Path in any supported format</span>
+<span class="sd">        default: Default value if resolution fails</span>
+<span class="sd">        format: Format hint</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Resolved value or default</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; data = {&#39;user&#39;: {&#39;name&#39;: &#39;Alice&#39;, &#39;age&#39;: 30}}</span>
+<span class="sd">        &gt;&gt;&gt; resolve_path(data, &#39;/user/name&#39;)</span>
+<span class="sd">        &#39;Alice&#39;</span>
+<span class="sd">        &gt;&gt;&gt; resolve_path(data, &#39;user.age&#39;)</span>
+<span class="sd">        30</span>
+<span class="sd">        &gt;&gt;&gt; resolve_path(data, (&#39;user&#39;, &#39;name&#39;))</span>
+<span class="sd">        &#39;Alice&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">path_obj</span> <span class="o">=</span> <span class="n">parse_path</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">format</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">path_obj</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="set_path">
+<a class="viewcode-back" href="../../module_docs/embody/paths.html#embody.set_path">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_path</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span><span class="p">],</span>
+    <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="nb">format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+    <span class="n">create_intermediate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set a value at a path.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data: Data to modify</span>
+<span class="sd">        path: Path in any supported format</span>
+<span class="sd">        value: Value to set</span>
+<span class="sd">        format: Format hint</span>
+<span class="sd">        create_intermediate: If True, create intermediate structures</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; data = {}</span>
+<span class="sd">        &gt;&gt;&gt; set_path(data, &#39;/user/name&#39;, &#39;Alice&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; data</span>
+<span class="sd">        {&#39;user&#39;: {&#39;name&#39;: &#39;Alice&#39;}}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">path_obj</span> <span class="o">=</span> <span class="n">parse_path</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">format</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path_obj</span><span class="p">,</span> <span class="n">JSONPointer</span><span class="p">):</span>
+        <span class="n">path_obj</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">create_intermediate</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Convert to JSON Pointer for setting</span>
+        <span class="n">json_pointer</span> <span class="o">=</span> <span class="n">path_obj</span><span class="o">.</span><span class="n">to_json_pointer</span><span class="p">()</span>
+        <span class="n">json_pointer</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">create_intermediate</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

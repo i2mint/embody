@@ -1,0 +1,4 @@
+embody.strategies
+=================
+.. automodule:: embody.strategies
+   :members:

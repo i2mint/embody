@@ -1,0 +1,394 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>embody.util &mdash; embody 0.1.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=ca7ad2ea"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="embody.templating" href="templating.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            embody
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../embody.html">embody</a></li>
+<li class="toctree-l1"><a class="reference internal" href="base.html">embody.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphviz_template.html">embody.graphviz_template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mappings.html">embody.mappings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="naming.html">embody.naming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="paths.html">embody.paths</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scrap/ca_templating.html">embody.scrap.ca_templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="strategies.html">embody.strategies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="substitution.html">embody.substitution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="templater.html">embody.templater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="templating.html">embody.templating</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">embody.util</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#embody.util.CycleError"><code class="docutils literal notranslate"><span class="pre">CycleError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.util.PathNotFoundError"><code class="docutils literal notranslate"><span class="pre">PathNotFoundError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.util.count_template_markers"><code class="docutils literal notranslate"><span class="pre">count_template_markers()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.util.detect_cycle"><code class="docutils literal notranslate"><span class="pre">detect_cycle()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.util.flatten_dict"><code class="docutils literal notranslate"><span class="pre">flatten_dict()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.util.flatten_to_tuples"><code class="docutils literal notranslate"><span class="pre">flatten_to_tuples()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.util.get_by_path"><code class="docutils literal notranslate"><span class="pre">get_by_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.util.max_depth"><code class="docutils literal notranslate"><span class="pre">max_depth()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.util.set_by_path"><code class="docutils literal notranslate"><span class="pre">set_by_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.util.unflatten_dict"><code class="docutils literal notranslate"><span class="pre">unflatten_dict()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.util.unflatten_from_tuples"><code class="docutils literal notranslate"><span class="pre">unflatten_from_tuples()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">embody</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">embody.util</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/embody/util.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-embody.util">
+<span id="embody-util"></span><h1>embody.util<a class="headerlink" href="#module-embody.util" title="Link to this heading"></a></h1>
+<p>Utility functions for embody: flattening, unflattening, and cycle detection.</p>
+<p>This module provides helper functions for working with nested data structures,
+including path-based operations and cycle detection for safe traversal.</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="embody.util.CycleError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.util.</span></span><span class="sig-name descname"><span class="pre">CycleError</span></span><a class="reference internal" href="../../_modules/embody/util.html#CycleError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.util.CycleError" title="Link to this definition"></a></dt>
+<dd><p>Raised when a circular reference is detected in a data structure.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="embody.util.PathNotFoundError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.util.</span></span><span class="sig-name descname"><span class="pre">PathNotFoundError</span></span><a class="reference internal" href="../../_modules/embody/util.html#PathNotFoundError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.util.PathNotFoundError" title="Link to this definition"></a></dt>
+<dd><p>Raised when a path doesn’t exist in a data structure.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.util.count_template_markers">
+<span class="sig-prename descclassname"><span class="pre">embody.util.</span></span><span class="sig-name descname"><span class="pre">count_template_markers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">syntax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dollar_brace'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../../_modules/embody/util.html#count_template_markers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.util.count_template_markers" title="Link to this definition"></a></dt>
+<dd><p>Count the number of template markers in a nested structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> – Object to count markers in</p></li>
+<li><p><strong>syntax</strong> – Template syntax to look for</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Number of template markers found</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">count_template_markers</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{x}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{y}</span><span class="s1">&#39;</span><span class="p">})</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">count_template_markers</span><span class="p">([</span><span class="s1">&#39;$</span><span class="si">{a}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;literal&#39;</span><span class="p">,</span> <span class="s1">&#39;$</span><span class="si">{b}</span><span class="s1"> and $</span><span class="si">{c}</span><span class="s1">&#39;</span><span class="p">])</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.util.detect_cycle">
+<span class="sig-prename descclassname"><span class="pre">embody.util.</span></span><span class="sig-name descname"><span class="pre">detect_cycle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/embody/util.html#detect_cycle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.util.detect_cycle" title="Link to this definition"></a></dt>
+<dd><p>Detect cycles in a nested data structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> – The object to check for cycles</p></li>
+<li><p><strong>visited</strong> – Set of object IDs already visited</p></li>
+<li><p><strong>path</strong> – Current path in the structure (for error reporting)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#embody.util.CycleError" title="embody.util.CycleError"><strong>CycleError</strong></a> – If a cycle is detected</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">detect_cycle</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>  <span class="c1"># No cycle, returns None</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">circular</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">circular</span><span class="p">[</span><span class="s1">&#39;self&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">circular</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">detect_cycle</span><span class="p">(</span><span class="n">circular</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">except</span> <span class="n">CycleError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cycle detected&quot;</span><span class="p">)</span>
+<span class="go">Cycle detected</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.util.flatten_dict">
+<span class="sig-prename descclassname"><span class="pre">embody.util.</span></span><span class="sig-name descname"><span class="pre">flatten_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nested_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/embody/util.html#flatten_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.util.flatten_dict" title="Link to this definition"></a></dt>
+<dd><p>Flatten a nested dictionary into a single-level dictionary with path keys.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nested_dict</strong> – Nested dictionary to flatten</p></li>
+<li><p><strong>separator</strong> – String to use for separating path components</p></li>
+<li><p><strong>parent_key</strong> – Key of the parent (used in recursion)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Flattened dictionary with path keys</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}},</span> <span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flatten_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="go">{&#39;a.b.c&#39;: 1, &#39;d&#39;: 2}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flatten_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="go">{&#39;user.name&#39;: &#39;Alice&#39;, &#39;user.age&#39;: 30}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flatten_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="go">{&#39;items.0&#39;: 1, &#39;items.1&#39;: 2, &#39;items.2&#39;: 3}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.util.flatten_to_tuples">
+<span class="sig-prename descclassname"><span class="pre">embody.util.</span></span><span class="sig-name descname"><span class="pre">flatten_to_tuples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/embody/util.html#flatten_to_tuples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.util.flatten_to_tuples" title="Link to this definition"></a></dt>
+<dd><p>Flatten a nested structure using tuple paths (unambiguous).</p>
+<p>This avoids the ambiguity of string separators. A tuple path like
+(‘a’, ‘b’, 0) is unambiguous, while ‘a.b.0’ could mean multiple things
+if keys contain dots.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> – Object to flatten</p></li>
+<li><p><strong>parent_path</strong> – Current path as tuple</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary mapping tuple paths to values</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flatten_to_tuples</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="go">{(&#39;a&#39;, &#39;b&#39;, 0): 1, (&#39;a&#39;, &#39;b&#39;, 1): 2}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.util.get_by_path">
+<span class="sig-prename descclassname"><span class="pre">embody.util.</span></span><span class="sig-name descname"><span class="pre">get_by_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../_modules/embody/util.html#get_by_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.util.get_by_path" title="Link to this definition"></a></dt>
+<dd><p>Get a value from a nested structure by path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> – Nested structure</p></li>
+<li><p><strong>path</strong> – Path as string or tuple</p></li>
+<li><p><strong>separator</strong> – Separator for string paths</p></li>
+<li><p><strong>default</strong> – Default value if path not found</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Value at the path, or default if not found</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">}}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_by_path</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s1">&#39;a.b.c&#39;</span><span class="p">)</span>
+<span class="go">42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_by_path</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">))</span>
+<span class="go">42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_by_path</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s1">&#39;a.b.x&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;not found&#39;</span><span class="p">)</span>
+<span class="go">&#39;not found&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.util.max_depth">
+<span class="sig-prename descclassname"><span class="pre">embody.util.</span></span><span class="sig-name descname"><span class="pre">max_depth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_depth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../../_modules/embody/util.html#max_depth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.util.max_depth" title="Link to this definition"></a></dt>
+<dd><p>Calculate the maximum depth of a nested structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> – Object to measure</p></li>
+<li><p><strong>current_depth</strong> – Current depth (used in recursion)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Maximum depth</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">max_depth</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">max_depth</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}}})</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">max_depth</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]])</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.util.set_by_path">
+<span class="sig-prename descclassname"><span class="pre">embody.util.</span></span><span class="sig-name descname"><span class="pre">set_by_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_intermediate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/embody/util.html#set_by_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.util.set_by_path" title="Link to this definition"></a></dt>
+<dd><p>Set a value in a nested structure by path (modifies in place).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> – Nested structure to modify</p></li>
+<li><p><strong>path</strong> – Path as string or tuple</p></li>
+<li><p><strong>value</strong> – Value to set</p></li>
+<li><p><strong>separator</strong> – Separator for string paths</p></li>
+<li><p><strong>create_intermediate</strong> – If True, create intermediate dicts/lists as needed</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">set_by_path</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s1">&#39;a.b.c&#39;</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span>
+<span class="go">{&#39;a&#39;: {&#39;b&#39;: {&#39;c&#39;: 42}}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.util.unflatten_dict">
+<span class="sig-prename descclassname"><span class="pre">embody.util.</span></span><span class="sig-name descname"><span class="pre">unflatten_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flat_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/embody/util.html#unflatten_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.util.unflatten_dict" title="Link to this definition"></a></dt>
+<dd><p>Unflatten a dictionary with path keys into a nested structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>flat_dict</strong> – Flattened dictionary with path keys</p></li>
+<li><p><strong>separator</strong> – String used for separating path components</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Nested dictionary structure</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">flat</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a.b.c&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unflatten_dict</span><span class="p">(</span><span class="n">flat</span><span class="p">)</span>
+<span class="go">{&#39;a&#39;: {&#39;b&#39;: {&#39;c&#39;: 1}}, &#39;d&#39;: 2}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">flat</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;items.0&#39;</span><span class="p">:</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;items.1&#39;</span><span class="p">:</span> <span class="s1">&#39;b&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unflatten_dict</span><span class="p">(</span><span class="n">flat</span><span class="p">)</span>
+<span class="go">{&#39;items&#39;: [&#39;a&#39;, &#39;b&#39;]}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.util.unflatten_from_tuples">
+<span class="sig-prename descclassname"><span class="pre">embody.util.</span></span><span class="sig-name descname"><span class="pre">unflatten_from_tuples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flat_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../_modules/embody/util.html#unflatten_from_tuples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.util.unflatten_from_tuples" title="Link to this definition"></a></dt>
+<dd><p>Unflatten a dictionary with tuple paths into a nested structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>flat_dict</strong> – Dictionary with tuple paths as keys</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Nested structure (dict or list)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">flat</span> <span class="o">=</span> <span class="p">{(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="mi">2</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unflatten_from_tuples</span><span class="p">(</span><span class="n">flat</span><span class="p">)</span>
+<span class="go">{&#39;a&#39;: {&#39;b&#39;: [1, 2]}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="templating.html" class="btn btn-neutral float-left" title="embody.templating" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

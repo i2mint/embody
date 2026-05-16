@@ -1,0 +1,308 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>embody.substitution &mdash; embody 0.1.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=ca7ad2ea"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="embody.templater" href="templater.html" />
+    <link rel="prev" title="embody.strategies" href="strategies.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            embody
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../embody.html">embody</a></li>
+<li class="toctree-l1"><a class="reference internal" href="base.html">embody.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphviz_template.html">embody.graphviz_template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mappings.html">embody.mappings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="naming.html">embody.naming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="paths.html">embody.paths</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scrap/ca_templating.html">embody.scrap.ca_templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="strategies.html">embody.strategies</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">embody.substitution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#embody.substitution.SafeFormatter"><code class="docutils literal notranslate"><span class="pre">SafeFormatter</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.substitution.SubstitutionSyntax"><code class="docutils literal notranslate"><span class="pre">SubstitutionSyntax</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embody.substitution.SubstitutionSyntax.get_pattern"><code class="docutils literal notranslate"><span class="pre">SubstitutionSyntax.get_pattern()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.substitution.extract_template_vars"><code class="docutils literal notranslate"><span class="pre">extract_template_vars()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.substitution.is_exact_match"><code class="docutils literal notranslate"><span class="pre">is_exact_match()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.substitution.safe_format"><code class="docutils literal notranslate"><span class="pre">safe_format()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.substitution.substitute"><code class="docutils literal notranslate"><span class="pre">substitute()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.substitution.substitute_all_syntaxes"><code class="docutils literal notranslate"><span class="pre">substitute_all_syntaxes()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="templater.html">embody.templater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="templating.html">embody.templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util.html">embody.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">embody</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">embody.substitution</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/embody/substitution.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-embody.substitution">
+<span id="embody-substitution"></span><h1>embody.substitution<a class="headerlink" href="#module-embody.substitution" title="Link to this heading"></a></h1>
+<p>Pattern matching and type-preserving substitution logic for templates.</p>
+<p>This module provides the core substitution functionality for embody, supporting
+multiple syntaxes (${var}, {var}) with type preservation.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.substitution.SafeFormatter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.substitution.</span></span><span class="sig-name descname"><span class="pre">SafeFormatter</span></span><a class="reference internal" href="../../_modules/embody/substitution.html#SafeFormatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.substitution.SafeFormatter" title="Link to this definition"></a></dt>
+<dd><p>A string formatter that doesn’t raise errors for missing keys.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.substitution.SubstitutionSyntax">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.substitution.</span></span><span class="sig-name descname"><span class="pre">SubstitutionSyntax</span></span><a class="reference internal" href="../../_modules/embody/substitution.html#SubstitutionSyntax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.substitution.SubstitutionSyntax" title="Link to this definition"></a></dt>
+<dd><p>Defines the syntax patterns for template variable substitution.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.substitution.SubstitutionSyntax.get_pattern">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_pattern</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">syntax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dollar_brace'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Pattern</span></span></span><a class="reference internal" href="../../_modules/embody/substitution.html#SubstitutionSyntax.get_pattern"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.substitution.SubstitutionSyntax.get_pattern" title="Link to this definition"></a></dt>
+<dd><p>Get the regex pattern for the specified syntax.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>syntax</strong> – One of ‘dollar_brace’, ‘brace’, ‘double_bracket’</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Compiled regex pattern</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pattern</span> <span class="o">=</span> <span class="n">SubstitutionSyntax</span><span class="o">.</span><span class="n">get_pattern</span><span class="p">(</span><span class="s1">&#39;dollar_brace&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pattern</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;$</span><span class="si">{name}</span><span class="s1"> is $</span><span class="si">{age}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">[&#39;name&#39;, &#39;age&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.substitution.extract_template_vars">
+<span class="sig-prename descclassname"><span class="pre">embody.substitution.</span></span><span class="sig-name descname"><span class="pre">extract_template_vars</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">syntax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dollar_brace'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/embody/substitution.html#extract_template_vars"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.substitution.extract_template_vars" title="Link to this definition"></a></dt>
+<dd><p>Extract all template variable names from a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>template</strong> – Template string containing variables</p></li>
+<li><p><strong>syntax</strong> – Variable syntax to use</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of variable names found in the template</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">extract_template_vars</span><span class="p">(</span><span class="s1">&#39;Hello $</span><span class="si">{name}</span><span class="s1">, you are $</span><span class="si">{age}</span><span class="s1"> years old&#39;</span><span class="p">)</span>
+<span class="go">[&#39;name&#39;, &#39;age&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">extract_template_vars</span><span class="p">(</span><span class="s1">&#39;Hello </span><span class="si">{name}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">syntax</span><span class="o">=</span><span class="s1">&#39;brace&#39;</span><span class="p">)</span>
+<span class="go">[&#39;name&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.substitution.is_exact_match">
+<span class="sig-prename descclassname"><span class="pre">embody.substitution.</span></span><span class="sig-name descname"><span class="pre">is_exact_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">syntax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dollar_brace'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/embody/substitution.html#is_exact_match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.substitution.is_exact_match" title="Link to this definition"></a></dt>
+<dd><p>Check if template is exactly one variable placeholder (no other text).</p>
+<p>This is crucial for type preservation. If the template is exactly ${var},
+we should return the raw value, not convert it to a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>template</strong> – Template string to check</p></li>
+<li><p><strong>syntax</strong> – Variable syntax to use</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Variable name if exact match, None otherwise</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">is_exact_match</span><span class="p">(</span><span class="s1">&#39;$</span><span class="si">{name}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">&#39;name&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_exact_match</span><span class="p">(</span><span class="s1">&#39;Hello $</span><span class="si">{name}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">is_exact_match</span><span class="p">(</span><span class="s1">&#39;$</span><span class="si">{count}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">&#39;count&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.substitution.safe_format">
+<span class="sig-prename descclassname"><span class="pre">embody.substitution.</span></span><span class="sig-name descname"><span class="pre">safe_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/embody/substitution.html#safe_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.substitution.safe_format" title="Link to this definition"></a></dt>
+<dd><p>Safely format a string, leaving undefined placeholders unchanged.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>template</strong> – Template string</p></li>
+<li><p><strong>**params</strong> – Parameters for substitution</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Formatted string</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">safe_format</span><span class="p">(</span><span class="s1">&#39;Hello </span><span class="si">{name}</span><span class="s1">, you are </span><span class="si">{age}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Alice&#39;</span><span class="p">)</span>
+<span class="go">&#39;Hello Alice, you are {age}&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.substitution.substitute">
+<span class="sig-prename descclassname"><span class="pre">embody.substitution.</span></span><span class="sig-name descname"><span class="pre">substitute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">syntax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dollar_brace'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../_modules/embody/substitution.html#substitute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.substitution.substitute" title="Link to this definition"></a></dt>
+<dd><p>Perform type-preserving substitution on a template value.</p>
+<p>This is the core substitution function. It handles:
+1. Exact match: ${var} -&gt; returns params[‘var’] with type preserved
+2. Partial match: “Count is ${var}” -&gt; string interpolation
+3. Non-string templates: returned unchanged</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>template</strong> – The template value (can be any type)</p></li>
+<li><p><strong>params</strong> – Dictionary of parameters for substitution</p></li>
+<li><p><strong>syntax</strong> – Variable syntax to use</p></li>
+<li><p><strong>strict</strong> – If True, raise KeyError for missing variables</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The substituted value with type preservation</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">substitute</span><span class="p">(</span><span class="s1">&#39;$</span><span class="si">{count}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">})</span>
+<span class="go">42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">substitute</span><span class="p">(</span><span class="s1">&#39;Count: $</span><span class="si">{count}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">})</span>
+<span class="go">&#39;Count: 42&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">substitute</span><span class="p">(</span><span class="s1">&#39;$</span><span class="si">{active}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;active&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">substitute</span><span class="p">(</span><span class="s1">&#39;$</span><span class="si">{items}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]})</span>
+<span class="go">[1, 2, 3]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">substitute</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="p">{})</span>
+<span class="go">42</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.substitution.substitute_all_syntaxes">
+<span class="sig-prename descclassname"><span class="pre">embody.substitution.</span></span><span class="sig-name descname"><span class="pre">substitute_all_syntaxes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">syntaxes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../_modules/embody/substitution.html#substitute_all_syntaxes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.substitution.substitute_all_syntaxes" title="Link to this definition"></a></dt>
+<dd><p>Apply substitution for multiple syntax styles.</p>
+<p>Useful when you want to support mixed syntax in templates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>template</strong> – The template value</p></li>
+<li><p><strong>params</strong> – Dictionary of parameters</p></li>
+<li><p><strong>syntaxes</strong> – List of syntaxes to try (default: [‘dollar_brace’, ‘brace’])</p></li>
+<li><p><strong>strict</strong> – If True, raise errors for missing variables</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The substituted value</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">substitute_all_syntaxes</span><span class="p">(</span><span class="s1">&#39;$</span><span class="si">{name}</span><span class="s1"> is </span><span class="si">{age}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">})</span>
+<span class="go">&#39;Alice is 30&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="strategies.html" class="btn btn-neutral float-left" title="embody.strategies" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="templater.html" class="btn btn-neutral float-right" title="embody.templater" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

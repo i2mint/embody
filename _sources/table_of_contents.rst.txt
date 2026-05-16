@@ -3,8 +3,14 @@
    :caption: Contents:
 
    module_docs/embody
+   module_docs/embody/base
    module_docs/embody/graphviz_template
+   module_docs/embody/mappings
    module_docs/embody/naming
+   module_docs/embody/paths
    module_docs/embody/scrap/ca_templating
+   module_docs/embody/strategies
+   module_docs/embody/substitution
    module_docs/embody/templater
    module_docs/embody/templating
+   module_docs/embody/util

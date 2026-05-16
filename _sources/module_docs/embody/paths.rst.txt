@@ -1,0 +1,4 @@
+embody.paths
+============
+.. automodule:: embody.paths
+   :members:

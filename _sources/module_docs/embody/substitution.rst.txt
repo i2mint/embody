@@ -1,0 +1,4 @@
+embody.substitution
+===================
+.. automodule:: embody.substitution
+   :members:

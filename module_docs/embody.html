@@ -6,25 +6,25 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>embody &mdash; embody 0.1.6 documentation</title>
+  <title>embody &mdash; embody 0.1.7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=6e0256f3"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/documentation_options.js?v=ca7ad2ea"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/toggleprompt.js?v=d7ede5d2"></script>
       <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="embody.graphviz_template" href="embody/graphviz_template.html" />
+    <link rel="next" title="embody.base" href="embody/base.html" />
     <link rel="prev" title="Welcome to embody’s documentation!" href="../index.html" /> 
 </head>
 
@@ -49,12 +49,110 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">embody</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">embody</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#embody.AttributeMapping"><code class="docutils literal notranslate"><span class="pre">AttributeMapping</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embody.AttributeMapping.to_dict"><code class="docutils literal notranslate"><span class="pre">AttributeMapping.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.CompiledPathEngine"><code class="docutils literal notranslate"><span class="pre">CompiledPathEngine</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embody.CompiledPathEngine.compile"><code class="docutils literal notranslate"><span class="pre">CompiledPathEngine.compile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embody.CompiledPathEngine.embody"><code class="docutils literal notranslate"><span class="pre">CompiledPathEngine.embody()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embody.CompiledPathEngine.embody_compiled"><code class="docutils literal notranslate"><span class="pre">CompiledPathEngine.embody_compiled()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.Context"><code class="docutils literal notranslate"><span class="pre">Context</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embody.Context.child"><code class="docutils literal notranslate"><span class="pre">Context.child()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embody.Context.get"><code class="docutils literal notranslate"><span class="pre">Context.get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embody.Context.register_resolver"><code class="docutils literal notranslate"><span class="pre">Context.register_resolver()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embody.Context.to_dict"><code class="docutils literal notranslate"><span class="pre">Context.to_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embody.Context.update"><code class="docutils literal notranslate"><span class="pre">Context.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.CycleError"><code class="docutils literal notranslate"><span class="pre">CycleError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.DotPath"><code class="docutils literal notranslate"><span class="pre">DotPath</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embody.DotPath.resolve"><code class="docutils literal notranslate"><span class="pre">DotPath.resolve()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embody.DotPath.to_json_pointer"><code class="docutils literal notranslate"><span class="pre">DotPath.to_json_pointer()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.EmbodiedMapping"><code class="docutils literal notranslate"><span class="pre">EmbodiedMapping</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.Embodier"><code class="docutils literal notranslate"><span class="pre">Embodier</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embody.Embodier.get_signature"><code class="docutils literal notranslate"><span class="pre">Embodier.get_signature()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.FlatMapping"><code class="docutils literal notranslate"><span class="pre">FlatMapping</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embody.FlatMapping.get_nested"><code class="docutils literal notranslate"><span class="pre">FlatMapping.get_nested()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.FrozenMapping"><code class="docutils literal notranslate"><span class="pre">FrozenMapping</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.InvalidPathError"><code class="docutils literal notranslate"><span class="pre">InvalidPathError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.IterativeStackEngine"><code class="docutils literal notranslate"><span class="pre">IterativeStackEngine</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embody.IterativeStackEngine.embody"><code class="docutils literal notranslate"><span class="pre">IterativeStackEngine.embody()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.JSONPointer"><code class="docutils literal notranslate"><span class="pre">JSONPointer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embody.JSONPointer.from_parts"><code class="docutils literal notranslate"><span class="pre">JSONPointer.from_parts()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embody.JSONPointer.resolve"><code class="docutils literal notranslate"><span class="pre">JSONPointer.resolve()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embody.JSONPointer.set"><code class="docutils literal notranslate"><span class="pre">JSONPointer.set()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.KeyCollisionError"><code class="docutils literal notranslate"><span class="pre">KeyCollisionError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.LazyEmbodiedMapping"><code class="docutils literal notranslate"><span class="pre">LazyEmbodiedMapping</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.MissingParameterError"><code class="docutils literal notranslate"><span class="pre">MissingParameterError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.MutableEmbodiedMapping"><code class="docutils literal notranslate"><span class="pre">MutableEmbodiedMapping</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embody.MutableEmbodiedMapping.freeze"><code class="docutils literal notranslate"><span class="pre">MutableEmbodiedMapping.freeze()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.PathMapping"><code class="docutils literal notranslate"><span class="pre">PathMapping</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.PathNotFoundError"><code class="docutils literal notranslate"><span class="pre">PathNotFoundError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.RecursiveVisitorEngine"><code class="docutils literal notranslate"><span class="pre">RecursiveVisitorEngine</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embody.RecursiveVisitorEngine.embody"><code class="docutils literal notranslate"><span class="pre">RecursiveVisitorEngine.embody()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.SubstitutionSyntax"><code class="docutils literal notranslate"><span class="pre">SubstitutionSyntax</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embody.SubstitutionSyntax.get_pattern"><code class="docutils literal notranslate"><span class="pre">SubstitutionSyntax.get_pattern()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.TemplateWrapper"><code class="docutils literal notranslate"><span class="pre">TemplateWrapper</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embody.TemplateWrapper.get_dependencies"><code class="docutils literal notranslate"><span class="pre">TemplateWrapper.get_dependencies()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embody.TemplateWrapper.validate_params"><code class="docutils literal notranslate"><span class="pre">TemplateWrapper.validate_params()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.TuplePath"><code class="docutils literal notranslate"><span class="pre">TuplePath</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#embody.TuplePath.resolve"><code class="docutils literal notranslate"><span class="pre">TuplePath.resolve()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embody.TuplePath.to_json_pointer"><code class="docutils literal notranslate"><span class="pre">TuplePath.to_json_pointer()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.as_mapping"><code class="docutils literal notranslate"><span class="pre">as_mapping()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.count_template_markers"><code class="docutils literal notranslate"><span class="pre">count_template_markers()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.detect_cycle"><code class="docutils literal notranslate"><span class="pre">detect_cycle()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.embody"><code class="docutils literal notranslate"><span class="pre">embody()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.extract_template_vars"><code class="docutils literal notranslate"><span class="pre">extract_template_vars()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.flatten_dict"><code class="docutils literal notranslate"><span class="pre">flatten_dict()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.flatten_to_tuples"><code class="docutils literal notranslate"><span class="pre">flatten_to_tuples()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.get_by_path"><code class="docutils literal notranslate"><span class="pre">get_by_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.get_engine"><code class="docutils literal notranslate"><span class="pre">get_engine()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.is_exact_match"><code class="docutils literal notranslate"><span class="pre">is_exact_match()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.max_depth"><code class="docutils literal notranslate"><span class="pre">max_depth()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.parse_path"><code class="docutils literal notranslate"><span class="pre">parse_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.resolve_path"><code class="docutils literal notranslate"><span class="pre">resolve_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.set_by_path"><code class="docutils literal notranslate"><span class="pre">set_by_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.set_path"><code class="docutils literal notranslate"><span class="pre">set_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.substitute"><code class="docutils literal notranslate"><span class="pre">substitute()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.unflatten_dict"><code class="docutils literal notranslate"><span class="pre">unflatten_dict()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embody.unflatten_from_tuples"><code class="docutils literal notranslate"><span class="pre">unflatten_from_tuples()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="embody/base.html">embody.base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="embody/graphviz_template.html">embody.graphviz_template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="embody/mappings.html">embody.mappings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="embody/naming.html">embody.naming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="embody/paths.html">embody.paths</a></li>
 <li class="toctree-l1"><a class="reference internal" href="embody/scrap/ca_templating.html">embody.scrap.ca_templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="embody/strategies.html">embody.strategies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="embody/substitution.html">embody.substitution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="embody/templater.html">embody.templater</a></li>
 <li class="toctree-l1"><a class="reference internal" href="embody/templating.html">embody.templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="embody/util.html">embody.util</a></li>
 </ul>
 
         </div>
@@ -83,7 +181,1235 @@
              
   <section id="module-embody">
 <span id="embody"></span><h1>embody<a class="headerlink" href="#module-embody" title="Link to this heading"></a></h1>
-<p>Generate templated objects</p>
+<p>Generate templated objects with advanced structural embodiment features.</p>
+<p>This package provides powerful tools for template-based object generation,
+supporting:
+- Multiple syntax styles (${var}, {var}, [[var]])
+- Type-preserving substitution
+- Multiple traversal strategies (recursive, compiled, iterative)
+- Cycle detection
+- Mapping interfaces with various access patterns
+- Path-based addressing (JSON Pointer, dot notation, tuple paths)</p>
+<dl>
+<dt>Basic usage:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">embody</span><span class="w"> </span><span class="kn">import</span> <span class="n">embody</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">template</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{name}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{age}</span><span class="s1">&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">embody</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span>
+<span class="go">{&#39;name&#39;: &#39;Alice&#39;, &#39;age&#39;: 30}</span>
+</pre></div>
+</div>
+</dd>
+<dt>Advanced usage:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">embody</span><span class="w"> </span><span class="kn">import</span> <span class="n">Embodier</span><span class="p">,</span> <span class="n">Context</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">template</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;greeting&#39;</span><span class="p">:</span> <span class="s1">&#39;Hello $</span><span class="si">{name}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{num}</span><span class="s1">&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embodier</span> <span class="o">=</span> <span class="n">Embodier</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">syntax</span><span class="o">=</span><span class="s1">&#39;dollar_brace&#39;</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embodier</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;num&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">})</span>
+<span class="go">{&#39;greeting&#39;: &#39;Hello Alice&#39;, &#39;count&#39;: 42}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.AttributeMapping">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">AttributeMapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/embody/mappings.html#AttributeMapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.AttributeMapping" title="Link to this definition"></a></dt>
+<dd><p>Mapping that allows attribute access (Box pattern).</p>
+<p>Allows accessing dictionary keys as attributes for more fluid syntax.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">attr_map</span> <span class="o">=</span> <span class="n">AttributeMapping</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">attr_map</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Alice&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">attr_map</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">age</span>
+<span class="go">30</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">attr_map</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>  <span class="c1"># Still works as dict</span>
+<span class="go">&#39;Alice&#39;</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.AttributeMapping.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/embody/mappings.html#AttributeMapping.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.AttributeMapping.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Convert back to plain dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Plain dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.CompiledPathEngine">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">CompiledPathEngine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/embody/strategies.html#CompiledPathEngine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.CompiledPathEngine" title="Link to this definition"></a></dt>
+<dd><p>Pre-compiled path-based traversal strategy.</p>
+<p>This engine flattens the template into a path map, performs substitutions,
+and then reconstructs the structure. It’s best for:
+- Templates embodied repeatedly (e.g., API responses)
+- Static templates with known structure
+- Performance-critical paths</p>
+<p>The compilation happens once, then embodiment is a linear scan.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">CompiledPathEngine</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">template</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{x}</span><span class="s1">&#39;</span><span class="p">},</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{y}</span><span class="s1">&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">compiled</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span><span class="o">.</span><span class="n">embody_compiled</span><span class="p">(</span><span class="n">compiled</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+<span class="go">{&#39;a&#39;: {&#39;b&#39;: 1}, &#39;c&#39;: 2}</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.CompiledPathEngine.compile">
+<span class="sig-name descname"><span class="pre">compile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/embody/strategies.html#CompiledPathEngine.compile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.CompiledPathEngine.compile" title="Link to this definition"></a></dt>
+<dd><p>Compile a template into a flat path map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>template</strong> – Template to compile</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Compiled template data</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">CompiledPathEngine</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">template</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{x}</span><span class="s1">&#39;</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">compiled</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">compiled</span><span class="p">[</span><span class="s1">&#39;flat&#39;</span><span class="p">]</span>
+<span class="go">{(&#39;a&#39;, &#39;b&#39;): &#39;${x}&#39;}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.CompiledPathEngine.embody">
+<span class="sig-name descname"><span class="pre">embody</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/embody/strategies.html#CompiledPathEngine.embody"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.CompiledPathEngine.embody" title="Link to this definition"></a></dt>
+<dd><p>Embody a template (compiles on first use, caches compilation).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>template</strong> – Template to embody</p></li>
+<li><p><strong>params</strong> – Parameters for substitution</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Embodied object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.CompiledPathEngine.embody_compiled">
+<span class="sig-name descname"><span class="pre">embody_compiled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">compiled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/embody/strategies.html#CompiledPathEngine.embody_compiled"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.CompiledPathEngine.embody_compiled" title="Link to this definition"></a></dt>
+<dd><p>Embody a pre-compiled template.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>compiled</strong> – Compiled template from compile()</p></li>
+<li><p><strong>params</strong> – Parameters for substitution</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Embodied object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.Context">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">Context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="embody/base.html#embody.base.Context" title="embody.base.Context"><span class="pre">Context</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolvers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_call</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/embody/base.html#Context"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.Context" title="Link to this definition"></a></dt>
+<dd><p>Parameter store for template embodiment with support for resolvers.</p>
+<p>The Context holds parameters for substitution and supports:
+- Hierarchical scoping (global → local overrides)
+- Resolver functions (lazy evaluation)
+- Callable values that are invoked on access</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ctx</span> <span class="o">=</span> <span class="n">Context</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ctx</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+<span class="go">&#39;Alice&#39;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ctx</span> <span class="o">=</span> <span class="n">Context</span><span class="p">({</span><span class="s1">&#39;now&#39;</span><span class="p">:</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ctx</span><span class="p">[</span><span class="s1">&#39;now&#39;</span><span class="p">]</span>
+<span class="go">datetime.datetime(...)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ctx</span> <span class="o">=</span> <span class="n">Context</span><span class="p">({</span><span class="s1">&#39;base&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span> <span class="n">parent</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;base&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;other&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ctx</span><span class="p">[</span><span class="s1">&#39;base&#39;</span><span class="p">]</span>  <span class="c1"># Local overrides parent</span>
+<span class="go">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ctx</span><span class="p">[</span><span class="s1">&#39;other&#39;</span><span class="p">]</span>  <span class="c1"># Falls back to parent</span>
+<span class="go">20</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.Context.child">
+<span class="sig-name descname"><span class="pre">child</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="embody/base.html#embody.base.Context" title="embody.base.Context"><span class="pre">Context</span></a></span></span><a class="reference internal" href="../_modules/embody/base.html#Context.child"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.Context.child" title="Link to this definition"></a></dt>
+<dd><p>Create a child context with this context as parent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>params</strong> – Parameters for the child context</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New Context with this as parent</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.Context.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/embody/base.html#Context.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.Context.get" title="Link to this definition"></a></dt>
+<dd><p>Get a parameter with a default value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.Context.register_resolver">
+<span class="sig-name descname"><span class="pre">register_resolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/embody/base.html#Context.register_resolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.Context.register_resolver" title="Link to this definition"></a></dt>
+<dd><p>Register a named resolver function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – Name of the resolver</p></li>
+<li><p><strong>func</strong> – Callable that returns the resolved value</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ctx</span> <span class="o">=</span> <span class="n">Context</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ctx</span><span class="o">.</span><span class="n">register_resolver</span><span class="p">(</span><span class="s1">&#39;env&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;USER&#39;</span><span class="p">,</span> <span class="s1">&#39;unknown&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.Context.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/embody/base.html#Context.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.Context.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Convert to a plain dictionary (resolving all values).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary with all parameters resolved</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.Context.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="embody/base.html#embody.base.Context" title="embody.base.Context"><span class="pre">Context</span></a></span></span><a class="reference internal" href="../_modules/embody/base.html#Context.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.Context.update" title="Link to this definition"></a></dt>
+<dd><p>Create a new context with updated parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>params</strong> – Parameters to add/override</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New Context with updated parameters</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="embody.CycleError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">CycleError</span></span><a class="reference internal" href="../_modules/embody/util.html#CycleError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.CycleError" title="Link to this definition"></a></dt>
+<dd><p>Raised when a circular reference is detected in a data structure.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.DotPath">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">DotPath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/embody/paths.html#DotPath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.DotPath" title="Link to this definition"></a></dt>
+<dd><p>Dot notation path handler (e.g., ‘user.address.city’).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s1">&#39;NYC&#39;</span><span class="p">}}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span> <span class="o">=</span> <span class="n">DotPath</span><span class="p">(</span><span class="s1">&#39;user.address.city&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">&#39;NYC&#39;</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.DotPath.resolve">
+<span class="sig-name descname"><span class="pre">resolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/embody/paths.html#DotPath.resolve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.DotPath.resolve" title="Link to this definition"></a></dt>
+<dd><p>Resolve the path against data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Data to resolve against</p></li>
+<li><p><strong>default</strong> – Default value if resolution fails</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Resolved value or default</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.DotPath.to_json_pointer">
+<span class="sig-name descname"><span class="pre">to_json_pointer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="embody/paths.html#embody.paths.JSONPointer" title="embody.paths.JSONPointer"><span class="pre">JSONPointer</span></a></span></span><a class="reference internal" href="../_modules/embody/paths.html#DotPath.to_json_pointer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.DotPath.to_json_pointer" title="Link to this definition"></a></dt>
+<dd><p>Convert to a JSON Pointer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSONPointer instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.EmbodiedMapping">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">EmbodiedMapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/embody/mappings.html#EmbodiedMapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.EmbodiedMapping" title="Link to this definition"></a></dt>
+<dd><p>Read-only Mapping wrapper for embodied objects with lazy evaluation.</p>
+<p>This wrapper provides a Mapping interface around an embodied object,
+with support for lazy embodiment (values materialized on access).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">embody</span><span class="w"> </span><span class="kn">import</span> <span class="n">embody</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">template</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{name}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{age}</span><span class="s1">&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Embody eagerly first</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">embody</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mapping</span> <span class="o">=</span> <span class="n">EmbodiedMapping</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+<span class="go">&#39;Alice&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">mapping</span><span class="p">)</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.Embodier">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">Embodier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">syntax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dollar_brace'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_cycles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_collision</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'error'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/embody/base.html#Embodier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.Embodier" title="Link to this definition"></a></dt>
+<dd><p>Main class for embodying templates with parameters.</p>
+<p>This is the primary API for the embody framework. It supports:
+- Multiple traversal strategies (recursive, compiled, auto)
+- Multiple syntax styles
+- Strict or lenient parameter checking
+- Cycle detection</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">template</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;greeting&#39;</span><span class="p">:</span> <span class="s1">&#39;Hello $</span><span class="si">{name}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{age}</span><span class="s1">&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embodier</span> <span class="o">=</span> <span class="n">Embodier</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embodier</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">})</span>
+<span class="go">{&#39;greeting&#39;: &#39;Hello Alice&#39;, &#39;age&#39;: 30}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">template</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{num}</span><span class="s1">&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embodier</span> <span class="o">=</span> <span class="n">Embodier</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embodier</span><span class="p">({</span><span class="s1">&#39;num&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">})</span>  <span class="c1"># Type preserved</span>
+<span class="go">{&#39;count&#39;: 42}</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.Embodier.get_signature">
+<span class="sig-name descname"><span class="pre">get_signature</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/embody/base.html#Embodier.get_signature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.Embodier.get_signature" title="Link to this definition"></a></dt>
+<dd><p>Get the list of parameters required by the template.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of parameter names</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.FlatMapping">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">FlatMapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/embody/mappings.html#FlatMapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.FlatMapping" title="Link to this definition"></a></dt>
+<dd><p>Mapping with flattened nested structure for path-based access.</p>
+<p>Allows accessing nested values using dot notation as single keys.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nested</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flat</span> <span class="o">=</span> <span class="n">FlatMapping</span><span class="p">(</span><span class="n">nested</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flat</span><span class="p">[</span><span class="s1">&#39;user.name&#39;</span><span class="p">]</span>
+<span class="go">&#39;Alice&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flat</span><span class="p">[</span><span class="s1">&#39;user.age&#39;</span><span class="p">]</span>
+<span class="go">30</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">flat</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="go">[&#39;user.name&#39;, &#39;user.age&#39;]</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.FlatMapping.get_nested">
+<span class="sig-name descname"><span class="pre">get_nested</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">path_parts</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/embody/mappings.html#FlatMapping.get_nested"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.FlatMapping.get_nested" title="Link to this definition"></a></dt>
+<dd><p>Get a value by path components.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>*path_parts</strong> – Path components</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Value at path</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">nested</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">}}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flat</span> <span class="o">=</span> <span class="n">FlatMapping</span><span class="p">(</span><span class="n">nested</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flat</span><span class="o">.</span><span class="n">get_nested</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">)</span>
+<span class="go">42</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.FrozenMapping">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">FrozenMapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/embody/mappings.html#FrozenMapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.FrozenMapping" title="Link to this definition"></a></dt>
+<dd><p>Immutable Mapping wrapper.</p>
+<p>Provides a frozen (immutable) view of a dictionary.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">frozen</span> <span class="o">=</span> <span class="n">FrozenMapping</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">frozen</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Modifications to original don&#39;t affect frozen (deep copy)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;c&#39;</span> <span class="ow">in</span> <span class="n">frozen</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="embody.InvalidPathError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">InvalidPathError</span></span><a class="reference internal" href="../_modules/embody/paths.html#InvalidPathError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.InvalidPathError" title="Link to this definition"></a></dt>
+<dd><p>Raised when a path is malformed or invalid.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.IterativeStackEngine">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">IterativeStackEngine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">syntax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dollar_brace'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_collision</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'error'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/embody/strategies.html#IterativeStackEngine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.IterativeStackEngine" title="Link to this definition"></a></dt>
+<dd><p>Iterative stack-based traversal strategy.</p>
+<p>This engine uses an explicit stack instead of recursion, which is more
+memory-efficient for very deep structures and avoids Python’s recursion limit.</p>
+<p>Best for:
+- Very deeply nested structures (&gt;100 levels)
+- When recursion depth is a concern</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.IterativeStackEngine.embody">
+<span class="sig-name descname"><span class="pre">embody</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/embody/strategies.html#IterativeStackEngine.embody"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.IterativeStackEngine.embody" title="Link to this definition"></a></dt>
+<dd><p>Embody using iterative stack-based traversal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>template</strong> – Template to embody</p></li>
+<li><p><strong>params</strong> – Parameters for substitution</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Embodied object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.JSONPointer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">JSONPointer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pointer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/embody/paths.html#JSONPointer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.JSONPointer" title="Link to this definition"></a></dt>
+<dd><p>JSON Pointer implementation (RFC 6901).</p>
+<p>JSON Pointer defines a string syntax for identifying a specific value
+within a JSON document. Example: /foo/bar/0 refers to the first element
+of the ‘bar’ array in the ‘foo’ object.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;foo&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;bar&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ptr</span> <span class="o">=</span> <span class="n">JSONPointer</span><span class="p">(</span><span class="s1">&#39;/foo/bar/0&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ptr</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">JSONPointer</span><span class="p">(</span><span class="s1">&#39;/user/name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">&#39;Alice&#39;</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.JSONPointer.from_parts">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_parts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="embody/paths.html#embody.paths.JSONPointer" title="embody.paths.JSONPointer"><span class="pre">JSONPointer</span></a></span></span><a class="reference internal" href="../_modules/embody/paths.html#JSONPointer.from_parts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.JSONPointer.from_parts" title="Link to this definition"></a></dt>
+<dd><p>Create a JSON Pointer from path components.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parts</strong> – List of path components</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSONPointer instance</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ptr</span> <span class="o">=</span> <span class="n">JSONPointer</span><span class="o">.</span><span class="n">from_parts</span><span class="p">([</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ptr</span><span class="o">.</span><span class="n">pointer</span>
+<span class="go">&#39;/foo/bar/0&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.JSONPointer.resolve">
+<span class="sig-name descname"><span class="pre">resolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/embody/paths.html#JSONPointer.resolve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.JSONPointer.resolve" title="Link to this definition"></a></dt>
+<dd><p>Resolve the pointer against data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Data to resolve against</p></li>
+<li><p><strong>default</strong> – Default value if resolution fails</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Resolved value or default</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">JSONPointer</span><span class="p">(</span><span class="s1">&#39;/a/b/1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">JSONPointer</span><span class="p">(</span><span class="s1">&#39;/a/x&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;not found&#39;</span><span class="p">)</span>
+<span class="go">&#39;not found&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.JSONPointer.set">
+<span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_intermediate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/embody/paths.html#JSONPointer.set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.JSONPointer.set" title="Link to this definition"></a></dt>
+<dd><p>Set a value at the pointer location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Data to modify (in place)</p></li>
+<li><p><strong>value</strong> – Value to set</p></li>
+<li><p><strong>create_intermediate</strong> – If True, create intermediate structures</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#embody.InvalidPathError" title="embody.InvalidPathError"><strong>InvalidPathError</strong></a> – If path cannot be set</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">{}}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">JSONPointer</span><span class="p">(</span><span class="s1">&#39;/a/b/c&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span>
+<span class="go">{&#39;a&#39;: {&#39;b&#39;: {&#39;c&#39;: 42}}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="embody.KeyCollisionError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">KeyCollisionError</span></span><a class="reference internal" href="../_modules/embody/strategies.html#KeyCollisionError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.KeyCollisionError" title="Link to this definition"></a></dt>
+<dd><p>Raised when dynamic keys resolve to the same value.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.LazyEmbodiedMapping">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">LazyEmbodiedMapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embodier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#embody.Embodier" title="embody.Embodier"><span class="pre">Embodier</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/embody/mappings.html#LazyEmbodiedMapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.LazyEmbodiedMapping" title="Link to this definition"></a></dt>
+<dd><p>Lazy Mapping that embodies values on access.</p>
+<p>This is useful for large templates where you only need to access
+a subset of values. Values are embodied on-demand and cached.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">embody</span><span class="w"> </span><span class="kn">import</span> <span class="n">Embodier</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">template</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{x}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{y}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{z}</span><span class="s1">&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embodier</span> <span class="o">=</span> <span class="n">Embodier</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lazy</span> <span class="o">=</span> <span class="n">LazyEmbodiedMapping</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">embodier</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lazy</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>  <span class="c1"># Only &#39;a&#39; is embodied</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="embody.MissingParameterError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">MissingParameterError</span></span><a class="reference internal" href="../_modules/embody/base.html#MissingParameterError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.MissingParameterError" title="Link to this definition"></a></dt>
+<dd><p>Raised when a required template parameter is missing.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.MutableEmbodiedMapping">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">MutableEmbodiedMapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/embody/mappings.html#MutableEmbodiedMapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.MutableEmbodiedMapping" title="Link to this definition"></a></dt>
+<dd><p>Mutable Mapping wrapper for embodied objects.</p>
+<p>Provides full MutableMapping interface for modifying embodied results.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mutable</span> <span class="o">=</span> <span class="n">MutableEmbodiedMapping</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mutable</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mutable</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">mutable</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span><span class="p">(</span><span class="n">mutable</span><span class="p">)</span>
+<span class="go">{&#39;a&#39;: 10, &#39;c&#39;: 3}</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.MutableEmbodiedMapping.freeze">
+<span class="sig-name descname"><span class="pre">freeze</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="embody/mappings.html#embody.mappings.FrozenMapping" title="embody.mappings.FrozenMapping"><span class="pre">FrozenMapping</span></a></span></span><a class="reference internal" href="../_modules/embody/mappings.html#MutableEmbodiedMapping.freeze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.MutableEmbodiedMapping.freeze" title="Link to this definition"></a></dt>
+<dd><p>Convert to an immutable FrozenMapping.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Frozen version of this mapping</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.PathMapping">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">PathMapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/embody/mappings.html#PathMapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.PathMapping" title="Link to this definition"></a></dt>
+<dd><p>Mapping supporting multiple path access styles.</p>
+<p>Supports:
+- Regular dict access: mapping[‘key’]
+- Dot notation: mapping[‘a.b.c’]
+- Tuple paths: mapping[(‘a’, ‘b’, ‘c’)]
+- JSON Pointer: mapping[‘/a/b/c’]</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">}}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pm</span> <span class="o">=</span> <span class="n">PathMapping</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pm</span><span class="p">[</span><span class="s1">&#39;a.b.c&#39;</span><span class="p">]</span>
+<span class="go">42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pm</span><span class="p">[(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">)]</span>
+<span class="go">42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pm</span><span class="p">[</span><span class="s1">&#39;/a/b/c&#39;</span><span class="p">]</span>  <span class="c1"># JSON Pointer</span>
+<span class="go">42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pm</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>  <span class="c1"># Regular access</span>
+<span class="go">{&#39;b&#39;: {&#39;c&#39;: 42}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="embody.PathNotFoundError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">PathNotFoundError</span></span><a class="reference internal" href="../_modules/embody/util.html#PathNotFoundError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.PathNotFoundError" title="Link to this definition"></a></dt>
+<dd><p>Raised when a path doesn’t exist in a data structure.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.RecursiveVisitorEngine">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">RecursiveVisitorEngine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">syntax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dollar_brace'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_collision</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'error'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/embody/strategies.html#RecursiveVisitorEngine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.RecursiveVisitorEngine" title="Link to this definition"></a></dt>
+<dd><p>Dynamic traversal strategy using the Visitor pattern.</p>
+<p>This engine recursively walks the template structure at runtime,
+visiting each node and performing substitutions. It’s best for:
+- One-off templates
+- Dynamic templates with conditional logic
+- Templates where structure changes based on parameters</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">RecursiveVisitorEngine</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">template</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;greeting&#39;</span><span class="p">:</span> <span class="s1">&#39;Hello $</span><span class="si">{name}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{num}</span><span class="s1">&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span><span class="o">.</span><span class="n">embody</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;num&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">})</span>
+<span class="go">{&#39;greeting&#39;: &#39;Hello Alice&#39;, &#39;count&#39;: 42}</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.RecursiveVisitorEngine.embody">
+<span class="sig-name descname"><span class="pre">embody</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/embody/strategies.html#RecursiveVisitorEngine.embody"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.RecursiveVisitorEngine.embody" title="Link to this definition"></a></dt>
+<dd><p>Recursively embody a template.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>template</strong> – Template to embody</p></li>
+<li><p><strong>params</strong> – Parameters for substitution</p></li>
+<li><p><strong>visited</strong> – Set of visited object IDs (for cycle detection)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Embodied object</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#embody.CycleError" title="embody.CycleError"><strong>CycleError</strong></a> – If a circular reference is detected</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.SubstitutionSyntax">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">SubstitutionSyntax</span></span><a class="reference internal" href="../_modules/embody/substitution.html#SubstitutionSyntax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.SubstitutionSyntax" title="Link to this definition"></a></dt>
+<dd><p>Defines the syntax patterns for template variable substitution.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.SubstitutionSyntax.get_pattern">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_pattern</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">syntax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dollar_brace'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Pattern</span></span></span><a class="reference internal" href="../_modules/embody/substitution.html#SubstitutionSyntax.get_pattern"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.SubstitutionSyntax.get_pattern" title="Link to this definition"></a></dt>
+<dd><p>Get the regex pattern for the specified syntax.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>syntax</strong> – One of ‘dollar_brace’, ‘brace’, ‘double_bracket’</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Compiled regex pattern</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pattern</span> <span class="o">=</span> <span class="n">SubstitutionSyntax</span><span class="o">.</span><span class="n">get_pattern</span><span class="p">(</span><span class="s1">&#39;dollar_brace&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pattern</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;$</span><span class="si">{name}</span><span class="s1"> is $</span><span class="si">{age}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">[&#39;name&#39;, &#39;age&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.TemplateWrapper">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">TemplateWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">syntax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dollar_brace'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_cycles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/embody/base.html#TemplateWrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.TemplateWrapper" title="Link to this definition"></a></dt>
+<dd><p>Wrapper for template data with introspection capabilities.</p>
+<p>This class wraps template data and provides methods to:
+- Extract variable dependencies
+- Detect cycles
+- Parse and validate the template structure</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">template</span> <span class="o">=</span> <span class="n">TemplateWrapper</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{user}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{years}</span><span class="s1">&#39;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">template</span><span class="o">.</span><span class="n">get_dependencies</span><span class="p">()</span>
+<span class="go">{&#39;user&#39;, &#39;years&#39;}</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.TemplateWrapper.get_dependencies">
+<span class="sig-name descname"><span class="pre">get_dependencies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/embody/base.html#TemplateWrapper.get_dependencies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.TemplateWrapper.get_dependencies" title="Link to this definition"></a></dt>
+<dd><p>Extract all template variables from the template.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Set of variable names used in the template</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.TemplateWrapper.validate_params">
+<span class="sig-name descname"><span class="pre">validate_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="embody/base.html#embody.base.Context" title="embody.base.Context"><span class="pre">Context</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/embody/base.html#TemplateWrapper.validate_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.TemplateWrapper.validate_params" title="Link to this definition"></a></dt>
+<dd><p>Check which template dependencies are missing from params.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>params</strong> – Parameters to check against</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of missing parameter names</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="embody.TuplePath">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">TuplePath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/embody/paths.html#TuplePath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.TuplePath" title="Link to this definition"></a></dt>
+<dd><p>Tuple-based path (unambiguous, e.g., (‘user’, ‘address’, ‘city’)).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;address&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s1">&#39;NYC&#39;</span><span class="p">}}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span> <span class="o">=</span> <span class="n">TuplePath</span><span class="p">((</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;address&#39;</span><span class="p">,</span> <span class="s1">&#39;city&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="go">&#39;NYC&#39;</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.TuplePath.resolve">
+<span class="sig-name descname"><span class="pre">resolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/embody/paths.html#TuplePath.resolve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.TuplePath.resolve" title="Link to this definition"></a></dt>
+<dd><p>Resolve the path against data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="embody.TuplePath.to_json_pointer">
+<span class="sig-name descname"><span class="pre">to_json_pointer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="embody/paths.html#embody.paths.JSONPointer" title="embody.paths.JSONPointer"><span class="pre">JSONPointer</span></a></span></span><a class="reference internal" href="../_modules/embody/paths.html#TuplePath.to_json_pointer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.TuplePath.to_json_pointer" title="Link to this definition"></a></dt>
+<dd><p>Convert to a JSON Pointer.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.as_mapping">
+<span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">as_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'basic'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Mapping</span></span></span><a class="reference internal" href="../_modules/embody/mappings.html#as_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.as_mapping" title="Link to this definition"></a></dt>
+<dd><p>Convert data to a Mapping with the specified style.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Data to wrap</p></li>
+<li><p><strong>style</strong> – Style of mapping (‘basic’, ‘attribute’, ‘flat’, ‘path’, ‘frozen’)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mapping instance</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">as_mapping</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;attribute&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;Alice&#39;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">as_mapping</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;flat&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="p">[</span><span class="s1">&#39;user.name&#39;</span><span class="p">]</span>
+<span class="go">&#39;Alice&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.count_template_markers">
+<span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">count_template_markers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">syntax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dollar_brace'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/embody/util.html#count_template_markers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.count_template_markers" title="Link to this definition"></a></dt>
+<dd><p>Count the number of template markers in a nested structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> – Object to count markers in</p></li>
+<li><p><strong>syntax</strong> – Template syntax to look for</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Number of template markers found</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">count_template_markers</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{x}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{y}</span><span class="s1">&#39;</span><span class="p">})</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">count_template_markers</span><span class="p">([</span><span class="s1">&#39;$</span><span class="si">{a}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;literal&#39;</span><span class="p">,</span> <span class="s1">&#39;$</span><span class="si">{b}</span><span class="s1"> and $</span><span class="si">{c}</span><span class="s1">&#39;</span><span class="p">])</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.detect_cycle">
+<span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">detect_cycle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/embody/util.html#detect_cycle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.detect_cycle" title="Link to this definition"></a></dt>
+<dd><p>Detect cycles in a nested data structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> – The object to check for cycles</p></li>
+<li><p><strong>visited</strong> – Set of object IDs already visited</p></li>
+<li><p><strong>path</strong> – Current path in the structure (for error reporting)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#embody.CycleError" title="embody.CycleError"><strong>CycleError</strong></a> – If a cycle is detected</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">detect_cycle</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>  <span class="c1"># No cycle, returns None</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">circular</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">circular</span><span class="p">[</span><span class="s1">&#39;self&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">circular</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">detect_cycle</span><span class="p">(</span><span class="n">circular</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">except</span> <span class="n">CycleError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cycle detected&quot;</span><span class="p">)</span>
+<span class="go">Cycle detected</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.embody">
+<span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">embody</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="embody/base.html#embody.base.Context" title="embody.base.Context"><span class="pre">Context</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/embody/base.html#embody"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.embody" title="Link to this definition"></a></dt>
+<dd><p>Convenience function for template embodiment.</p>
+<p>This is the main entry point for simple embodiment use cases.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>template</strong> – The template to embody</p></li>
+<li><p><strong>params</strong> – Parameters for substitution</p></li>
+<li><p><strong>**kwargs</strong> – Additional parameters or config options</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Embodied object</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">embody</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{name}</span><span class="s1">&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">})</span>
+<span class="go">{&#39;name&#39;: &#39;Alice&#39;}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">embody</span><span class="p">({</span><span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="s1">&#39;$</span><span class="si">{n}</span><span class="s1">&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">})</span>
+<span class="go">{&#39;count&#39;: 42}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">embody</span><span class="p">([</span><span class="s1">&#39;$</span><span class="si">{a}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;$</span><span class="si">{b}</span><span class="s1">&#39;</span><span class="p">],</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
+<span class="go">[1, 2]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.extract_template_vars">
+<span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">extract_template_vars</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">syntax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dollar_brace'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/embody/substitution.html#extract_template_vars"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.extract_template_vars" title="Link to this definition"></a></dt>
+<dd><p>Extract all template variable names from a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>template</strong> – Template string containing variables</p></li>
+<li><p><strong>syntax</strong> – Variable syntax to use</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of variable names found in the template</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">extract_template_vars</span><span class="p">(</span><span class="s1">&#39;Hello $</span><span class="si">{name}</span><span class="s1">, you are $</span><span class="si">{age}</span><span class="s1"> years old&#39;</span><span class="p">)</span>
+<span class="go">[&#39;name&#39;, &#39;age&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">extract_template_vars</span><span class="p">(</span><span class="s1">&#39;Hello </span><span class="si">{name}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">syntax</span><span class="o">=</span><span class="s1">&#39;brace&#39;</span><span class="p">)</span>
+<span class="go">[&#39;name&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.flatten_dict">
+<span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">flatten_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nested_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/embody/util.html#flatten_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.flatten_dict" title="Link to this definition"></a></dt>
+<dd><p>Flatten a nested dictionary into a single-level dictionary with path keys.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nested_dict</strong> – Nested dictionary to flatten</p></li>
+<li><p><strong>separator</strong> – String to use for separating path components</p></li>
+<li><p><strong>parent_key</strong> – Key of the parent (used in recursion)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Flattened dictionary with path keys</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}},</span> <span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flatten_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="go">{&#39;a.b.c&#39;: 1, &#39;d&#39;: 2}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flatten_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="go">{&#39;user.name&#39;: &#39;Alice&#39;, &#39;user.age&#39;: 30}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flatten_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="go">{&#39;items.0&#39;: 1, &#39;items.1&#39;: 2, &#39;items.2&#39;: 3}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.flatten_to_tuples">
+<span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">flatten_to_tuples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/embody/util.html#flatten_to_tuples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.flatten_to_tuples" title="Link to this definition"></a></dt>
+<dd><p>Flatten a nested structure using tuple paths (unambiguous).</p>
+<p>This avoids the ambiguity of string separators. A tuple path like
+(‘a’, ‘b’, 0) is unambiguous, while ‘a.b.0’ could mean multiple things
+if keys contain dots.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> – Object to flatten</p></li>
+<li><p><strong>parent_path</strong> – Current path as tuple</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary mapping tuple paths to values</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flatten_to_tuples</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="go">{(&#39;a&#39;, &#39;b&#39;, 0): 1, (&#39;a&#39;, &#39;b&#39;, 1): 2}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.get_by_path">
+<span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">get_by_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/embody/util.html#get_by_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.get_by_path" title="Link to this definition"></a></dt>
+<dd><p>Get a value from a nested structure by path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> – Nested structure</p></li>
+<li><p><strong>path</strong> – Path as string or tuple</p></li>
+<li><p><strong>separator</strong> – Separator for string paths</p></li>
+<li><p><strong>default</strong> – Default value if path not found</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Value at the path, or default if not found</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">}}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_by_path</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s1">&#39;a.b.c&#39;</span><span class="p">)</span>
+<span class="go">42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_by_path</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">))</span>
+<span class="go">42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_by_path</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s1">&#39;a.b.x&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;not found&#39;</span><span class="p">)</span>
+<span class="go">&#39;not found&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.get_engine">
+<span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">get_engine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'recursive'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="embody/strategies.html#embody.strategies.BaseEmbodimentEngine" title="embody.strategies.BaseEmbodimentEngine"><span class="pre">BaseEmbodimentEngine</span></a></span></span><a class="reference internal" href="../_modules/embody/strategies.html#get_engine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.get_engine" title="Link to this definition"></a></dt>
+<dd><p>Get an embodiment engine by name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>strategy</strong> – Name of strategy (‘recursive’, ‘compiled’, ‘iterative’)</p></li>
+<li><p><strong>**kwargs</strong> – Arguments to pass to engine constructor</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Embodiment engine instance</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">get_engine</span><span class="p">(</span><span class="s1">&#39;recursive&#39;</span><span class="p">,</span> <span class="n">syntax</span><span class="o">=</span><span class="s1">&#39;brace&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">RecursiveVisitorEngine</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.is_exact_match">
+<span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">is_exact_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">syntax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dollar_brace'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/embody/substitution.html#is_exact_match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.is_exact_match" title="Link to this definition"></a></dt>
+<dd><p>Check if template is exactly one variable placeholder (no other text).</p>
+<p>This is crucial for type preservation. If the template is exactly ${var},
+we should return the raw value, not convert it to a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>template</strong> – Template string to check</p></li>
+<li><p><strong>syntax</strong> – Variable syntax to use</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Variable name if exact match, None otherwise</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">is_exact_match</span><span class="p">(</span><span class="s1">&#39;$</span><span class="si">{name}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">&#39;name&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_exact_match</span><span class="p">(</span><span class="s1">&#39;Hello $</span><span class="si">{name}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">is_exact_match</span><span class="p">(</span><span class="s1">&#39;$</span><span class="si">{count}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="go">&#39;count&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.max_depth">
+<span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">max_depth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_depth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/embody/util.html#max_depth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.max_depth" title="Link to this definition"></a></dt>
+<dd><p>Calculate the maximum depth of a nested structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> – Object to measure</p></li>
+<li><p><strong>current_depth</strong> – Current depth (used in recursion)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Maximum depth</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">max_depth</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">max_depth</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}}})</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">max_depth</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]])</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.parse_path">
+<span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">parse_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="embody/paths.html#embody.paths.JSONPointer" title="embody.paths.JSONPointer"><span class="pre">JSONPointer</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="embody/paths.html#embody.paths.DotPath" title="embody.paths.DotPath"><span class="pre">DotPath</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="embody/paths.html#embody.paths.TuplePath" title="embody.paths.TuplePath"><span class="pre">TuplePath</span></a></span></span><a class="reference internal" href="../_modules/embody/paths.html#parse_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.parse_path" title="Link to this definition"></a></dt>
+<dd><p>Parse a path in various formats.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – Path in any supported format</p></li>
+<li><p><strong>format</strong> – Format hint (‘auto’, ‘json_pointer’, ‘dot’, ‘tuple’)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path object</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parse_path</span><span class="p">(</span><span class="s1">&#39;/user/name&#39;</span><span class="p">)</span>
+<span class="go">&lt;embody.paths.JSONPointer object at ...&gt;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parse_path</span><span class="p">(</span><span class="s1">&#39;user.name&#39;</span><span class="p">)</span>
+<span class="go">&lt;embody.paths.DotPath object at ...&gt;</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parse_path</span><span class="p">((</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">))</span>
+<span class="go">&lt;embody.paths.TuplePath object at ...&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.resolve_path">
+<span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">resolve_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'auto'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/embody/paths.html#resolve_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.resolve_path" title="Link to this definition"></a></dt>
+<dd><p>Resolve a path against data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Data to resolve against</p></li>
+<li><p><strong>path</strong> – Path in any supported format</p></li>
+<li><p><strong>default</strong> – Default value if resolution fails</p></li>
+<li><p><strong>format</strong> – Format hint</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Resolved value or default</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Alice&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">resolve_path</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;/user/name&#39;</span><span class="p">)</span>
+<span class="go">&#39;Alice&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">resolve_path</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;user.age&#39;</span><span class="p">)</span>
+<span class="go">30</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">resolve_path</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">))</span>
+<span class="go">&#39;Alice&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.set_by_path">
+<span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">set_by_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_intermediate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/embody/util.html#set_by_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.set_by_path" title="Link to this definition"></a></dt>
+<dd><p>Set a value in a nested structure by path (modifies in place).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> – Nested structure to modify</p></li>
+<li><p><strong>path</strong> – Path as string or tuple</p></li>
+<li><p><strong>value</strong> – Value to set</p></li>
+<li><p><strong>separator</strong> – Separator for string paths</p></li>
+<li><p><strong>create_intermediate</strong> – If True, create intermediate dicts/lists as needed</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">set_by_path</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s1">&#39;a.b.c&#39;</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span>
+<span class="go">{&#39;a&#39;: {&#39;b&#39;: {&#39;c&#39;: 42}}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.set_path">
+<span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">set_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_intermediate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/embody/paths.html#set_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.set_path" title="Link to this definition"></a></dt>
+<dd><p>Set a value at a path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Data to modify</p></li>
+<li><p><strong>path</strong> – Path in any supported format</p></li>
+<li><p><strong>value</strong> – Value to set</p></li>
+<li><p><strong>format</strong> – Format hint</p></li>
+<li><p><strong>create_intermediate</strong> – If True, create intermediate structures</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">set_path</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;/user/name&#39;</span><span class="p">,</span> <span class="s1">&#39;Alice&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span>
+<span class="go">{&#39;user&#39;: {&#39;name&#39;: &#39;Alice&#39;}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.substitute">
+<span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">substitute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">syntax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dollar_brace'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/embody/substitution.html#substitute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.substitute" title="Link to this definition"></a></dt>
+<dd><p>Perform type-preserving substitution on a template value.</p>
+<p>This is the core substitution function. It handles:
+1. Exact match: ${var} -&gt; returns params[‘var’] with type preserved
+2. Partial match: “Count is ${var}” -&gt; string interpolation
+3. Non-string templates: returned unchanged</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>template</strong> – The template value (can be any type)</p></li>
+<li><p><strong>params</strong> – Dictionary of parameters for substitution</p></li>
+<li><p><strong>syntax</strong> – Variable syntax to use</p></li>
+<li><p><strong>strict</strong> – If True, raise KeyError for missing variables</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The substituted value with type preservation</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">substitute</span><span class="p">(</span><span class="s1">&#39;$</span><span class="si">{count}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">})</span>
+<span class="go">42</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">substitute</span><span class="p">(</span><span class="s1">&#39;Count: $</span><span class="si">{count}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">})</span>
+<span class="go">&#39;Count: 42&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">substitute</span><span class="p">(</span><span class="s1">&#39;$</span><span class="si">{active}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;active&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">substitute</span><span class="p">(</span><span class="s1">&#39;$</span><span class="si">{items}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]})</span>
+<span class="go">[1, 2, 3]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">substitute</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="p">{})</span>
+<span class="go">42</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.unflatten_dict">
+<span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">unflatten_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flat_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/embody/util.html#unflatten_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.unflatten_dict" title="Link to this definition"></a></dt>
+<dd><p>Unflatten a dictionary with path keys into a nested structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>flat_dict</strong> – Flattened dictionary with path keys</p></li>
+<li><p><strong>separator</strong> – String used for separating path components</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Nested dictionary structure</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">flat</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a.b.c&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unflatten_dict</span><span class="p">(</span><span class="n">flat</span><span class="p">)</span>
+<span class="go">{&#39;a&#39;: {&#39;b&#39;: {&#39;c&#39;: 1}}, &#39;d&#39;: 2}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">flat</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;items.0&#39;</span><span class="p">:</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;items.1&#39;</span><span class="p">:</span> <span class="s1">&#39;b&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unflatten_dict</span><span class="p">(</span><span class="n">flat</span><span class="p">)</span>
+<span class="go">{&#39;items&#39;: [&#39;a&#39;, &#39;b&#39;]}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="embody.unflatten_from_tuples">
+<span class="sig-prename descclassname"><span class="pre">embody.</span></span><span class="sig-name descname"><span class="pre">unflatten_from_tuples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flat_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/embody/util.html#unflatten_from_tuples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#embody.unflatten_from_tuples" title="Link to this definition"></a></dt>
+<dd><p>Unflatten a dictionary with tuple paths into a nested structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>flat_dict</strong> – Dictionary with tuple paths as keys</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Nested structure (dict or list)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">flat</span> <span class="o">=</span> <span class="p">{(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="mi">2</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unflatten_from_tuples</span><span class="p">(</span><span class="n">flat</span><span class="p">)</span>
+<span class="go">{&#39;a&#39;: {&#39;b&#39;: [1, 2]}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </section>
 
 
@@ -91,7 +1417,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to embody’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="embody/graphviz_template.html" class="btn btn-neutral float-right" title="embody.graphviz_template" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="embody/base.html" class="btn btn-neutral float-right" title="embody.base" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

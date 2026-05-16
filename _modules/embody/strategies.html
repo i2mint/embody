@@ -1,0 +1,562 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>embody.strategies &mdash; embody 0.1.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=ca7ad2ea"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            embody
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody.html">embody</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/base.html">embody.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/graphviz_template.html">embody.graphviz_template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/mappings.html">embody.mappings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/naming.html">embody.naming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/paths.html">embody.paths</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/scrap/ca_templating.html">embody.scrap.ca_templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/strategies.html">embody.strategies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/substitution.html">embody.substitution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/templater.html">embody.templater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/templating.html">embody.templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/util.html">embody.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">embody</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">embody.strategies</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for embody.strategies</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Traversal strategies for template embodiment.</span>
+
+<span class="sd">This module provides different strategies for traversing and embodying templates:</span>
+<span class="sd">- RecursiveVisitorEngine: Dynamic traversal using the Visitor pattern</span>
+<span class="sd">- CompiledPathEngine: Pre-compiled path-based traversal for performance</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">embody.substitution</span><span class="w"> </span><span class="kn">import</span> <span class="n">substitute</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">embody.util</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">flatten_to_tuples</span><span class="p">,</span> <span class="n">unflatten_from_tuples</span><span class="p">,</span> <span class="n">detect_cycle</span><span class="p">,</span> <span class="n">CycleError</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="KeyCollisionError">
+<a class="viewcode-back" href="../../module_docs/embody/strategies.html#embody.KeyCollisionError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">KeyCollisionError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raised when dynamic keys resolve to the same value.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="BaseEmbodimentEngine">
+<a class="viewcode-back" href="../../module_docs/embody/strategies.html#embody.BaseEmbodimentEngine">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">BaseEmbodimentEngine</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for embodiment engines.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">syntax</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;dollar_brace&#39;</span><span class="p">,</span>
+        <span class="n">strict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">key_collision</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;error&#39;</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize an embodiment engine.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            syntax: Template variable syntax</span>
+<span class="sd">            strict: If True, raise errors for missing parameters</span>
+<span class="sd">            key_collision: How to handle key collisions: &#39;error&#39;, &#39;last_wins&#39;, &#39;namespace&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">syntax</span> <span class="o">=</span> <span class="n">syntax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strict</span> <span class="o">=</span> <span class="n">strict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">key_collision</span> <span class="o">=</span> <span class="n">key_collision</span>
+
+<div class="viewcode-block" id="BaseEmbodimentEngine.embody">
+<a class="viewcode-back" href="../../module_docs/embody/strategies.html#embody.BaseEmbodimentEngine.embody">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">embody</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Embody a template with parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            template: The template to embody</span>
+<span class="sd">            params: Parameters for substitution</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Embodied object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="RecursiveVisitorEngine">
+<a class="viewcode-back" href="../../module_docs/embody/strategies.html#embody.RecursiveVisitorEngine">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RecursiveVisitorEngine</span><span class="p">(</span><span class="n">BaseEmbodimentEngine</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Dynamic traversal strategy using the Visitor pattern.</span>
+
+<span class="sd">    This engine recursively walks the template structure at runtime,</span>
+<span class="sd">    visiting each node and performing substitutions. It&#39;s best for:</span>
+<span class="sd">    - One-off templates</span>
+<span class="sd">    - Dynamic templates with conditional logic</span>
+<span class="sd">    - Templates where structure changes based on parameters</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; engine = RecursiveVisitorEngine()</span>
+<span class="sd">        &gt;&gt;&gt; template = {&#39;greeting&#39;: &#39;Hello ${name}&#39;, &#39;count&#39;: &#39;${num}&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; engine.embody(template, {&#39;name&#39;: &#39;Alice&#39;, &#39;num&#39;: 42})</span>
+<span class="sd">        {&#39;greeting&#39;: &#39;Hello Alice&#39;, &#39;count&#39;: 42}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RecursiveVisitorEngine.embody">
+<a class="viewcode-back" href="../../module_docs/embody/strategies.html#embody.RecursiveVisitorEngine.embody">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">embody</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">template</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="n">visited</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Recursively embody a template.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            template: Template to embody</span>
+<span class="sd">            params: Parameters for substitution</span>
+<span class="sd">            visited: Set of visited object IDs (for cycle detection)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Embodied object</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            CycleError: If a circular reference is detected</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">visited</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+        <span class="c1"># Cycle detection for container types</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+            <span class="n">obj_id</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">obj_id</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">CycleError</span><span class="p">(</span><span class="s2">&quot;Circular reference detected during embodiment&quot;</span><span class="p">)</span>
+            <span class="n">visited</span> <span class="o">=</span> <span class="n">visited</span> <span class="o">|</span> <span class="p">{</span><span class="n">obj_id</span><span class="p">}</span>  <span class="c1"># Create new set to avoid mutation</span>
+
+        <span class="c1"># Visit based on type</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_visit_dict</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">visited</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_visit_list</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">visited</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_visit_list</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">template</span><span class="p">),</span> <span class="n">params</span><span class="p">,</span> <span class="n">visited</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_visit_string</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Scalar values returned as-is</span>
+            <span class="k">return</span> <span class="n">template</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_visit_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Visit a string template and perform substitution.</span>
+
+<span class="sd">        This uses type-preserving substitution from the substitution module.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">substitute</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">syntax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">syntax</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strict</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_visit_list</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">template</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="n">visited</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Visit a list template and recursively embody each item.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">embody</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">visited</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">template</span>
+        <span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_visit_dict</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">template</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="n">visited</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Visit a dict template and recursively embody keys and values.</span>
+
+<span class="sd">        This is the most complex case because both keys and values can be templated.</span>
+<span class="sd">        We must:</span>
+<span class="sd">        1. Build a new dict (can&#39;t modify dict during iteration)</span>
+<span class="sd">        2. Handle dynamic keys (keys that contain variables)</span>
+<span class="sd">        3. Detect and handle key collisions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Build list of (embodied_key, embodied_value) pairs</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">template</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># Embody both key and value</span>
+            <span class="n">embodied_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embody</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">visited</span><span class="p">)</span>
+            <span class="n">embodied_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embody</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">visited</span><span class="p">)</span>
+            <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">embodied_key</span><span class="p">,</span> <span class="n">embodied_value</span><span class="p">))</span>
+
+        <span class="c1"># Check for key collisions</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">items</span><span class="p">]</span>
+        <span class="n">unique_keys</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_keys</span><span class="p">):</span>
+            <span class="c1"># We have collisions</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">key_collision</span> <span class="o">==</span> <span class="s1">&#39;error&#39;</span><span class="p">:</span>
+                <span class="c1"># Find the duplicate keys</span>
+                <span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+                <span class="n">duplicates</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+                        <span class="n">duplicates</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+                    <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">KeyCollisionError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Dynamic keys resolved to same value: </span><span class="si">{</span><span class="n">duplicates</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">key_collision</span> <span class="o">==</span> <span class="s1">&#39;last_wins&#39;</span><span class="p">:</span>
+                <span class="c1"># Just use dict() which will use last value for duplicate keys</span>
+                <span class="k">pass</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">key_collision</span> <span class="o">==</span> <span class="s1">&#39;namespace&#39;</span><span class="p">:</span>
+                <span class="c1"># Add suffix to make keys unique</span>
+                <span class="n">key_counts</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">new_items</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">key_counts</span><span class="p">:</span>
+                        <span class="c1"># This is a duplicate, add suffix</span>
+                        <span class="n">key_counts</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="n">unique_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">key_counts</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="n">new_items</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">unique_key</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">key_counts</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="n">new_items</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+                <span class="n">items</span> <span class="o">=</span> <span class="n">new_items</span>
+
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">items</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="CompiledPathEngine">
+<a class="viewcode-back" href="../../module_docs/embody/strategies.html#embody.CompiledPathEngine">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CompiledPathEngine</span><span class="p">(</span><span class="n">BaseEmbodimentEngine</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pre-compiled path-based traversal strategy.</span>
+
+<span class="sd">    This engine flattens the template into a path map, performs substitutions,</span>
+<span class="sd">    and then reconstructs the structure. It&#39;s best for:</span>
+<span class="sd">    - Templates embodied repeatedly (e.g., API responses)</span>
+<span class="sd">    - Static templates with known structure</span>
+<span class="sd">    - Performance-critical paths</span>
+
+<span class="sd">    The compilation happens once, then embodiment is a linear scan.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; engine = CompiledPathEngine()</span>
+<span class="sd">        &gt;&gt;&gt; template = {&#39;a&#39;: {&#39;b&#39;: &#39;${x}&#39;}, &#39;c&#39;: &#39;${y}&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; compiled = engine.compile(template)</span>
+<span class="sd">        &gt;&gt;&gt; engine.embody_compiled(compiled, {&#39;x&#39;: 1, &#39;y&#39;: 2})</span>
+<span class="sd">        {&#39;a&#39;: {&#39;b&#39;: 1}, &#39;c&#39;: 2}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compiled_cache</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="CompiledPathEngine.compile">
+<a class="viewcode-back" href="../../module_docs/embody/strategies.html#embody.CompiledPathEngine.compile">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compile a template into a flat path map.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            template: Template to compile</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Compiled template data</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; engine = CompiledPathEngine()</span>
+<span class="sd">            &gt;&gt;&gt; template = {&#39;a&#39;: {&#39;b&#39;: &#39;${x}&#39;}}</span>
+<span class="sd">            &gt;&gt;&gt; compiled = engine.compile(template)</span>
+<span class="sd">            &gt;&gt;&gt; compiled[&#39;flat&#39;]</span>
+<span class="sd">            {(&#39;a&#39;, &#39;b&#39;): &#39;${x}&#39;}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Flatten template to tuple paths</span>
+        <span class="n">flat</span> <span class="o">=</span> <span class="n">flatten_to_tuples</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+
+        <span class="c1"># Identify which paths need substitution</span>
+        <span class="n">templated_paths</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">flat</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="c1"># Check if it contains template markers</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">embody.substitution</span><span class="w"> </span><span class="kn">import</span> <span class="n">extract_template_vars</span>
+                <span class="n">vars_in_val</span> <span class="o">=</span> <span class="n">extract_template_vars</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">syntax</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">vars_in_val</span><span class="p">:</span>
+                    <span class="n">templated_paths</span><span class="p">[</span><span class="n">path</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;flat&#39;</span><span class="p">:</span> <span class="n">flat</span><span class="p">,</span>
+            <span class="s1">&#39;templated_paths&#39;</span><span class="p">:</span> <span class="n">templated_paths</span><span class="p">,</span>
+            <span class="s1">&#39;original_template&#39;</span><span class="p">:</span> <span class="n">template</span>
+        <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="CompiledPathEngine.embody_compiled">
+<a class="viewcode-back" href="../../module_docs/embody/strategies.html#embody.CompiledPathEngine.embody_compiled">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">embody_compiled</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">compiled</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Embody a pre-compiled template.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            compiled: Compiled template from compile()</span>
+<span class="sd">            params: Parameters for substitution</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Embodied object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">flat</span> <span class="o">=</span> <span class="n">compiled</span><span class="p">[</span><span class="s1">&#39;flat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="c1"># Substitute all templated paths</span>
+        <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">template_str</span> <span class="ow">in</span> <span class="n">compiled</span><span class="p">[</span><span class="s1">&#39;templated_paths&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">embodied_value</span> <span class="o">=</span> <span class="n">substitute</span><span class="p">(</span>
+                <span class="n">template_str</span><span class="p">,</span>
+                <span class="n">params</span><span class="p">,</span>
+                <span class="n">syntax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">syntax</span><span class="p">,</span>
+                <span class="n">strict</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strict</span>
+            <span class="p">)</span>
+            <span class="n">flat</span><span class="p">[</span><span class="n">path</span><span class="p">]</span> <span class="o">=</span> <span class="n">embodied_value</span>
+
+        <span class="c1"># Reconstruct the nested structure</span>
+        <span class="k">return</span> <span class="n">unflatten_from_tuples</span><span class="p">(</span><span class="n">flat</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CompiledPathEngine.embody">
+<a class="viewcode-back" href="../../module_docs/embody/strategies.html#embody.CompiledPathEngine.embody">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">embody</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Embody a template (compiles on first use, caches compilation).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            template: Template to embody</span>
+<span class="sd">            params: Parameters for substitution</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Embodied object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Use template id as cache key</span>
+        <span class="n">template_id</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">template_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compiled_cache</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_compiled_cache</span><span class="p">[</span><span class="n">template_id</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+
+        <span class="n">compiled</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compiled_cache</span><span class="p">[</span><span class="n">template_id</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">embody_compiled</span><span class="p">(</span><span class="n">compiled</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="IterativeStackEngine">
+<a class="viewcode-back" href="../../module_docs/embody/strategies.html#embody.IterativeStackEngine">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">IterativeStackEngine</span><span class="p">(</span><span class="n">BaseEmbodimentEngine</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Iterative stack-based traversal strategy.</span>
+
+<span class="sd">    This engine uses an explicit stack instead of recursion, which is more</span>
+<span class="sd">    memory-efficient for very deep structures and avoids Python&#39;s recursion limit.</span>
+
+<span class="sd">    Best for:</span>
+<span class="sd">    - Very deeply nested structures (&gt;100 levels)</span>
+<span class="sd">    - When recursion depth is a concern</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="IterativeStackEngine.embody">
+<a class="viewcode-back" href="../../module_docs/embody/strategies.html#embody.IterativeStackEngine.embody">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">embody</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Embody using iterative stack-based traversal.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            template: Template to embody</span>
+<span class="sd">            params: Parameters for substitution</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Embodied object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Stack of (object, parent, key) tuples</span>
+        <span class="c1"># We&#39;ll build the result bottom-up</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[(</span><span class="n">template</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)]</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># Map id(obj) -&gt; embodied result</span>
+        <span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+        <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+            <span class="n">obj</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="n">obj_id</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+            <span class="c1"># Cycle detection</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span> <span class="ow">and</span> <span class="n">obj_id</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">CycleError</span><span class="p">(</span><span class="s2">&quot;Circular reference detected&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="c1"># Leaf: substitute</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">substitute</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">syntax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">syntax</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">strict</span><span class="p">)</span>
+                <span class="n">results</span><span class="p">[</span><span class="n">obj_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">obj_id</span><span class="p">)</span>
+                <span class="c1"># Check if all children are processed</span>
+                <span class="n">all_children_done</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span>
+                    <span class="nb">id</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="ow">in</span> <span class="n">results</span> <span class="ow">and</span> <span class="nb">id</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">results</span>
+                    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">all_children_done</span><span class="p">:</span>
+                    <span class="c1"># Build the dict with embodied children</span>
+                    <span class="n">embodied_dict</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="n">results</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">k</span><span class="p">)]:</span> <span class="n">results</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">v</span><span class="p">)]</span>
+                        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                    <span class="p">}</span>
+                    <span class="n">results</span><span class="p">[</span><span class="n">obj_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">embodied_dict</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Re-add to stack (will process after children)</span>
+                    <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">obj</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+                    <span class="c1"># Add children to stack</span>
+                    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                        <span class="k">if</span> <span class="nb">id</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+                            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;key&#39;</span><span class="p">))</span>
+                        <span class="k">if</span> <span class="nb">id</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+                            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">v</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">))</span>
+
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">obj_id</span><span class="p">)</span>
+                <span class="c1"># Check if all items are processed</span>
+                <span class="n">all_items_done</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="ow">in</span> <span class="n">results</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">all_items_done</span><span class="p">:</span>
+                    <span class="n">embodied_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">item</span><span class="p">)]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">]</span>
+                    <span class="n">results</span><span class="p">[</span><span class="n">obj_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">embodied_list</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Re-add to stack</span>
+                    <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">obj</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+                    <span class="c1"># Add items to stack</span>
+                    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="nb">id</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+                            <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">item</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;item&#39;</span><span class="p">))</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Scalar, return as-is</span>
+                <span class="n">results</span><span class="p">[</span><span class="n">obj_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
+
+        <span class="k">return</span> <span class="n">results</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">template</span><span class="p">)]</span></div>
+</div>
+
+
+
+<span class="c1"># Registry of available strategies</span>
+<span class="n">STRATEGIES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;recursive&#39;</span><span class="p">:</span> <span class="n">RecursiveVisitorEngine</span><span class="p">,</span>
+    <span class="s1">&#39;compiled&#39;</span><span class="p">:</span> <span class="n">CompiledPathEngine</span><span class="p">,</span>
+    <span class="s1">&#39;iterative&#39;</span><span class="p">:</span> <span class="n">IterativeStackEngine</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="get_engine">
+<a class="viewcode-back" href="../../module_docs/embody/strategies.html#embody.get_engine">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_engine</span><span class="p">(</span><span class="n">strategy</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;recursive&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseEmbodimentEngine</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get an embodiment engine by name.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        strategy: Name of strategy (&#39;recursive&#39;, &#39;compiled&#39;, &#39;iterative&#39;)</span>
+<span class="sd">        **kwargs: Arguments to pass to engine constructor</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Embodiment engine instance</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; engine = get_engine(&#39;recursive&#39;, syntax=&#39;brace&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; isinstance(engine, RecursiveVisitorEngine)</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">engine_class</span> <span class="o">=</span> <span class="n">STRATEGIES</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">strategy</span><span class="p">,</span> <span class="n">RecursiveVisitorEngine</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">engine_class</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

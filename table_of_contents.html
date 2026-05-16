@@ -6,18 +6,18 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>&lt;no title&gt; &mdash; embody 0.1.6 documentation</title>
+  <title>&lt;no title&gt; &mdash; embody 0.1.7 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=6e0256f3"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/documentation_options.js?v=ca7ad2ea"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/toggleprompt.js?v=d7ede5d2"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="_static/copybutton.js?v=f281be69"></script>
@@ -48,11 +48,17 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/embody.html">embody</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/base.html">embody.base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/embody/graphviz_template.html">embody.graphviz_template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/mappings.html">embody.mappings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/embody/naming.html">embody.naming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/paths.html">embody.paths</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/embody/scrap/ca_templating.html">embody.scrap.ca_templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/strategies.html">embody.strategies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/substitution.html">embody.substitution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/embody/templater.html">embody.templater</a></li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/embody/templating.html">embody.templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/util.html">embody.util</a></li>
 </ul>
 
         </div>
@@ -82,8 +88,69 @@
   <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody.html">embody</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/embody.html">embody</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.AttributeMapping"><code class="docutils literal notranslate"><span class="pre">AttributeMapping</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.CompiledPathEngine"><code class="docutils literal notranslate"><span class="pre">CompiledPathEngine</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.Context"><code class="docutils literal notranslate"><span class="pre">Context</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.CycleError"><code class="docutils literal notranslate"><span class="pre">CycleError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.DotPath"><code class="docutils literal notranslate"><span class="pre">DotPath</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.EmbodiedMapping"><code class="docutils literal notranslate"><span class="pre">EmbodiedMapping</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.Embodier"><code class="docutils literal notranslate"><span class="pre">Embodier</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.FlatMapping"><code class="docutils literal notranslate"><span class="pre">FlatMapping</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.FrozenMapping"><code class="docutils literal notranslate"><span class="pre">FrozenMapping</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.InvalidPathError"><code class="docutils literal notranslate"><span class="pre">InvalidPathError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.IterativeStackEngine"><code class="docutils literal notranslate"><span class="pre">IterativeStackEngine</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.JSONPointer"><code class="docutils literal notranslate"><span class="pre">JSONPointer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.KeyCollisionError"><code class="docutils literal notranslate"><span class="pre">KeyCollisionError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.LazyEmbodiedMapping"><code class="docutils literal notranslate"><span class="pre">LazyEmbodiedMapping</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.MissingParameterError"><code class="docutils literal notranslate"><span class="pre">MissingParameterError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.MutableEmbodiedMapping"><code class="docutils literal notranslate"><span class="pre">MutableEmbodiedMapping</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.PathMapping"><code class="docutils literal notranslate"><span class="pre">PathMapping</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.PathNotFoundError"><code class="docutils literal notranslate"><span class="pre">PathNotFoundError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.RecursiveVisitorEngine"><code class="docutils literal notranslate"><span class="pre">RecursiveVisitorEngine</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.SubstitutionSyntax"><code class="docutils literal notranslate"><span class="pre">SubstitutionSyntax</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.TemplateWrapper"><code class="docutils literal notranslate"><span class="pre">TemplateWrapper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.TuplePath"><code class="docutils literal notranslate"><span class="pre">TuplePath</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.as_mapping"><code class="docutils literal notranslate"><span class="pre">as_mapping()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.count_template_markers"><code class="docutils literal notranslate"><span class="pre">count_template_markers()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.detect_cycle"><code class="docutils literal notranslate"><span class="pre">detect_cycle()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.embody"><code class="docutils literal notranslate"><span class="pre">embody()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.extract_template_vars"><code class="docutils literal notranslate"><span class="pre">extract_template_vars()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.flatten_dict"><code class="docutils literal notranslate"><span class="pre">flatten_dict()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.flatten_to_tuples"><code class="docutils literal notranslate"><span class="pre">flatten_to_tuples()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.get_by_path"><code class="docutils literal notranslate"><span class="pre">get_by_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.get_engine"><code class="docutils literal notranslate"><span class="pre">get_engine()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.is_exact_match"><code class="docutils literal notranslate"><span class="pre">is_exact_match()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.max_depth"><code class="docutils literal notranslate"><span class="pre">max_depth()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.parse_path"><code class="docutils literal notranslate"><span class="pre">parse_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.resolve_path"><code class="docutils literal notranslate"><span class="pre">resolve_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.set_by_path"><code class="docutils literal notranslate"><span class="pre">set_by_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.set_path"><code class="docutils literal notranslate"><span class="pre">set_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.substitute"><code class="docutils literal notranslate"><span class="pre">substitute()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.unflatten_dict"><code class="docutils literal notranslate"><span class="pre">unflatten_dict()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.unflatten_from_tuples"><code class="docutils literal notranslate"><span class="pre">unflatten_from_tuples()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/base.html">embody.base</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/base.html#embody.base.Context"><code class="docutils literal notranslate"><span class="pre">Context</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/base.html#embody.base.Embodier"><code class="docutils literal notranslate"><span class="pre">Embodier</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/base.html#embody.base.MissingParameterError"><code class="docutils literal notranslate"><span class="pre">MissingParameterError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/base.html#embody.base.TemplateWrapper"><code class="docutils literal notranslate"><span class="pre">TemplateWrapper</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/base.html#embody.base.embody"><code class="docutils literal notranslate"><span class="pre">embody()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/embody/graphviz_template.html">embody.graphviz_template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/mappings.html">embody.mappings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/mappings.html#embody.mappings.AttributeMapping"><code class="docutils literal notranslate"><span class="pre">AttributeMapping</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/mappings.html#embody.mappings.EmbodiedMapping"><code class="docutils literal notranslate"><span class="pre">EmbodiedMapping</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/mappings.html#embody.mappings.FlatMapping"><code class="docutils literal notranslate"><span class="pre">FlatMapping</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/mappings.html#embody.mappings.FrozenMapping"><code class="docutils literal notranslate"><span class="pre">FrozenMapping</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/mappings.html#embody.mappings.LazyEmbodiedMapping"><code class="docutils literal notranslate"><span class="pre">LazyEmbodiedMapping</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/mappings.html#embody.mappings.MutableEmbodiedMapping"><code class="docutils literal notranslate"><span class="pre">MutableEmbodiedMapping</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/mappings.html#embody.mappings.PathMapping"><code class="docutils literal notranslate"><span class="pre">PathMapping</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/mappings.html#embody.mappings.as_mapping"><code class="docutils literal notranslate"><span class="pre">as_mapping()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/embody/naming.html">embody.naming</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.BigDocTest"><code class="docutils literal notranslate"><span class="pre">BigDocTest</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.KeyMapNames"><code class="docutils literal notranslate"><span class="pre">KeyMapNames</span></code></a></li>
@@ -106,10 +173,39 @@
 <li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.validate_kwargs"><code class="docutils literal notranslate"><span class="pre">validate_kwargs()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/paths.html">embody.paths</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/paths.html#embody.paths.DotPath"><code class="docutils literal notranslate"><span class="pre">DotPath</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/paths.html#embody.paths.InvalidPathError"><code class="docutils literal notranslate"><span class="pre">InvalidPathError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/paths.html#embody.paths.JSONPointer"><code class="docutils literal notranslate"><span class="pre">JSONPointer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/paths.html#embody.paths.TuplePath"><code class="docutils literal notranslate"><span class="pre">TuplePath</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/paths.html#embody.paths.parse_path"><code class="docutils literal notranslate"><span class="pre">parse_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/paths.html#embody.paths.resolve_path"><code class="docutils literal notranslate"><span class="pre">resolve_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/paths.html#embody.paths.set_path"><code class="docutils literal notranslate"><span class="pre">set_path()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/embody/scrap/ca_templating.html">embody.scrap.ca_templating</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="module_docs/embody/scrap/ca_templating.html#embody.scrap.ca_templating.TypeNotKnown"><code class="docutils literal notranslate"><span class="pre">TypeNotKnown</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="module_docs/embody/scrap/ca_templating.html#embody.scrap.ca_templating.format_iterable"><code class="docutils literal notranslate"><span class="pre">format_iterable()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="module_docs/embody/scrap/ca_templating.html#embody.scrap.ca_templating.format_multi_iterable"><code class="docutils literal notranslate"><span class="pre">format_multi_iterable()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/strategies.html">embody.strategies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/strategies.html#embody.strategies.BaseEmbodimentEngine"><code class="docutils literal notranslate"><span class="pre">BaseEmbodimentEngine</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/strategies.html#embody.strategies.CompiledPathEngine"><code class="docutils literal notranslate"><span class="pre">CompiledPathEngine</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/strategies.html#embody.strategies.IterativeStackEngine"><code class="docutils literal notranslate"><span class="pre">IterativeStackEngine</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/strategies.html#embody.strategies.KeyCollisionError"><code class="docutils literal notranslate"><span class="pre">KeyCollisionError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/strategies.html#embody.strategies.RecursiveVisitorEngine"><code class="docutils literal notranslate"><span class="pre">RecursiveVisitorEngine</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/strategies.html#embody.strategies.get_engine"><code class="docutils literal notranslate"><span class="pre">get_engine()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/substitution.html">embody.substitution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/substitution.html#embody.substitution.SafeFormatter"><code class="docutils literal notranslate"><span class="pre">SafeFormatter</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/substitution.html#embody.substitution.SubstitutionSyntax"><code class="docutils literal notranslate"><span class="pre">SubstitutionSyntax</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/substitution.html#embody.substitution.extract_template_vars"><code class="docutils literal notranslate"><span class="pre">extract_template_vars()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/substitution.html#embody.substitution.is_exact_match"><code class="docutils literal notranslate"><span class="pre">is_exact_match()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/substitution.html#embody.substitution.safe_format"><code class="docutils literal notranslate"><span class="pre">safe_format()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/substitution.html#embody.substitution.substitute"><code class="docutils literal notranslate"><span class="pre">substitute()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/substitution.html#embody.substitution.substitute_all_syntaxes"><code class="docutils literal notranslate"><span class="pre">substitute_all_syntaxes()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/embody/templater.html">embody.templater</a><ul>
@@ -118,6 +214,20 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="module_docs/embody/templating.html">embody.templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/util.html">embody.util</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.CycleError"><code class="docutils literal notranslate"><span class="pre">CycleError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.PathNotFoundError"><code class="docutils literal notranslate"><span class="pre">PathNotFoundError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.count_template_markers"><code class="docutils literal notranslate"><span class="pre">count_template_markers()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.detect_cycle"><code class="docutils literal notranslate"><span class="pre">detect_cycle()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.flatten_dict"><code class="docutils literal notranslate"><span class="pre">flatten_dict()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.flatten_to_tuples"><code class="docutils literal notranslate"><span class="pre">flatten_to_tuples()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.get_by_path"><code class="docutils literal notranslate"><span class="pre">get_by_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.max_depth"><code class="docutils literal notranslate"><span class="pre">max_depth()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.set_by_path"><code class="docutils literal notranslate"><span class="pre">set_by_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.unflatten_dict"><code class="docutils literal notranslate"><span class="pre">unflatten_dict()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.unflatten_from_tuples"><code class="docutils literal notranslate"><span class="pre">unflatten_from_tuples()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </div>
 

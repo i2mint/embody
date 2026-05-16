@@ -1,0 +1,378 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>embody.substitution &mdash; embody 0.1.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=ca7ad2ea"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            embody
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody.html">embody</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/base.html">embody.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/graphviz_template.html">embody.graphviz_template</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/mappings.html">embody.mappings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/naming.html">embody.naming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/paths.html">embody.paths</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/scrap/ca_templating.html">embody.scrap.ca_templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/strategies.html">embody.strategies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/substitution.html">embody.substitution</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/templater.html">embody.templater</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/templating.html">embody.templating</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/embody/util.html">embody.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">embody</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">embody.substitution</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for embody.substitution</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Pattern matching and type-preserving substitution logic for templates.</span>
+
+<span class="sd">This module provides the core substitution functionality for embody, supporting</span>
+<span class="sd">multiple syntaxes (${var}, {var}) with type preservation.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">string</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Pattern</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+
+
+<div class="viewcode-block" id="SubstitutionSyntax">
+<a class="viewcode-back" href="../../module_docs/embody/substitution.html#embody.SubstitutionSyntax">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SubstitutionSyntax</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Defines the syntax patterns for template variable substitution.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Pattern for ${var} syntax</span>
+    <span class="n">DOLLAR_BRACE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\$\{([a-zA-Z_][a-zA-Z0-9_]*)\}&#39;</span><span class="p">)</span>
+    <span class="c1"># Pattern for {var} syntax (Python str.format style)</span>
+    <span class="n">BRACE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\{([a-zA-Z_][a-zA-Z0-9_]*)\}&#39;</span><span class="p">)</span>
+    <span class="c1"># Pattern for [[var]] syntax</span>
+    <span class="n">DOUBLE_BRACKET</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\[\[([a-zA-Z_][a-zA-Z0-9_]*)\]\]&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SubstitutionSyntax.get_pattern">
+<a class="viewcode-back" href="../../module_docs/embody/substitution.html#embody.SubstitutionSyntax.get_pattern">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_pattern</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">syntax</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;dollar_brace&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Pattern</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the regex pattern for the specified syntax.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            syntax: One of &#39;dollar_brace&#39;, &#39;brace&#39;, &#39;double_bracket&#39;</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Compiled regex pattern</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; pattern = SubstitutionSyntax.get_pattern(&#39;dollar_brace&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; pattern.findall(&#39;${name} is ${age}&#39;)</span>
+<span class="sd">            [&#39;name&#39;, &#39;age&#39;]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">patterns</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;dollar_brace&#39;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">DOLLAR_BRACE</span><span class="p">,</span>
+            <span class="s1">&#39;brace&#39;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">BRACE</span><span class="p">,</span>
+            <span class="s1">&#39;double_bracket&#39;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">DOUBLE_BRACKET</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">patterns</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">syntax</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">DOLLAR_BRACE</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="extract_template_vars">
+<a class="viewcode-back" href="../../module_docs/embody/substitution.html#embody.extract_template_vars">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_template_vars</span><span class="p">(</span>
+    <span class="n">template</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">syntax</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;dollar_brace&#39;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract all template variable names from a string.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        template: Template string containing variables</span>
+<span class="sd">        syntax: Variable syntax to use</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List of variable names found in the template</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; extract_template_vars(&#39;Hello ${name}, you are ${age} years old&#39;)</span>
+<span class="sd">        [&#39;name&#39;, &#39;age&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; extract_template_vars(&#39;Hello {name}&#39;, syntax=&#39;brace&#39;)</span>
+<span class="sd">        [&#39;name&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">SubstitutionSyntax</span><span class="o">.</span><span class="n">get_pattern</span><span class="p">(</span><span class="n">syntax</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pattern</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">template</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="is_exact_match">
+<a class="viewcode-back" href="../../module_docs/embody/substitution.html#embody.is_exact_match">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_exact_match</span><span class="p">(</span><span class="n">template</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">syntax</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;dollar_brace&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if template is exactly one variable placeholder (no other text).</span>
+
+<span class="sd">    This is crucial for type preservation. If the template is exactly ${var},</span>
+<span class="sd">    we should return the raw value, not convert it to a string.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        template: Template string to check</span>
+<span class="sd">        syntax: Variable syntax to use</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Variable name if exact match, None otherwise</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; is_exact_match(&#39;${name}&#39;)</span>
+<span class="sd">        &#39;name&#39;</span>
+<span class="sd">        &gt;&gt;&gt; is_exact_match(&#39;Hello ${name}&#39;)</span>
+
+<span class="sd">        &gt;&gt;&gt; is_exact_match(&#39;${count}&#39;)</span>
+<span class="sd">        &#39;count&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">SubstitutionSyntax</span><span class="o">.</span><span class="n">get_pattern</span><span class="p">(</span><span class="n">syntax</span><span class="p">)</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="substitute">
+<a class="viewcode-back" href="../../module_docs/embody/substitution.html#embody.substitute">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">substitute</span><span class="p">(</span>
+    <span class="n">template</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="n">syntax</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;dollar_brace&#39;</span><span class="p">,</span>
+    <span class="n">strict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Perform type-preserving substitution on a template value.</span>
+
+<span class="sd">    This is the core substitution function. It handles:</span>
+<span class="sd">    1. Exact match: ${var} -&gt; returns params[&#39;var&#39;] with type preserved</span>
+<span class="sd">    2. Partial match: &quot;Count is ${var}&quot; -&gt; string interpolation</span>
+<span class="sd">    3. Non-string templates: returned unchanged</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        template: The template value (can be any type)</span>
+<span class="sd">        params: Dictionary of parameters for substitution</span>
+<span class="sd">        syntax: Variable syntax to use</span>
+<span class="sd">        strict: If True, raise KeyError for missing variables</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The substituted value with type preservation</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; substitute(&#39;${count}&#39;, {&#39;count&#39;: 42})</span>
+<span class="sd">        42</span>
+<span class="sd">        &gt;&gt;&gt; substitute(&#39;Count: ${count}&#39;, {&#39;count&#39;: 42})</span>
+<span class="sd">        &#39;Count: 42&#39;</span>
+<span class="sd">        &gt;&gt;&gt; substitute(&#39;${active}&#39;, {&#39;active&#39;: True})</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; substitute(&#39;${items}&#39;, {&#39;items&#39;: [1, 2, 3]})</span>
+<span class="sd">        [1, 2, 3]</span>
+<span class="sd">        &gt;&gt;&gt; substitute(42, {})</span>
+<span class="sd">        42</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># If not a string, return as-is</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">template</span>
+
+    <span class="c1"># Check for exact match - return raw value (type preserved)</span>
+    <span class="n">var_name</span> <span class="o">=</span> <span class="n">is_exact_match</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">syntax</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">var_name</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">var_name</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">params</span><span class="p">[</span><span class="n">var_name</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">strict</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing required parameter: </span><span class="si">{</span><span class="n">var_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">template</span>  <span class="c1"># Return template unchanged if var not found</span>
+
+    <span class="c1"># Partial match - do string interpolation</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">SubstitutionSyntax</span><span class="o">.</span><span class="n">get_pattern</span><span class="p">(</span><span class="n">syntax</span><span class="p">)</span>
+    <span class="n">vars_in_template</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">vars_in_template</span><span class="p">:</span>
+        <span class="c1"># No variables in template, return as-is</span>
+        <span class="k">return</span> <span class="n">template</span>
+
+    <span class="c1"># Check if all vars are available</span>
+    <span class="k">if</span> <span class="n">strict</span><span class="p">:</span>
+        <span class="n">missing</span> <span class="o">=</span> <span class="p">[</span><span class="n">var</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">vars_in_template</span> <span class="k">if</span> <span class="n">var</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">params</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">missing</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing required parameters: </span><span class="si">{</span><span class="n">missing</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Perform substitution based on syntax</span>
+    <span class="k">if</span> <span class="n">syntax</span> <span class="o">==</span> <span class="s1">&#39;brace&#39;</span><span class="p">:</span>
+        <span class="c1"># Use Python&#39;s str.format directly</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">strict</span><span class="p">:</span>
+                <span class="k">raise</span>
+            <span class="k">return</span> <span class="n">template</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># For ${var} and [[var]], we need to replace manually</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">template</span>
+        <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">vars_in_template</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+                <span class="c1"># Convert value to string for interpolation</span>
+                <span class="n">value_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="n">var</span><span class="p">])</span>
+                <span class="c1"># Replace the pattern</span>
+                <span class="k">if</span> <span class="n">syntax</span> <span class="o">==</span> <span class="s1">&#39;dollar_brace&#39;</span><span class="p">:</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;$</span><span class="se">{{</span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="se">}}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">value_str</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">syntax</span> <span class="o">==</span> <span class="s1">&#39;double_bracket&#39;</span><span class="p">:</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[[</span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s1">]]&#39;</span><span class="p">,</span> <span class="n">value_str</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="substitute_all_syntaxes">
+<a class="viewcode-back" href="../../module_docs/embody/substitution.html#embody.substitute_all_syntaxes">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">substitute_all_syntaxes</span><span class="p">(</span>
+    <span class="n">template</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+    <span class="n">syntaxes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">strict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply substitution for multiple syntax styles.</span>
+
+<span class="sd">    Useful when you want to support mixed syntax in templates.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        template: The template value</span>
+<span class="sd">        params: Dictionary of parameters</span>
+<span class="sd">        syntaxes: List of syntaxes to try (default: [&#39;dollar_brace&#39;, &#39;brace&#39;])</span>
+<span class="sd">        strict: If True, raise errors for missing variables</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The substituted value</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; substitute_all_syntaxes(&#39;${name} is {age}&#39;, {&#39;name&#39;: &#39;Alice&#39;, &#39;age&#39;: 30})</span>
+<span class="sd">        &#39;Alice is 30&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">syntaxes</span> <span class="o">=</span> <span class="n">syntaxes</span> <span class="ow">or</span> <span class="p">[</span><span class="s1">&#39;dollar_brace&#39;</span><span class="p">,</span> <span class="s1">&#39;brace&#39;</span><span class="p">]</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">template</span>
+    <span class="k">for</span> <span class="n">syntax</span> <span class="ow">in</span> <span class="n">syntaxes</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">substitute</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">syntax</span><span class="o">=</span><span class="n">syntax</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="n">strict</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<span class="c1"># For backwards compatibility with str.format style</span>
+<div class="viewcode-block" id="SafeFormatter">
+<a class="viewcode-back" href="../../module_docs/embody/substitution.html#embody.SafeFormatter">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SafeFormatter</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">Formatter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A string formatter that doesn&#39;t raise errors for missing keys.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="safe_format">
+<a class="viewcode-back" href="../../module_docs/embody/substitution.html#embody.safe_format">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">safe_format</span><span class="p">(</span><span class="n">template</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Safely format a string, leaving undefined placeholders unchanged.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        template: Template string</span>
+<span class="sd">        **params: Parameters for substitution</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Formatted string</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; safe_format(&#39;Hello {name}, you are {age}&#39;, name=&#39;Alice&#39;)</span>
+<span class="sd">        &#39;Hello Alice, you are {age}&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">SafeFormatter</span><span class="p">()</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
