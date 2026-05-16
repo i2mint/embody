@@ -12,6 +12,7 @@ from embody.util import detect_cycle, CycleError
 
 class MissingParameterError(Exception):
     """Raised when a required template parameter is missing."""
+
     pass
 
 
@@ -43,9 +44,9 @@ class Context(Mapping):
     def __init__(
         self,
         params: Dict[str, Any] = None,
-        parent: 'Context' = None,
+        parent: "Context" = None,
         resolvers: Dict[str, Callable] = None,
-        auto_call: bool = True
+        auto_call: bool = True,
     ):
         """Initialize a Context.
 
@@ -102,7 +103,7 @@ class Context(Mapping):
         except KeyError:
             return default
 
-    def update(self, params: Dict[str, Any]) -> 'Context':
+    def update(self, params: Dict[str, Any]) -> "Context":
         """Create a new context with updated parameters.
 
         Args:
@@ -116,7 +117,7 @@ class Context(Mapping):
             new_params,
             parent=self._parent,
             resolvers=self._resolvers,
-            auto_call=self._auto_call
+            auto_call=self._auto_call,
         )
 
     def register_resolver(self, name: str, func: Callable):
@@ -133,7 +134,7 @@ class Context(Mapping):
         """
         self._resolvers[name] = func
 
-    def child(self, params: Dict[str, Any] = None) -> 'Context':
+    def child(self, params: Dict[str, Any] = None) -> "Context":
         """Create a child context with this context as parent.
 
         Args:
@@ -171,10 +172,7 @@ class TemplateWrapper:
     """
 
     def __init__(
-        self,
-        template: Any,
-        syntax: str = 'dollar_brace',
-        check_cycles: bool = True
+        self, template: Any, syntax: str = "dollar_brace", check_cycles: bool = True
     ):
         """Initialize a TemplateWrapper.
 
@@ -257,11 +255,11 @@ class Embodier:
     def __init__(
         self,
         template: Any,
-        strategy: str = 'auto',
-        syntax: str = 'dollar_brace',
+        strategy: str = "auto",
+        syntax: str = "dollar_brace",
         strict: bool = False,
         check_cycles: bool = True,
-        key_collision: str = 'error'
+        key_collision: str = "error",
     ):
         """Initialize an Embodier.
 
@@ -282,19 +280,20 @@ class Embodier:
 
         # Select strategy (will be implemented in strategies.py)
         self._strategy_impl = None
-        if strategy == 'compiled':
+        if strategy == "compiled":
             # Will use CompiledPathEngine
             pass
-        elif strategy == 'auto':
+        elif strategy == "auto":
             # Auto-select based on template characteristics
             from embody.util import max_depth, count_template_markers
+
             depth = max_depth(template)
             marker_count = count_template_markers(template, syntax)
             # Use compiled strategy if deep or many markers
             if depth > 5 or marker_count > 10:
-                self.strategy = 'compiled'
+                self.strategy = "compiled"
             else:
-                self.strategy = 'recursive'
+                self.strategy = "recursive"
 
     def __call__(self, params: Union[Dict, Context] = None, **kwargs) -> Any:
         """Embody the template with the given parameters.
@@ -328,17 +327,13 @@ class Embodier:
         if self.strict:
             missing = self.template_wrapper.validate_params(param_dict)
             if missing:
-                raise MissingParameterError(
-                    f"Missing required parameters: {missing}"
-                )
+                raise MissingParameterError(f"Missing required parameters: {missing}")
 
         # Use the recursive visitor strategy (strategies.py will provide more options)
         from embody.strategies import RecursiveVisitorEngine
 
         engine = RecursiveVisitorEngine(
-            syntax=self.syntax,
-            strict=self.strict,
-            key_collision=self.key_collision
+            syntax=self.syntax, strict=self.strict, key_collision=self.key_collision
         )
         return engine.embody(self.template, param_dict)
 
@@ -375,7 +370,7 @@ def embody(template: Any, params: Union[Dict, Context] = None, **kwargs) -> Any:
         [1, 2]
     """
     # Extract config kwargs
-    config_keys = {'syntax', 'strict', 'strategy', 'check_cycles', 'key_collision'}
+    config_keys = {"syntax", "strict", "strategy", "check_cycles", "key_collision"}
     config = {k: v for k, v in kwargs.items() if k in config_keys}
     params_kwargs = {k: v for k, v in kwargs.items() if k not in config_keys}
 

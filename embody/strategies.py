@@ -8,12 +8,16 @@ This module provides different strategies for traversing and embodying templates
 from typing import Any, Dict, Set, Optional
 from embody.substitution import substitute
 from embody.util import (
-    flatten_to_tuples, unflatten_from_tuples, detect_cycle, CycleError
+    flatten_to_tuples,
+    unflatten_from_tuples,
+    detect_cycle,
+    CycleError,
 )
 
 
 class KeyCollisionError(Exception):
     """Raised when dynamic keys resolve to the same value."""
+
     pass
 
 
@@ -22,9 +26,9 @@ class BaseEmbodimentEngine:
 
     def __init__(
         self,
-        syntax: str = 'dollar_brace',
+        syntax: str = "dollar_brace",
         strict: bool = False,
-        key_collision: str = 'error'
+        key_collision: str = "error",
     ):
         """Initialize an embodiment engine.
 
@@ -67,10 +71,7 @@ class RecursiveVisitorEngine(BaseEmbodimentEngine):
     """
 
     def embody(
-        self,
-        template: Any,
-        params: Dict[str, Any],
-        visited: Optional[Set[int]] = None
+        self, template: Any, params: Dict[str, Any], visited: Optional[Set[int]] = None
     ) -> Any:
         """Recursively embody a template.
 
@@ -116,22 +117,13 @@ class RecursiveVisitorEngine(BaseEmbodimentEngine):
         return substitute(template, params, syntax=self.syntax, strict=self.strict)
 
     def _visit_list(
-        self,
-        template: list,
-        params: Dict[str, Any],
-        visited: Set[int]
+        self, template: list, params: Dict[str, Any], visited: Set[int]
     ) -> list:
         """Visit a list template and recursively embody each item."""
-        return [
-            self.embody(item, params, visited)
-            for item in template
-        ]
+        return [self.embody(item, params, visited) for item in template]
 
     def _visit_dict(
-        self,
-        template: dict,
-        params: Dict[str, Any],
-        visited: Set[int]
+        self, template: dict, params: Dict[str, Any], visited: Set[int]
     ) -> dict:
         """Visit a dict template and recursively embody keys and values.
 
@@ -155,7 +147,7 @@ class RecursiveVisitorEngine(BaseEmbodimentEngine):
 
         if len(keys) != len(unique_keys):
             # We have collisions
-            if self.key_collision == 'error':
+            if self.key_collision == "error":
                 # Find the duplicate keys
                 seen = set()
                 duplicates = set()
@@ -166,10 +158,10 @@ class RecursiveVisitorEngine(BaseEmbodimentEngine):
                 raise KeyCollisionError(
                     f"Dynamic keys resolved to same value: {duplicates}"
                 )
-            elif self.key_collision == 'last_wins':
+            elif self.key_collision == "last_wins":
                 # Just use dict() which will use last value for duplicate keys
                 pass
-            elif self.key_collision == 'namespace':
+            elif self.key_collision == "namespace":
                 # Add suffix to make keys unique
                 key_counts = {}
                 new_items = []
@@ -235,21 +227,18 @@ class CompiledPathEngine(BaseEmbodimentEngine):
             if isinstance(value, str):
                 # Check if it contains template markers
                 from embody.substitution import extract_template_vars
+
                 vars_in_val = extract_template_vars(value, self.syntax)
                 if vars_in_val:
                     templated_paths[path] = value
 
         return {
-            'flat': flat,
-            'templated_paths': templated_paths,
-            'original_template': template
+            "flat": flat,
+            "templated_paths": templated_paths,
+            "original_template": template,
         }
 
-    def embody_compiled(
-        self,
-        compiled: Dict,
-        params: Dict[str, Any]
-    ) -> Any:
+    def embody_compiled(self, compiled: Dict, params: Dict[str, Any]) -> Any:
         """Embody a pre-compiled template.
 
         Args:
@@ -259,15 +248,12 @@ class CompiledPathEngine(BaseEmbodimentEngine):
         Returns:
             Embodied object
         """
-        flat = compiled['flat'].copy()
+        flat = compiled["flat"].copy()
 
         # Substitute all templated paths
-        for path, template_str in compiled['templated_paths'].items():
+        for path, template_str in compiled["templated_paths"].items():
             embodied_value = substitute(
-                template_str,
-                params,
-                syntax=self.syntax,
-                strict=self.strict
+                template_str, params, syntax=self.syntax, strict=self.strict
             )
             flat[path] = embodied_value
 
@@ -338,15 +324,13 @@ class IterativeStackEngine(BaseEmbodimentEngine):
                 visited.add(obj_id)
                 # Check if all children are processed
                 all_children_done = all(
-                    id(k) in results and id(v) in results
-                    for k, v in obj.items()
+                    id(k) in results and id(v) in results for k, v in obj.items()
                 )
 
                 if all_children_done:
                     # Build the dict with embodied children
                     embodied_dict = {
-                        results[id(k)]: results[id(v)]
-                        for k, v in obj.items()
+                        results[id(k)]: results[id(v)] for k, v in obj.items()
                     }
                     results[obj_id] = embodied_dict
                 else:
@@ -355,9 +339,9 @@ class IterativeStackEngine(BaseEmbodimentEngine):
                     # Add children to stack
                     for k, v in obj.items():
                         if id(k) not in results:
-                            stack.append((k, obj, 'key'))
+                            stack.append((k, obj, "key"))
                         if id(v) not in results:
-                            stack.append((v, obj, 'value'))
+                            stack.append((v, obj, "value"))
 
             elif isinstance(obj, list):
                 visited.add(obj_id)
@@ -373,7 +357,7 @@ class IterativeStackEngine(BaseEmbodimentEngine):
                     # Add items to stack
                     for item in obj:
                         if id(item) not in results:
-                            stack.append((item, obj, 'item'))
+                            stack.append((item, obj, "item"))
 
             else:
                 # Scalar, return as-is
@@ -384,13 +368,13 @@ class IterativeStackEngine(BaseEmbodimentEngine):
 
 # Registry of available strategies
 STRATEGIES = {
-    'recursive': RecursiveVisitorEngine,
-    'compiled': CompiledPathEngine,
-    'iterative': IterativeStackEngine,
+    "recursive": RecursiveVisitorEngine,
+    "compiled": CompiledPathEngine,
+    "iterative": IterativeStackEngine,
 }
 
 
-def get_engine(strategy: str = 'recursive', **kwargs) -> BaseEmbodimentEngine:
+def get_engine(strategy: str = "recursive", **kwargs) -> BaseEmbodimentEngine:
     """Get an embodiment engine by name.
 
     Args:

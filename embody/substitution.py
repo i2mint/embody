@@ -14,14 +14,14 @@ class SubstitutionSyntax:
     """Defines the syntax patterns for template variable substitution."""
 
     # Pattern for ${var} syntax
-    DOLLAR_BRACE = re.compile(r'\$\{([a-zA-Z_][a-zA-Z0-9_]*)\}')
+    DOLLAR_BRACE = re.compile(r"\$\{([a-zA-Z_][a-zA-Z0-9_]*)\}")
     # Pattern for {var} syntax (Python str.format style)
-    BRACE = re.compile(r'\{([a-zA-Z_][a-zA-Z0-9_]*)\}')
+    BRACE = re.compile(r"\{([a-zA-Z_][a-zA-Z0-9_]*)\}")
     # Pattern for [[var]] syntax
-    DOUBLE_BRACKET = re.compile(r'\[\[([a-zA-Z_][a-zA-Z0-9_]*)\]\]')
+    DOUBLE_BRACKET = re.compile(r"\[\[([a-zA-Z_][a-zA-Z0-9_]*)\]\]")
 
     @classmethod
-    def get_pattern(cls, syntax: str = 'dollar_brace') -> Pattern:
+    def get_pattern(cls, syntax: str = "dollar_brace") -> Pattern:
         """Get the regex pattern for the specified syntax.
 
         Args:
@@ -36,17 +36,14 @@ class SubstitutionSyntax:
             ['name', 'age']
         """
         patterns = {
-            'dollar_brace': cls.DOLLAR_BRACE,
-            'brace': cls.BRACE,
-            'double_bracket': cls.DOUBLE_BRACKET,
+            "dollar_brace": cls.DOLLAR_BRACE,
+            "brace": cls.BRACE,
+            "double_bracket": cls.DOUBLE_BRACKET,
         }
         return patterns.get(syntax, cls.DOLLAR_BRACE)
 
 
-def extract_template_vars(
-    template: str,
-    syntax: str = 'dollar_brace'
-) -> list[str]:
+def extract_template_vars(template: str, syntax: str = "dollar_brace") -> list[str]:
     """Extract all template variable names from a string.
 
     Args:
@@ -66,7 +63,7 @@ def extract_template_vars(
     return pattern.findall(template)
 
 
-def is_exact_match(template: str, syntax: str = 'dollar_brace') -> Optional[str]:
+def is_exact_match(template: str, syntax: str = "dollar_brace") -> Optional[str]:
     """Check if template is exactly one variable placeholder (no other text).
 
     This is crucial for type preservation. If the template is exactly ${var},
@@ -97,8 +94,8 @@ def is_exact_match(template: str, syntax: str = 'dollar_brace') -> Optional[str]
 def substitute(
     template: Any,
     params: Dict[str, Any],
-    syntax: str = 'dollar_brace',
-    strict: bool = False
+    syntax: str = "dollar_brace",
+    strict: bool = False,
 ) -> Any:
     """Perform type-preserving substitution on a template value.
 
@@ -157,7 +154,7 @@ def substitute(
             raise KeyError(f"Missing required parameters: {missing}")
 
     # Perform substitution based on syntax
-    if syntax == 'brace':
+    if syntax == "brace":
         # Use Python's str.format directly
         try:
             return template.format(**params)
@@ -173,10 +170,10 @@ def substitute(
                 # Convert value to string for interpolation
                 value_str = str(params[var])
                 # Replace the pattern
-                if syntax == 'dollar_brace':
-                    result = result.replace(f'${{{var}}}', value_str)
-                elif syntax == 'double_bracket':
-                    result = result.replace(f'[[{var}]]', value_str)
+                if syntax == "dollar_brace":
+                    result = result.replace(f"${{{var}}}", value_str)
+                elif syntax == "double_bracket":
+                    result = result.replace(f"[[{var}]]", value_str)
         return result
 
 
@@ -184,7 +181,7 @@ def substitute_all_syntaxes(
     template: Any,
     params: Dict[str, Any],
     syntaxes: list[str] = None,
-    strict: bool = False
+    strict: bool = False,
 ) -> Any:
     """Apply substitution for multiple syntax styles.
 
@@ -203,7 +200,7 @@ def substitute_all_syntaxes(
         >>> substitute_all_syntaxes('${name} is {age}', {'name': 'Alice', 'age': 30})
         'Alice is 30'
     """
-    syntaxes = syntaxes or ['dollar_brace', 'brace']
+    syntaxes = syntaxes or ["dollar_brace", "brace"]
     result = template
     for syntax in syntaxes:
         result = substitute(result, params, syntax=syntax, strict=strict)
@@ -216,7 +213,7 @@ class SafeFormatter(string.Formatter):
 
     def get_value(self, key, args, kwargs):
         if isinstance(key, str):
-            return kwargs.get(key, '{' + key + '}')
+            return kwargs.get(key, "{" + key + "}")
         return super().get_value(key, args, kwargs)
 
 

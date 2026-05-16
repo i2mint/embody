@@ -10,11 +10,13 @@ from collections.abc import Mapping, Sequence
 
 class CycleError(Exception):
     """Raised when a circular reference is detected in a data structure."""
+
     pass
 
 
 class PathNotFoundError(Exception):
     """Raised when a path doesn't exist in a data structure."""
+
     pass
 
 
@@ -51,10 +53,8 @@ def detect_cycle(obj: Any, visited: Set[int] = None, path: List[str] = None) -> 
     # Only check for cycles in container types
     if isinstance(obj, (dict, list, tuple, set)):
         if obj_id in visited:
-            path_str = ' -> '.join(path) if path else 'root'
-            raise CycleError(
-                f"Circular reference detected at path: {path_str}"
-            )
+            path_str = " -> ".join(path) if path else "root"
+            raise CycleError(f"Circular reference detected at path: {path_str}")
 
         visited.add(obj_id)
 
@@ -64,16 +64,14 @@ def detect_cycle(obj: Any, visited: Set[int] = None, path: List[str] = None) -> 
                     detect_cycle(value, visited, path + [str(key)])
             elif isinstance(obj, (list, tuple, set)):
                 for i, item in enumerate(obj):
-                    detect_cycle(item, visited, path + [f'[{i}]'])
+                    detect_cycle(item, visited, path + [f"[{i}]"])
         finally:
             # Remove from visited after checking (allows diamond structures)
             visited.discard(obj_id)
 
 
 def flatten_dict(
-    nested_dict: Dict[str, Any],
-    separator: str = '.',
-    parent_key: str = ''
+    nested_dict: Dict[str, Any], separator: str = ".", parent_key: str = ""
 ) -> Dict[str, Any]:
     """Flatten a nested dictionary into a single-level dictionary with path keys.
 
@@ -117,10 +115,7 @@ def flatten_dict(
     return dict(items)
 
 
-def flatten_to_tuples(
-    obj: Any,
-    parent_path: Tuple = ()
-) -> Dict[Tuple, Any]:
+def flatten_to_tuples(obj: Any, parent_path: Tuple = ()) -> Dict[Tuple, Any]:
     """Flatten a nested structure using tuple paths (unambiguous).
 
     This avoids the ambiguity of string separators. A tuple path like
@@ -162,10 +157,7 @@ def flatten_to_tuples(
         return {parent_path: obj} if parent_path else {}
 
 
-def unflatten_dict(
-    flat_dict: Dict[str, Any],
-    separator: str = '.'
-) -> Dict[str, Any]:
+def unflatten_dict(flat_dict: Dict[str, Any], separator: str = ".") -> Dict[str, Any]:
     """Unflatten a dictionary with path keys into a nested structure.
 
     Args:
@@ -263,10 +255,7 @@ def unflatten_from_tuples(flat_dict: Dict[Tuple, Any]) -> Any:
 
 
 def get_by_path(
-    obj: Any,
-    path: Union[str, Tuple],
-    separator: str = '.',
-    default: Any = None
+    obj: Any, path: Union[str, Tuple], separator: str = ".", default: Any = None
 ) -> Any:
     """Get a value from a nested structure by path.
 
@@ -310,8 +299,8 @@ def set_by_path(
     obj: Dict,
     path: Union[str, Tuple],
     value: Any,
-    separator: str = '.',
-    create_intermediate: bool = True
+    separator: str = ".",
+    create_intermediate: bool = True,
 ) -> None:
     """Set a value in a nested structure by path (modifies in place).
 
@@ -376,7 +365,7 @@ def max_depth(obj: Any, current_depth: int = 0) -> int:
         return current_depth
 
 
-def count_template_markers(obj: Any, syntax: str = 'dollar_brace') -> int:
+def count_template_markers(obj: Any, syntax: str = "dollar_brace") -> int:
     """Count the number of template markers in a nested structure.
 
     Args:

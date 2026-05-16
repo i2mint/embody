@@ -14,6 +14,7 @@ from urllib.parse import unquote
 
 class InvalidPathError(Exception):
     """Raised when a path is malformed or invalid."""
+
     pass
 
 
@@ -44,10 +45,8 @@ class JSONPointer:
         Raises:
             InvalidPathError: If pointer doesn't start with /
         """
-        if not pointer.startswith('/') and pointer != '':
-            raise InvalidPathError(
-                f"JSON Pointer must start with '/': {pointer}"
-            )
+        if not pointer.startswith("/") and pointer != "":
+            raise InvalidPathError(f"JSON Pointer must start with '/': {pointer}")
         self.pointer = pointer
         self.parts = self._parse(pointer)
 
@@ -67,11 +66,11 @@ class JSONPointer:
             >>> JSONPointer._parse('')
             []
         """
-        if pointer == '':
+        if pointer == "":
             return []
 
         # Remove leading /
-        parts = pointer[1:].split('/')
+        parts = pointer[1:].split("/")
 
         # Unescape according to RFC 6901
         # ~1 becomes /, ~0 becomes ~
@@ -80,7 +79,7 @@ class JSONPointer:
             # URL decode first (in case of %XX encoding)
             part = unquote(part)
             # Then unescape ~1 and ~0
-            part = part.replace('~1', '/').replace('~0', '~')
+            part = part.replace("~1", "/").replace("~0", "~")
             decoded_parts.append(part)
 
         return decoded_parts
@@ -96,10 +95,10 @@ class JSONPointer:
             Escaped component
         """
         # Must escape ~ first, then /
-        return part.replace('~', '~0').replace('/', '~1')
+        return part.replace("~", "~0").replace("/", "~1")
 
     @classmethod
-    def from_parts(cls, parts: List[str]) -> 'JSONPointer':
+    def from_parts(cls, parts: List[str]) -> "JSONPointer":
         """Create a JSON Pointer from path components.
 
         Args:
@@ -114,9 +113,9 @@ class JSONPointer:
             '/foo/bar/0'
         """
         if not parts:
-            return cls('')
+            return cls("")
         escaped_parts = [cls._escape(part) for part in parts]
-        pointer = '/' + '/'.join(escaped_parts)
+        pointer = "/" + "/".join(escaped_parts)
         return cls(pointer)
 
     def resolve(self, data: Any, default: Any = None) -> Any:
@@ -144,7 +143,7 @@ class JSONPointer:
                     current = current[part]
                 elif isinstance(current, (list, tuple)):
                     # Array index
-                    if part == '-':
+                    if part == "-":
                         # "-" refers to position after last element (for append)
                         return default
                     try:
@@ -231,7 +230,7 @@ class DotPath:
         'NYC'
     """
 
-    def __init__(self, path: str, separator: str = '.'):
+    def __init__(self, path: str, separator: str = "."):
         """Initialize a DotPath.
 
         Args:
@@ -323,8 +322,7 @@ class TuplePath:
 
 
 def parse_path(
-    path: Union[str, Tuple, List],
-    format: str = 'auto'
+    path: Union[str, Tuple, List], format: str = "auto"
 ) -> Union[JSONPointer, DotPath, TuplePath]:
     """Parse a path in various formats.
 
@@ -345,27 +343,27 @@ def parse_path(
         >>> parse_path(('user', 'name'))
         <embody.paths.TuplePath object at ...>
     """
-    if format == 'auto':
+    if format == "auto":
         if isinstance(path, (tuple, list)):
             return TuplePath(tuple(path))
         elif isinstance(path, str):
-            if path.startswith('/'):
+            if path.startswith("/"):
                 return JSONPointer(path)
             else:
                 return DotPath(path)
         else:
             raise InvalidPathError(f"Cannot parse path: {path}")
-    elif format == 'json_pointer':
+    elif format == "json_pointer":
         if isinstance(path, str):
             return JSONPointer(path)
         else:
             raise InvalidPathError("JSON Pointer must be a string")
-    elif format == 'dot':
+    elif format == "dot":
         if isinstance(path, str):
             return DotPath(path)
         else:
             raise InvalidPathError("Dot path must be a string")
-    elif format == 'tuple':
+    elif format == "tuple":
         if isinstance(path, (tuple, list)):
             return TuplePath(tuple(path))
         else:
@@ -375,10 +373,7 @@ def parse_path(
 
 
 def resolve_path(
-    data: Any,
-    path: Union[str, Tuple, List],
-    default: Any = None,
-    format: str = 'auto'
+    data: Any, path: Union[str, Tuple, List], default: Any = None, format: str = "auto"
 ) -> Any:
     """Resolve a path against data.
 
@@ -408,8 +403,8 @@ def set_path(
     data: Any,
     path: Union[str, Tuple, List],
     value: Any,
-    format: str = 'auto',
-    create_intermediate: bool = True
+    format: str = "auto",
+    create_intermediate: bool = True,
 ):
     """Set a value at a path.
 

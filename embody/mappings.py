@@ -72,7 +72,7 @@ class LazyEmbodiedMapping(Mapping):
         1
     """
 
-    def __init__(self, template: Dict, params: Dict, embodier: 'Embodier'):
+    def __init__(self, template: Dict, params: Dict, embodier: "Embodier"):
         """Initialize a LazyEmbodiedMapping.
 
         Args:
@@ -93,6 +93,7 @@ class LazyEmbodiedMapping(Mapping):
             # Embody just this value
             template_value = self._template[key]
             from embody.base import embody
+
             self._cache[key] = embody(template_value, self._params)
         return self._cache[key]
 
@@ -121,7 +122,7 @@ class FlatMapping(Mapping):
         ['user.name', 'user.age']
     """
 
-    def __init__(self, data: Dict, separator: str = '.'):
+    def __init__(self, data: Dict, separator: str = "."):
         """Initialize a FlatMapping.
 
         Args:
@@ -200,7 +201,9 @@ class AttributeMapping(Mapping):
         try:
             return self[key]
         except KeyError:
-            raise AttributeError(f"'{type(self).__name__}' object has no attribute '{key}'")
+            raise AttributeError(
+                f"'{type(self).__name__}' object has no attribute '{key}'"
+            )
 
     def __iter__(self) -> Iterator:
         """Iterate over keys."""
@@ -245,6 +248,7 @@ class FrozenMapping(Mapping):
             data: Dictionary to freeze (will be deep copied)
         """
         import copy
+
         self._data = copy.deepcopy(data)
         # Make it truly immutable by storing as tuple of items
         self._items = tuple(self._data.items())
@@ -344,7 +348,7 @@ class PathMapping(Mapping):
         {'b': {'c': 42}}
     """
 
-    def __init__(self, data: Dict, separator: str = '.'):
+    def __init__(self, data: Dict, separator: str = "."):
         """Initialize a PathMapping.
 
         Args:
@@ -360,10 +364,10 @@ class PathMapping(Mapping):
             # Tuple path
             return get_by_path(self._data, key)
         elif isinstance(key, str):
-            if key.startswith('/'):
+            if key.startswith("/"):
                 # JSON Pointer format
                 # Remove leading / and split
-                parts = key[1:].split('/')
+                parts = key[1:].split("/")
                 return get_by_path(self._data, tuple(parts))
             elif self._separator in key:
                 # Dot notation path
@@ -391,7 +395,7 @@ class PathMapping(Mapping):
             return False
 
 
-def as_mapping(data: Any, style: str = 'basic') -> Mapping:
+def as_mapping(data: Any, style: str = "basic") -> Mapping:
     """Convert data to a Mapping with the specified style.
 
     Args:
@@ -412,11 +416,11 @@ def as_mapping(data: Any, style: str = 'basic') -> Mapping:
         'Alice'
     """
     styles = {
-        'basic': EmbodiedMapping,
-        'attribute': AttributeMapping,
-        'flat': FlatMapping,
-        'path': PathMapping,
-        'frozen': FrozenMapping,
+        "basic": EmbodiedMapping,
+        "attribute": AttributeMapping,
+        "flat": FlatMapping,
+        "path": PathMapping,
+        "frozen": FrozenMapping,
     }
     mapping_class = styles.get(style, EmbodiedMapping)
     return mapping_class(data)
