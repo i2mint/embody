@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>embody.substitution &mdash; embody 0.1.7 documentation</title>
+  <title>embody.substitution &mdash; embody 0.1.8 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=ca7ad2ea"></script>
+      <script src="../../_static/documentation_options.js?v=22607128"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -103,16 +103,16 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Defines the syntax patterns for template variable substitution.&quot;&quot;&quot;</span>
 
     <span class="c1"># Pattern for ${var} syntax</span>
-    <span class="n">DOLLAR_BRACE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\$\{([a-zA-Z_][a-zA-Z0-9_]*)\}&#39;</span><span class="p">)</span>
+    <span class="n">DOLLAR_BRACE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\$\{([a-zA-Z_][a-zA-Z0-9_]*)\}&quot;</span><span class="p">)</span>
     <span class="c1"># Pattern for {var} syntax (Python str.format style)</span>
-    <span class="n">BRACE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\{([a-zA-Z_][a-zA-Z0-9_]*)\}&#39;</span><span class="p">)</span>
+    <span class="n">BRACE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\{([a-zA-Z_][a-zA-Z0-9_]*)\}&quot;</span><span class="p">)</span>
     <span class="c1"># Pattern for [[var]] syntax</span>
-    <span class="n">DOUBLE_BRACKET</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\[\[([a-zA-Z_][a-zA-Z0-9_]*)\]\]&#39;</span><span class="p">)</span>
+    <span class="n">DOUBLE_BRACKET</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\[\[([a-zA-Z_][a-zA-Z0-9_]*)\]\]&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SubstitutionSyntax.get_pattern">
 <a class="viewcode-back" href="../../module_docs/embody/substitution.html#embody.SubstitutionSyntax.get_pattern">[docs]</a>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_pattern</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">syntax</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;dollar_brace&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Pattern</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_pattern</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">syntax</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;dollar_brace&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Pattern</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the regex pattern for the specified syntax.</span>
 
 <span class="sd">        Args:</span>
@@ -127,9 +127,9 @@
 <span class="sd">            [&#39;name&#39;, &#39;age&#39;]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">patterns</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;dollar_brace&#39;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">DOLLAR_BRACE</span><span class="p">,</span>
-            <span class="s1">&#39;brace&#39;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">BRACE</span><span class="p">,</span>
-            <span class="s1">&#39;double_bracket&#39;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">DOUBLE_BRACKET</span><span class="p">,</span>
+            <span class="s2">&quot;dollar_brace&quot;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">DOLLAR_BRACE</span><span class="p">,</span>
+            <span class="s2">&quot;brace&quot;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">BRACE</span><span class="p">,</span>
+            <span class="s2">&quot;double_bracket&quot;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">DOUBLE_BRACKET</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="k">return</span> <span class="n">patterns</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">syntax</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">DOLLAR_BRACE</span><span class="p">)</span></div>
 </div>
@@ -138,10 +138,7 @@
 
 <div class="viewcode-block" id="extract_template_vars">
 <a class="viewcode-back" href="../../module_docs/embody/substitution.html#embody.extract_template_vars">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">extract_template_vars</span><span class="p">(</span>
-    <span class="n">template</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">syntax</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;dollar_brace&#39;</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_template_vars</span><span class="p">(</span><span class="n">template</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">syntax</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;dollar_brace&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract all template variable names from a string.</span>
 
 <span class="sd">    Args:</span>
@@ -164,7 +161,7 @@
 
 <div class="viewcode-block" id="is_exact_match">
 <a class="viewcode-back" href="../../module_docs/embody/substitution.html#embody.is_exact_match">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">is_exact_match</span><span class="p">(</span><span class="n">template</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">syntax</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;dollar_brace&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_exact_match</span><span class="p">(</span><span class="n">template</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">syntax</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;dollar_brace&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if template is exactly one variable placeholder (no other text).</span>
 
 <span class="sd">    This is crucial for type preservation. If the template is exactly ${var},</span>
@@ -198,8 +195,8 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">substitute</span><span class="p">(</span>
     <span class="n">template</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
     <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
-    <span class="n">syntax</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;dollar_brace&#39;</span><span class="p">,</span>
-    <span class="n">strict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">syntax</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;dollar_brace&quot;</span><span class="p">,</span>
+    <span class="n">strict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Perform type-preserving substitution on a template value.</span>
 
@@ -258,7 +255,7 @@
             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing required parameters: </span><span class="si">{</span><span class="n">missing</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="c1"># Perform substitution based on syntax</span>
-    <span class="k">if</span> <span class="n">syntax</span> <span class="o">==</span> <span class="s1">&#39;brace&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">syntax</span> <span class="o">==</span> <span class="s2">&quot;brace&quot;</span><span class="p">:</span>
         <span class="c1"># Use Python&#39;s str.format directly</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
@@ -274,10 +271,10 @@
                 <span class="c1"># Convert value to string for interpolation</span>
                 <span class="n">value_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="n">var</span><span class="p">])</span>
                 <span class="c1"># Replace the pattern</span>
-                <span class="k">if</span> <span class="n">syntax</span> <span class="o">==</span> <span class="s1">&#39;dollar_brace&#39;</span><span class="p">:</span>
-                    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;$</span><span class="se">{{</span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="se">}}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">value_str</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="n">syntax</span> <span class="o">==</span> <span class="s1">&#39;double_bracket&#39;</span><span class="p">:</span>
-                    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[[</span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s1">]]&#39;</span><span class="p">,</span> <span class="n">value_str</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">syntax</span> <span class="o">==</span> <span class="s2">&quot;dollar_brace&quot;</span><span class="p">:</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="se">{{</span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="se">}}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">value_str</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">syntax</span> <span class="o">==</span> <span class="s2">&quot;double_bracket&quot;</span><span class="p">:</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[[</span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2">]]&quot;</span><span class="p">,</span> <span class="n">value_str</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
 
@@ -288,7 +285,7 @@
     <span class="n">template</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
     <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
     <span class="n">syntaxes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">strict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">strict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply substitution for multiple syntax styles.</span>
 
@@ -307,7 +304,7 @@
 <span class="sd">        &gt;&gt;&gt; substitute_all_syntaxes(&#39;${name} is {age}&#39;, {&#39;name&#39;: &#39;Alice&#39;, &#39;age&#39;: 30})</span>
 <span class="sd">        &#39;Alice is 30&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">syntaxes</span> <span class="o">=</span> <span class="n">syntaxes</span> <span class="ow">or</span> <span class="p">[</span><span class="s1">&#39;dollar_brace&#39;</span><span class="p">,</span> <span class="s1">&#39;brace&#39;</span><span class="p">]</span>
+    <span class="n">syntaxes</span> <span class="o">=</span> <span class="n">syntaxes</span> <span class="ow">or</span> <span class="p">[</span><span class="s2">&quot;dollar_brace&quot;</span><span class="p">,</span> <span class="s2">&quot;brace&quot;</span><span class="p">]</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">template</span>
     <span class="k">for</span> <span class="n">syntax</span> <span class="ow">in</span> <span class="n">syntaxes</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">substitute</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">syntax</span><span class="o">=</span><span class="n">syntax</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="n">strict</span><span class="p">)</span>
@@ -323,7 +320,7 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s2">&quot;{&quot;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span></div>
 
 
@@ -355,7 +352,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright NO COPYRIGHT.</p>
+    <p></p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

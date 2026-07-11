@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>embody.mappings &mdash; embody 0.1.7 documentation</title>
+  <title>embody.mappings &mdash; embody 0.1.8 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=ca7ad2ea"></script>
+      <script src="../../_static/documentation_options.js?v=22607128"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -164,7 +164,7 @@
 <span class="sd">        1</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">embodier</span><span class="p">:</span> <span class="s1">&#39;Embodier&#39;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">embodier</span><span class="p">:</span> <span class="s2">&quot;Embodier&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize a LazyEmbodiedMapping.</span>
 
 <span class="sd">        Args:</span>
@@ -185,6 +185,7 @@
             <span class="c1"># Embody just this value</span>
             <span class="n">template_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_template</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
             <span class="kn">from</span><span class="w"> </span><span class="nn">embody.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">embody</span>
+
             <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">embody</span><span class="p">(</span><span class="n">template_value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
 
@@ -216,7 +217,7 @@
 <span class="sd">        [&#39;user.name&#39;, &#39;user.age&#39;]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">separator</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">separator</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize a FlatMapping.</span>
 
 <span class="sd">        Args:</span>
@@ -301,7 +302,9 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39; object has no attribute &#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39; object has no attribute &#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+            <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Iterate over keys.&quot;&quot;&quot;</span>
@@ -352,6 +355,7 @@
 <span class="sd">            data: Dictionary to freeze (will be deep copied)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="c1"># Make it truly immutable by storing as tuple of items</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
@@ -460,7 +464,7 @@
 <span class="sd">        {&#39;b&#39;: {&#39;c&#39;: 42}}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">separator</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">separator</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize a PathMapping.</span>
 
 <span class="sd">        Args:</span>
@@ -476,10 +480,10 @@
             <span class="c1"># Tuple path</span>
             <span class="k">return</span> <span class="n">get_by_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
                 <span class="c1"># JSON Pointer format</span>
                 <span class="c1"># Remove leading / and split</span>
-                <span class="n">parts</span> <span class="o">=</span> <span class="n">key</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+                <span class="n">parts</span> <span class="o">=</span> <span class="n">key</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">get_by_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">parts</span><span class="p">))</span>
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_separator</span> <span class="ow">in</span> <span class="n">key</span><span class="p">:</span>
                 <span class="c1"># Dot notation path</span>
@@ -510,7 +514,7 @@
 
 <div class="viewcode-block" id="as_mapping">
 <a class="viewcode-back" href="../../module_docs/embody/mappings.html#embody.as_mapping">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">as_mapping</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;basic&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">as_mapping</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;basic&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert data to a Mapping with the specified style.</span>
 
 <span class="sd">    Args:</span>
@@ -531,11 +535,11 @@
 <span class="sd">        &#39;Alice&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">styles</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;basic&#39;</span><span class="p">:</span> <span class="n">EmbodiedMapping</span><span class="p">,</span>
-        <span class="s1">&#39;attribute&#39;</span><span class="p">:</span> <span class="n">AttributeMapping</span><span class="p">,</span>
-        <span class="s1">&#39;flat&#39;</span><span class="p">:</span> <span class="n">FlatMapping</span><span class="p">,</span>
-        <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="n">PathMapping</span><span class="p">,</span>
-        <span class="s1">&#39;frozen&#39;</span><span class="p">:</span> <span class="n">FrozenMapping</span><span class="p">,</span>
+        <span class="s2">&quot;basic&quot;</span><span class="p">:</span> <span class="n">EmbodiedMapping</span><span class="p">,</span>
+        <span class="s2">&quot;attribute&quot;</span><span class="p">:</span> <span class="n">AttributeMapping</span><span class="p">,</span>
+        <span class="s2">&quot;flat&quot;</span><span class="p">:</span> <span class="n">FlatMapping</span><span class="p">,</span>
+        <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="n">PathMapping</span><span class="p">,</span>
+        <span class="s2">&quot;frozen&quot;</span><span class="p">:</span> <span class="n">FrozenMapping</span><span class="p">,</span>
     <span class="p">}</span>
     <span class="n">mapping_class</span> <span class="o">=</span> <span class="n">styles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">style</span><span class="p">,</span> <span class="n">EmbodiedMapping</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">mapping_class</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
@@ -549,7 +553,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright NO COPYRIGHT.</p>
+    <p></p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
