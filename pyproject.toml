@@ -48,7 +48,15 @@ convention = "google"
 "**/examples/*" = ["D"]
 "**/scrap/*" = ["D"]
 
+[tool.wads.ci.testing]
+# `scrap/` is throwaway code (already excluded from ruff); wads' default
+# exclude of "scrap" only matches a top-level dir, so name the real path.
+exclude_paths = ["examples", "embody/scrap"]
+
 [tool.pytest.ini_options]
 minversion = "6.0"
-testpaths = ["tests"]
+# CI runs `pytest --doctest-modules` with no path argument, so collection is
+# driven entirely by testpaths. The package dir must be listed here or none of
+# its doctests ever run.
+testpaths = ["tests", "embody"]
 doctest_optionflags = ["NORMALIZE_WHITESPACE", "ELLIPSIS"]
