@@ -167,8 +167,8 @@ class TemplateWrapper:
 
     Examples:
         >>> template = TemplateWrapper({'name': '${user}', 'age': '${years}'})
-        >>> template.get_dependencies()
-        {'user', 'years'}
+        >>> sorted(template.get_dependencies())
+        ['user', 'years']
     """
 
     def __init__(
