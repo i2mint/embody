@@ -311,7 +311,7 @@ def mk_pattern_from_template_and_format_dict(template, format_dict=None, sep=pat
     ...     assert p == re.compile('(?P<here>[^/]+)/and/(?P<there>[^/]+)')
     >>> p = mk_pattern_from_template_and_format_dict('{here}/and/{there}', {'there': r'\d+'})
     >>> if os.name == 'nt':  # for windows
-    ...     assert p == re.compile(r'(?P<here>[^\\\\]+)/and/(?P<there>\d+)')
+    ...     assert p == re.compile(r'(?P<here>[^\\]+)/and/(?P<there>\d+)')
     ... else:
     ...     assert p == re.compile(r'(?P<here>[^/]+)/and/(?P<there>\d+)')
     >>> type(p)
