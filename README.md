@@ -35,13 +35,9 @@ pip install embody
 from embody import embody
 
 # Simple template embodiment
-template = {
-    'name': '${name}',
-    'age': '${age}',
-    'greeting': 'Hello ${name}!'
-}
+template = {"name": "${name}", "age": "${age}", "greeting": "Hello ${name}!"}
 
-result = embody(template, {'name': 'Alice', 'age': 30})
+result = embody(template, {"name": "Alice", "age": 30})
 # {'name': 'Alice', 'age': 30, 'greeting': 'Hello Alice!'}
 ```
 
@@ -51,21 +47,17 @@ Unlike traditional templating, embody preserves types:
 
 ```python
 template = {
-    'count': '${num}',        # Will be int, not string!
-    'active': '${flag}',       # Will be bool
-    'items': '${list}',        # Will be list
-    'message': 'Count: ${num}' # Will be string (interpolation)
+    "count": "${num}",  # Will be int, not string!
+    "active": "${flag}",  # Will be bool
+    "items": "${list}",  # Will be list
+    "message": "Count: ${num}",  # Will be string (interpolation)
 }
 
-result = embody(template, {
-    'num': 42,
-    'flag': True,
-    'list': [1, 2, 3]
-})
+result = embody(template, {"num": 42, "flag": True, "list": [1, 2, 3]})
 
-assert isinstance(result['count'], int)    # True - type preserved!
-assert isinstance(result['active'], bool)  # True
-assert isinstance(result['items'], list)   # True
+assert isinstance(result["count"], int)  # True - type preserved!
+assert isinstance(result["active"], bool)  # True
+assert isinstance(result["items"], list)  # True
 ```
 
 ### Nested Structures
@@ -74,22 +66,15 @@ Embody handles deep nesting naturally:
 
 ```python
 template = {
-    'user': {
-        'profile': {
-            'name': '${name}',
-            'settings': {
-                'theme': '${theme}',
-                'notifications': '${notify}'
-            }
+    "user": {
+        "profile": {
+            "name": "${name}",
+            "settings": {"theme": "${theme}", "notifications": "${notify}"},
         }
     }
 }
 
-result = embody(template, {
-    'name': 'Bob',
-    'theme': 'dark',
-    'notify': True
-})
+result = embody(template, {"name": "Bob", "theme": "dark", "notify": True})
 ```
 
 ## Advanced Features
@@ -100,14 +85,11 @@ result = embody(template, {
 from embody import Context
 import datetime
 
-ctx = Context({
-    'now': lambda: datetime.datetime.now(),
-    'user': 'Alice'
-})
+ctx = Context({"now": lambda: datetime.datetime.now(), "user": "Alice"})
 
 # Callables are invoked on access
-print(ctx['now'])   # Current time
-print(ctx['user'])  # 'Alice'
+print(ctx["now"])  # Current time
+print(ctx["user"])  # 'Alice'
 ```
 
 ### Mapping Interfaces
@@ -116,14 +98,14 @@ print(ctx['user'])  # 'Alice'
 from embody.mappings import AttributeMapping, PathMapping
 
 # Attribute access (Box pattern)
-attr_map = AttributeMapping({'user': {'name': 'Alice'}})
+attr_map = AttributeMapping({"user": {"name": "Alice"}})
 print(attr_map.user.name)  # 'Alice'
 
 # Path-based access
-path_map = PathMapping({'a': {'b': {'c': 42}}})
-print(path_map['a.b.c'])        # Dot notation
-print(path_map['/a/b/c'])       # JSON Pointer
-print(path_map[('a', 'b', 'c')]) # Tuple path
+path_map = PathMapping({"a": {"b": {"c": 42}}})
+print(path_map["a.b.c"])  # Dot notation
+print(path_map["/a/b/c"])  # JSON Pointer
+print(path_map[("a", "b", "c")])  # Tuple path
 ```
 
 ### Path Addressing
@@ -131,14 +113,14 @@ print(path_map[('a', 'b', 'c')]) # Tuple path
 ```python
 from embody.paths import JSONPointer, resolve_path
 
-data = {'users': [{'name': 'Alice'}, {'name': 'Bob'}]}
+data = {"users": [{"name": "Alice"}, {"name": "Bob"}]}
 
 # JSON Pointer (RFC 6901)
-ptr = JSONPointer('/users/0/name')
+ptr = JSONPointer("/users/0/name")
 print(ptr.resolve(data))  # 'Alice'
 
 # Convenience function
-print(resolve_path(data, 'users.0.name'))  # 'Alice'
+print(resolve_path(data, "users.0.name"))  # 'Alice'
 ```
 
 ### Traversal Strategies
@@ -146,18 +128,18 @@ print(resolve_path(data, 'users.0.name'))  # 'Alice'
 ```python
 from embody import Embodier
 
-template = {'data': '${value}'}
+template = {"data": "${value}"}
 
 # Recursive visitor (default, best for one-off templates)
-embodier1 = Embodier(template, strategy='recursive')
+embodier1 = Embodier(template, strategy="recursive")
 
 # Compiled path (best for repeated embodiment)
-embodier2 = Embodier(template, strategy='compiled')
+embodier2 = Embodier(template, strategy="compiled")
 
 # Auto-select based on template complexity
-embodier3 = Embodier(template, strategy='auto')
+embodier3 = Embodier(template, strategy="auto")
 
-result = embodier1({'value': 42})
+result = embodier1({"value": 42})
 ```
 
 ## Examples
@@ -169,24 +151,20 @@ from embody import embody
 import os
 
 config_template = {
-    'database': {
-        'host': '${db_host}',
-        'port': '${db_port}',
-        'name': '${db_name}'
-    },
-    'api': {
-        'base_url': '${api_url}',
-        'timeout': '${timeout}'
-    }
+    "database": {"host": "${db_host}", "port": "${db_port}", "name": "${db_name}"},
+    "api": {"base_url": "${api_url}", "timeout": "${timeout}"},
 }
 
-config = embody(config_template, {
-    'db_host': os.getenv('DB_HOST', 'localhost'),
-    'db_port': int(os.getenv('DB_PORT', '5432')),
-    'db_name': 'myapp',
-    'api_url': 'https://api.example.com',
-    'timeout': 30
-})
+config = embody(
+    config_template,
+    {
+        "db_host": os.getenv("DB_HOST", "localhost"),
+        "db_port": int(os.getenv("DB_PORT", "5432")),
+        "db_name": "myapp",
+        "api_url": "https://api.example.com",
+        "timeout": 30,
+    },
+)
 ```
 
 ### API Response Templates
@@ -195,23 +173,15 @@ config = embody(config_template, {
 from embody import Embodier
 
 response_template = {
-    'status': 'success',
-    'data': {
-        'user_id': '${id}',
-        'name': '${name}',
-        'timestamp': '${ts}'
-    }
+    "status": "success",
+    "data": {"user_id": "${id}", "name": "${name}", "timestamp": "${ts}"},
 }
 
-embodier = Embodier(response_template, strategy='compiled')
+embodier = Embodier(response_template, strategy="compiled")
 
 # Efficiently generate many responses
 for user in users:
-    response = embodier({
-        'id': user.id,
-        'name': user.name,
-        'ts': datetime.now()
-    })
+    response = embodier({"id": user.id, "name": user.name, "ts": datetime.now()})
 ```
 
 ## Backwards Compatibility
@@ -221,13 +191,10 @@ The original `Templater` API is fully preserved:
 ```python
 from embody.templater import Templater
 
-template = {
-    'hello': '{name}',
-    'how are you': ['{verb}', 2, '{name} and {verb} again']
-}
+template = {"hello": "{name}", "how are you": ["{verb}", 2, "{name} and {verb} again"]}
 
 g = Templater.template_func(template=template)
-result = g(name='NAME', verb="VERB")
+result = g(name="NAME", verb="VERB")
 # {'hello': 'NAME', 'how are you': ['VERB', 2, 'NAME and VERB again']}
 ```
 

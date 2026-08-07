@@ -139,12 +139,12 @@ def embody_dynamic(template, params, visited=None):
 # Compilation phase (do once)
 def compile_template(template):
     """
-    {'a': {'b': {'c': '${x}'}}} 
-    → 
+    {'a': {'b': {'c': '${x}'}}}
+    →
     {('a', 'b', 'c'): '${x}'}  # Flat path map
     """
     flat = {}
-    
+
     def _flatten(obj, path=()):
         if isinstance(obj, dict):
             for k, v in obj.items():
@@ -154,16 +154,16 @@ def compile_template(template):
                 _flatten(item, path + (i,))
         else:
             flat[path] = obj
-    
+
     _flatten(template)
-    
+
     # Identify templated paths
     templated_paths = {
-        path: val for path, val in flat.items()
-        if isinstance(val, str) and '${' in val
+        path: val for path, val in flat.items() if isinstance(val, str) and "${" in val
     }
-    
+
     return CompiledTemplate(flat, templated_paths)
+
 
 # Embodiment phase (do many times)
 def embody_compiled(compiled, params):
@@ -171,7 +171,7 @@ def embody_compiled(compiled, params):
     for path, template in compiled.templated_paths.items():
         value = substitute(template, params)
         set_by_path(result, path, value)
-    
+
     return unflatten(result)
 ```
 
@@ -192,20 +192,20 @@ def embody_compiled(compiled, params):
 
 ```python
 class Embodier:
-    def __init__(self, template, strategy='auto'):
+    def __init__(self, template, strategy="auto"):
         self.template = template
         self.compiled = None
-        
-        if strategy == 'auto':
+
+        if strategy == "auto":
             depth = max_depth(template)
             cardinality = count_template_markers(template)
-            
+
             # Heuristic: compile if deep or will be reused
             if depth > 5 or self.expected_reuse_count > 10:
                 self.compiled = compile_template(template)
-        elif strategy == 'compiled':
+        elif strategy == "compiled":
             self.compiled = compile_template(template)
-    
+
     def __call__(self, **params):
         if self.compiled:
             return embody_compiled(self.compiled, params)
@@ -219,8 +219,8 @@ Mappings (dicts) have unique challenges:
 
 ### 1. **Dynamic Keys**
 ```python
-template = {'${key_name}': 'value'}
-params = {'key_name': 'actual_key'}
+template = {"${key_name}": "value"}
+params = {"key_name": "actual_key"}
 # Result: {'actual_key': 'value'}
 ```
 
@@ -229,19 +229,13 @@ params = {'key_name': 'actual_key'}
 
 ```python
 def embody_dict(template, params):
-    return {
-        substitute(k, params): substitute(v, params)
-        for k, v in template.items()
-    }
+    return {substitute(k, params): substitute(v, params) for k, v in template.items()}
 ```
 
 ### 2. **Key Collision**
 ```python
-template = {
-    '${env}_host': 'prod.example.com',
-    'prod_host': 'fallback.example.com'
-}
-params = {'env': 'prod'}
+template = {"${env}_host": "prod.example.com", "prod_host": "fallback.example.com"}
+params = {"env": "prod"}
 # Both resolve to 'prod_host'!
 ```
 
@@ -256,20 +250,20 @@ Critical: Don't stringify everything!
 
 ```python
 # BAD
-template = {'count': '${num}'}
-params = {'num': 42}
-result = {'count': '42'}  # String! Type lost
+template = {"count": "${num}"}
+params = {"num": 42}
+result = {"count": "42"}  # String! Type lost
 
-# GOOD  
-template = {'count': '${num}'}
-params = {'num': 42}
-result = {'count': 42}  # Integer preserved
+# GOOD
+template = {"count": "${num}"}
+params = {"num": 42}
+result = {"count": 42}  # Integer preserved
 ```
 
 **Implementation:**
 ```python
 def substitute(template_str, params):
-    if template_str == f'${{{var}}}':  # Exact match
+    if template_str == f"${{{var}}}":  # Exact match
         return params[var]  # Return raw value
     else:
         return template_str.format(**params)  # String interpolation
@@ -282,21 +276,22 @@ Ensure embodied objects satisfy `collections.abc.Mapping`:
 ```python
 from collections.abc import Mapping
 
+
 class EmbodiedMapping(Mapping):
     def __init__(self, template, params):
         self._template = template
         self._params = params
         self._cache = {}  # Lazy embodiment
-    
+
     def __getitem__(self, key):
         if key not in self._cache:
             template_val = self._template[key]
             self._cache[key] = embody(template_val, self._params)
         return self._cache[key]
-    
+
     def __iter__(self):
         return iter(self._template)
-    
+
     def __len__(self):
         return len(self._template)
 ```
@@ -312,14 +307,15 @@ The goal: Any nested structure → Standard `Mapping` interface
 ```python
 class FlatMapping(Mapping):
     """Nested dict accessible via path strings"""
-    def __init__(self, nested_dict, separator='.'):
+
+    def __init__(self, nested_dict, separator="."):
         self._flat = flatten_dict(nested_dict, separator)
         self._separator = separator
-    
+
     def __getitem__(self, path):
         # Access nested via 'user.address.city'
         return self._flat[path]
-    
+
     def get_nested(self, *path_parts):
         # Access nested via ('user', 'address', 'city')
         path = self._separator.join(path_parts)
@@ -331,15 +327,16 @@ class FlatMapping(Mapping):
 ```python
 class AttributeMapping(Mapping):
     """dict['key'] → dict.key"""
+
     def __init__(self, data):
         self._data = data
-    
+
     def __getattr__(self, key):
         val = self._data[key]
         if isinstance(val, dict):
             return AttributeMapping(val)  # Recursive wrapping
         return val
-    
+
     # ... implement Mapping methods ...
 ```
 
@@ -348,13 +345,15 @@ class AttributeMapping(Mapping):
 ```python
 import jsonpointer
 
+
 class PointerMapping(Mapping):
     """Access via RFC 6901 JSON Pointer syntax"""
+
     def __init__(self, data):
         self._data = data
-    
+
     def __getitem__(self, key):
-        if key.startswith('/'):
+        if key.startswith("/"):
             # JSON Pointer: /users/0/name
             return jsonpointer.resolve_pointer(self._data, key)
         else:
