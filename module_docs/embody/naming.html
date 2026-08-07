@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>embody.naming &mdash; embody 0.1.8 documentation</title>
+  <title>embody.naming &mdash; embody 0.1.9 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -15,7 +15,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=22607128"></script>
+      <script src="../../_static/documentation_options.js?v=8618f531"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -400,7 +400,7 @@ Used to easily make process_kwargs and process_info_dict arguments for LinearNam
 <span class="gp">... </span>    <span class="k">assert</span> <span class="n">p</span> <span class="o">==</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;(?P&lt;here&gt;[^/]+)/and/(?P&lt;there&gt;[^/]+)&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">mk_pattern_from_template_and_format_dict</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{here}</span><span class="s1">/and/</span><span class="si">{there}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;there&#39;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;\d+&#39;</span><span class="p">})</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;nt&#39;</span><span class="p">:</span>  <span class="c1"># for windows</span>
-<span class="gp">... </span>    <span class="k">assert</span> <span class="n">p</span> <span class="o">==</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?P&lt;here&gt;[^</span><span class="se">\\\\</span><span class="s1">]+)/and/(?P&lt;there&gt;\d+)&#39;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">assert</span> <span class="n">p</span> <span class="o">==</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?P&lt;here&gt;[^</span><span class="se">\\</span><span class="s1">]+)/and/(?P&lt;there&gt;\d+)&#39;</span><span class="p">)</span>
 <span class="gp">... </span><span class="k">else</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="k">assert</span> <span class="n">p</span> <span class="o">==</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?P&lt;here&gt;[^/]+)/and/(?P&lt;there&gt;\d+)&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
