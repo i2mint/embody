@@ -1,4 +1,0 @@
-embody.util
-===========
-.. automodule:: embody.util
-   :members:

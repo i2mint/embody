@@ -1,278 +1,570 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="alternate" type="text/markdown" href="index.html.md">
+<link rel="describedby" href="llms.txt" type="text/markdown">
+<link rel="alternate" type="text/markdown" href="index.html.md">
+<link rel="describedby" href="llms.txt"><link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="API reference" href="api.html">
+
+    <!-- Generated with Sphinx 9.1.1 and Furo 2025.12.19 -->
+        <title>embody</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d75fae25" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx_autodoc_typehints.css?v=057ac668" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
 
 
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to embody’s documentation! &mdash; embody 0.1.9 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
-
+<style>
+  body {
+    --color-code-background: #f0f0f0;
+  --color-code-foreground: black;
+  --color-brand-primary: #694191;
+  --color-brand-content: #694191;
   
-      <script src="_static/jquery.js?v=5d32c60e"></script>
-      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=8618f531"></script>
-      <script src="_static/doctools.js?v=fd6eb6e6"></script>
-      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
-      <script src="_static/toggleprompt.js?v=d7ede5d2"></script>
-      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
-    <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="embody" href="module_docs/embody.html" /> 
-</head>
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #cba1fa;
+  --color-brand-content: #cba1fa;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #cba1fa;
+  --color-brand-content: #cba1fa;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
 
-          
-          
-          <a href="#" class="icon icon-home">
-            embody
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody.html">embody</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/base.html">embody.base</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/graphviz_template.html">embody.graphviz_template</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/mappings.html">embody.mappings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/naming.html">embody.naming</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/paths.html">embody.paths</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/scrap/ca_templating.html">embody.scrap.ca_templating</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/strategies.html">embody.strategies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/substitution.html">embody.substitution</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/templater.html">embody.templater</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/templating.html">embody.templating</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/util.html">embody.util</a></li>
-</ul>
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
 
-        </div>
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">embody</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Welcome to embody’s documentation!</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="welcome-to-embody-s-documentation">
-<h1>Welcome to embody’s documentation!<a class="headerlink" href="#welcome-to-embody-s-documentation" title="Link to this heading"></a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody.html">embody</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.AttributeMapping"><code class="docutils literal notranslate"><span class="pre">AttributeMapping</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.CompiledPathEngine"><code class="docutils literal notranslate"><span class="pre">CompiledPathEngine</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.Context"><code class="docutils literal notranslate"><span class="pre">Context</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.CycleError"><code class="docutils literal notranslate"><span class="pre">CycleError</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.DotPath"><code class="docutils literal notranslate"><span class="pre">DotPath</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.EmbodiedMapping"><code class="docutils literal notranslate"><span class="pre">EmbodiedMapping</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.Embodier"><code class="docutils literal notranslate"><span class="pre">Embodier</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.FlatMapping"><code class="docutils literal notranslate"><span class="pre">FlatMapping</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.FrozenMapping"><code class="docutils literal notranslate"><span class="pre">FrozenMapping</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.InvalidPathError"><code class="docutils literal notranslate"><span class="pre">InvalidPathError</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.IterativeStackEngine"><code class="docutils literal notranslate"><span class="pre">IterativeStackEngine</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.JSONPointer"><code class="docutils literal notranslate"><span class="pre">JSONPointer</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.KeyCollisionError"><code class="docutils literal notranslate"><span class="pre">KeyCollisionError</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.LazyEmbodiedMapping"><code class="docutils literal notranslate"><span class="pre">LazyEmbodiedMapping</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.MissingParameterError"><code class="docutils literal notranslate"><span class="pre">MissingParameterError</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.MutableEmbodiedMapping"><code class="docutils literal notranslate"><span class="pre">MutableEmbodiedMapping</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.PathMapping"><code class="docutils literal notranslate"><span class="pre">PathMapping</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.PathNotFoundError"><code class="docutils literal notranslate"><span class="pre">PathNotFoundError</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.RecursiveVisitorEngine"><code class="docutils literal notranslate"><span class="pre">RecursiveVisitorEngine</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.SubstitutionSyntax"><code class="docutils literal notranslate"><span class="pre">SubstitutionSyntax</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.TemplateWrapper"><code class="docutils literal notranslate"><span class="pre">TemplateWrapper</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.TuplePath"><code class="docutils literal notranslate"><span class="pre">TuplePath</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.as_mapping"><code class="docutils literal notranslate"><span class="pre">as_mapping()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.count_template_markers"><code class="docutils literal notranslate"><span class="pre">count_template_markers()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.detect_cycle"><code class="docutils literal notranslate"><span class="pre">detect_cycle()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.embody"><code class="docutils literal notranslate"><span class="pre">embody()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.extract_template_vars"><code class="docutils literal notranslate"><span class="pre">extract_template_vars()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.flatten_dict"><code class="docutils literal notranslate"><span class="pre">flatten_dict()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.flatten_to_tuples"><code class="docutils literal notranslate"><span class="pre">flatten_to_tuples()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.get_by_path"><code class="docutils literal notranslate"><span class="pre">get_by_path()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.get_engine"><code class="docutils literal notranslate"><span class="pre">get_engine()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.is_exact_match"><code class="docutils literal notranslate"><span class="pre">is_exact_match()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.max_depth"><code class="docutils literal notranslate"><span class="pre">max_depth()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.parse_path"><code class="docutils literal notranslate"><span class="pre">parse_path()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.resolve_path"><code class="docutils literal notranslate"><span class="pre">resolve_path()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.set_by_path"><code class="docutils literal notranslate"><span class="pre">set_by_path()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.set_path"><code class="docutils literal notranslate"><span class="pre">set_path()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.substitute"><code class="docutils literal notranslate"><span class="pre">substitute()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.unflatten_dict"><code class="docutils literal notranslate"><span class="pre">unflatten_dict()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody.html#embody.unflatten_from_tuples"><code class="docutils literal notranslate"><span class="pre">unflatten_from_tuples()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/base.html">embody.base</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/base.html#embody.base.Context"><code class="docutils literal notranslate"><span class="pre">Context</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/base.html#embody.base.Embodier"><code class="docutils literal notranslate"><span class="pre">Embodier</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/base.html#embody.base.MissingParameterError"><code class="docutils literal notranslate"><span class="pre">MissingParameterError</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/base.html#embody.base.TemplateWrapper"><code class="docutils literal notranslate"><span class="pre">TemplateWrapper</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/base.html#embody.base.embody"><code class="docutils literal notranslate"><span class="pre">embody()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/graphviz_template.html">embody.graphviz_template</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/mappings.html">embody.mappings</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/mappings.html#embody.mappings.AttributeMapping"><code class="docutils literal notranslate"><span class="pre">AttributeMapping</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/mappings.html#embody.mappings.EmbodiedMapping"><code class="docutils literal notranslate"><span class="pre">EmbodiedMapping</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/mappings.html#embody.mappings.FlatMapping"><code class="docutils literal notranslate"><span class="pre">FlatMapping</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/mappings.html#embody.mappings.FrozenMapping"><code class="docutils literal notranslate"><span class="pre">FrozenMapping</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/mappings.html#embody.mappings.LazyEmbodiedMapping"><code class="docutils literal notranslate"><span class="pre">LazyEmbodiedMapping</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/mappings.html#embody.mappings.MutableEmbodiedMapping"><code class="docutils literal notranslate"><span class="pre">MutableEmbodiedMapping</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/mappings.html#embody.mappings.PathMapping"><code class="docutils literal notranslate"><span class="pre">PathMapping</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/mappings.html#embody.mappings.as_mapping"><code class="docutils literal notranslate"><span class="pre">as_mapping()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/naming.html">embody.naming</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.BigDocTest"><code class="docutils literal notranslate"><span class="pre">BigDocTest</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.KeyMapNames"><code class="docutils literal notranslate"><span class="pre">KeyMapNames</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.KeyMaps"><code class="docutils literal notranslate"><span class="pre">KeyMaps</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.LinearNaming"><code class="docutils literal notranslate"><span class="pre">LinearNaming</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.ParametricKeyStore"><code class="docutils literal notranslate"><span class="pre">ParametricKeyStore</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.PartialFormatter"><code class="docutils literal notranslate"><span class="pre">PartialFormatter</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.StoreWithDictKeys"><code class="docutils literal notranslate"><span class="pre">StoreWithDictKeys</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.StoreWithNamedTupleKeys"><code class="docutils literal notranslate"><span class="pre">StoreWithNamedTupleKeys</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.StoreWithTupleKeys"><code class="docutils literal notranslate"><span class="pre">StoreWithTupleKeys</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.StrTupleDictWithPrefix"><code class="docutils literal notranslate"><span class="pre">StrTupleDictWithPrefix</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.dict_to_namedtuple"><code class="docutils literal notranslate"><span class="pre">dict_to_namedtuple()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.get_fields_from_template"><code class="docutils literal notranslate"><span class="pre">get_fields_from_template()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.mk_kwargs_trans"><code class="docutils literal notranslate"><span class="pre">mk_kwargs_trans()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.mk_pattern_from_template_and_format_dict"><code class="docutils literal notranslate"><span class="pre">mk_pattern_from_template_and_format_dict()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.mk_store_from_path_format_store_cls"><code class="docutils literal notranslate"><span class="pre">mk_store_from_path_format_store_cls()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.mk_tupled_store_from_path_format_store_cls"><code class="docutils literal notranslate"><span class="pre">mk_tupled_store_from_path_format_store_cls()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.namedtuple_to_dict"><code class="docutils literal notranslate"><span class="pre">namedtuple_to_dict()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.update_fields_of_namedtuple"><code class="docutils literal notranslate"><span class="pre">update_fields_of_namedtuple()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/naming.html#embody.naming.validate_kwargs"><code class="docutils literal notranslate"><span class="pre">validate_kwargs()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/paths.html">embody.paths</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/paths.html#embody.paths.DotPath"><code class="docutils literal notranslate"><span class="pre">DotPath</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/paths.html#embody.paths.InvalidPathError"><code class="docutils literal notranslate"><span class="pre">InvalidPathError</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/paths.html#embody.paths.JSONPointer"><code class="docutils literal notranslate"><span class="pre">JSONPointer</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/paths.html#embody.paths.TuplePath"><code class="docutils literal notranslate"><span class="pre">TuplePath</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/paths.html#embody.paths.parse_path"><code class="docutils literal notranslate"><span class="pre">parse_path()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/paths.html#embody.paths.resolve_path"><code class="docutils literal notranslate"><span class="pre">resolve_path()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/paths.html#embody.paths.set_path"><code class="docutils literal notranslate"><span class="pre">set_path()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/scrap/ca_templating.html">embody.scrap.ca_templating</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/scrap/ca_templating.html#embody.scrap.ca_templating.TypeNotKnown"><code class="docutils literal notranslate"><span class="pre">TypeNotKnown</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/scrap/ca_templating.html#embody.scrap.ca_templating.format_iterable"><code class="docutils literal notranslate"><span class="pre">format_iterable()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/scrap/ca_templating.html#embody.scrap.ca_templating.format_multi_iterable"><code class="docutils literal notranslate"><span class="pre">format_multi_iterable()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/strategies.html">embody.strategies</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/strategies.html#embody.strategies.BaseEmbodimentEngine"><code class="docutils literal notranslate"><span class="pre">BaseEmbodimentEngine</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/strategies.html#embody.strategies.CompiledPathEngine"><code class="docutils literal notranslate"><span class="pre">CompiledPathEngine</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/strategies.html#embody.strategies.IterativeStackEngine"><code class="docutils literal notranslate"><span class="pre">IterativeStackEngine</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/strategies.html#embody.strategies.KeyCollisionError"><code class="docutils literal notranslate"><span class="pre">KeyCollisionError</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/strategies.html#embody.strategies.RecursiveVisitorEngine"><code class="docutils literal notranslate"><span class="pre">RecursiveVisitorEngine</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/strategies.html#embody.strategies.get_engine"><code class="docutils literal notranslate"><span class="pre">get_engine()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/substitution.html">embody.substitution</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/substitution.html#embody.substitution.SafeFormatter"><code class="docutils literal notranslate"><span class="pre">SafeFormatter</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/substitution.html#embody.substitution.SubstitutionSyntax"><code class="docutils literal notranslate"><span class="pre">SubstitutionSyntax</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/substitution.html#embody.substitution.extract_template_vars"><code class="docutils literal notranslate"><span class="pre">extract_template_vars()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/substitution.html#embody.substitution.is_exact_match"><code class="docutils literal notranslate"><span class="pre">is_exact_match()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/substitution.html#embody.substitution.safe_format"><code class="docutils literal notranslate"><span class="pre">safe_format()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/substitution.html#embody.substitution.substitute"><code class="docutils literal notranslate"><span class="pre">substitute()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/substitution.html#embody.substitution.substitute_all_syntaxes"><code class="docutils literal notranslate"><span class="pre">substitute_all_syntaxes()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/templater.html">embody.templater</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/templater.html#embody.templater.templated_string_func"><code class="docutils literal notranslate"><span class="pre">templated_string_func()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/templater.html#embody.templater.unique_list_conserving_order"><code class="docutils literal notranslate"><span class="pre">unique_list_conserving_order()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/templating.html">embody.templating</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/embody/util.html">embody.util</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.CycleError"><code class="docutils literal notranslate"><span class="pre">CycleError</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.PathNotFoundError"><code class="docutils literal notranslate"><span class="pre">PathNotFoundError</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.count_template_markers"><code class="docutils literal notranslate"><span class="pre">count_template_markers()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.detect_cycle"><code class="docutils literal notranslate"><span class="pre">detect_cycle()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.flatten_dict"><code class="docutils literal notranslate"><span class="pre">flatten_dict()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.flatten_to_tuples"><code class="docutils literal notranslate"><span class="pre">flatten_to_tuples()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.get_by_path"><code class="docutils literal notranslate"><span class="pre">get_by_path()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.max_depth"><code class="docutils literal notranslate"><span class="pre">max_depth()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.set_by_path"><code class="docutils literal notranslate"><span class="pre">set_by_path()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.unflatten_dict"><code class="docutils literal notranslate"><span class="pre">unflatten_dict()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/embody/util.html#embody.util.unflatten_from_tuples"><code class="docutils literal notranslate"><span class="pre">unflatten_from_tuples()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</div>
-</section>
-<section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
-<p>Release: 0.1.9</p>
-<p>Last change: Aug 07, 2026</p>
-</section>
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="module_docs/embody.html" class="btn btn-neutral float-right" title="embody" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
     </div>
+    <div class="header-center">
+      <a href="#"><div class="brand">embody</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="#">
+  
+  <span class="sidebar-brand-text">embody</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="_autosummary/embody.html">embody</a><input aria-label="Toggle navigation of embody" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/embody.base.html">embody.base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/embody.graphviz_template.html">embody.graphviz_template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/embody.mappings.html">embody.mappings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/embody.naming.html">embody.naming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/embody.paths.html">embody.paths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/embody.strategies.html">embody.strategies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/embody.substitution.html">embody.substitution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/embody.templater.html">embody.templater</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/embody.templating.html">embody.templating</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/embody.util.html">embody.util</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
-  <hr/>
+</div>
+</div>
 
-  <div role="contentinfo">
-    <p></p>
-  </div>
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/index.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <!-- generated by epythet -->
+<section id="embody">
+<h1>embody<a class="headerlink" href="#embody" title="Link to this heading">¶</a></h1>
+<p><strong>Structural Object Embodiment for Python</strong> - Transform skeletal templates into fully realized, type-safe objects through recursive hydration.</p>
+<p><a class="reference external" href="https://i2mint.github.io/embody/"><img alt="Documentation" src="https://img.shields.io/badge/docs-i2mint-blue" /></a>
+<a class="reference external" href="https://pypi.org/project/embody/"><img alt="PyPI version" src="https://img.shields.io/pypi/v/embody.svg" /></a>
+<a class="reference external" href="https://pypi.org/project/embody/"><img alt="Python" src="https://img.shields.io/pypi/pyversions/embody.svg" /></a></p>
+<section id="what-is-embody">
+<h2>What is Embody?<a class="headerlink" href="#what-is-embody" title="Link to this heading">¶</a></h2>
+<p>Embody is a powerful library for <strong>templated object generation</strong> that goes beyond simple string formatting. It provides <strong>structural embodiment</strong> - the recursive hydration of nested data structures with type preservation, cycle detection, and intelligent traversal strategies.</p>
+<section id="key-features">
+<h3>Key Features<a class="headerlink" href="#key-features" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>🎯 Type Preservation</strong>: Variables like <code class="docutils literal notranslate"><span class="pre">${count}</span></code> preserve their types (int, bool, list, dict) instead of converting everything to strings</p></li>
+<li><p><strong>🔄 Multiple Strategies</strong>: Choose between recursive visitor, compiled path, or iterative stack traversal</p></li>
+<li><p><strong>🎨 Multiple Syntaxes</strong>: Support for <code class="docutils literal notranslate"><span class="pre">${var}</span></code>, <code class="docutils literal notranslate"><span class="pre">{var}</span></code>, and <code class="docutils literal notranslate"><span class="pre">[[var]]</span></code> template syntaxes</p></li>
+<li><p><strong>🛡️ Cycle Detection</strong>: Automatically detect and prevent circular references</p></li>
+<li><p><strong>📍 Path Addressing</strong>: Access nested data via JSON Pointer, dot notation, or tuple paths</p></li>
+<li><p><strong>🗺️ Mapping Interfaces</strong>: Uniform interfaces for attribute access, flattening, and path-based operations</p></li>
+<li><p><strong>⚡ Performance</strong>: Auto-selects optimal strategy based on template complexity</p></li>
+<li><p><strong>🔒 Type Safety</strong>: Full integration with Pydantic and other validation libraries</p></li>
+</ul>
+</section>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>embody
+</pre></div>
+</div>
+</section>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">¶</a></h2>
+<section id="basic-usage">
+<h3>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">embody</span><span class="w"> </span><span class="kn">import</span> <span class="n">embody</span>
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+<span class="c1"># Simple template embodiment</span>
+<span class="n">template</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"$</span><span class="si">{name}</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"age"</span><span class="p">:</span> <span class="s2">"$</span><span class="si">{age}</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"greeting"</span><span class="p">:</span> <span class="s2">"Hello $</span><span class="si">{name}</span><span class="s2">!"</span><span class="p">}</span>
 
-</footer>
+<span class="n">result</span> <span class="o">=</span> <span class="n">embody</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Alice"</span><span class="p">,</span> <span class="s2">"age"</span><span class="p">:</span> <span class="mi">30</span><span class="p">})</span>
+<span class="c1"># {'name': 'Alice', 'age': 30, 'greeting': 'Hello Alice!'}</span>
+</pre></div>
+</div>
+</section>
+<section id="type-preservation">
+<h3>Type Preservation<a class="headerlink" href="#type-preservation" title="Link to this heading">¶</a></h3>
+<p>Unlike traditional templating, embody preserves types:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">template</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"count"</span><span class="p">:</span> <span class="s2">"$</span><span class="si">{num}</span><span class="s2">"</span><span class="p">,</span>  <span class="c1"># Will be int, not string!</span>
+    <span class="s2">"active"</span><span class="p">:</span> <span class="s2">"$</span><span class="si">{flag}</span><span class="s2">"</span><span class="p">,</span>  <span class="c1"># Will be bool</span>
+    <span class="s2">"items"</span><span class="p">:</span> <span class="s2">"$</span><span class="si">{list}</span><span class="s2">"</span><span class="p">,</span>  <span class="c1"># Will be list</span>
+    <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Count: $</span><span class="si">{num}</span><span class="s2">"</span><span class="p">,</span>  <span class="c1"># Will be string (interpolation)</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">embody</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="p">{</span><span class="s2">"num"</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span> <span class="s2">"flag"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"list"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]})</span>
+
+<span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"count"</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span>  <span class="c1"># True - type preserved!</span>
+<span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"active"</span><span class="p">],</span> <span class="nb">bool</span><span class="p">)</span>  <span class="c1"># True</span>
+<span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"items"</span><span class="p">],</span> <span class="nb">list</span><span class="p">)</span>  <span class="c1"># True</span>
+</pre></div>
+</div>
+</section>
+<section id="nested-structures">
+<h3>Nested Structures<a class="headerlink" href="#nested-structures" title="Link to this heading">¶</a></h3>
+<p>Embody handles deep nesting naturally:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">template</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"user"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"profile"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"$</span><span class="si">{name}</span><span class="s2">"</span><span class="p">,</span>
+            <span class="s2">"settings"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"theme"</span><span class="p">:</span> <span class="s2">"$</span><span class="si">{theme}</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"notifications"</span><span class="p">:</span> <span class="s2">"$</span><span class="si">{notify}</span><span class="s2">"</span><span class="p">},</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">embody</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Bob"</span><span class="p">,</span> <span class="s2">"theme"</span><span class="p">:</span> <span class="s2">"dark"</span><span class="p">,</span> <span class="s2">"notify"</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="advanced-features">
+<h2>Advanced Features<a class="headerlink" href="#advanced-features" title="Link to this heading">¶</a></h2>
+<section id="context-with-resolvers">
+<h3>Context with Resolvers<a class="headerlink" href="#context-with-resolvers" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">embody</span><span class="w"> </span><span class="kn">import</span> <span class="n">Context</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
+
+<span class="n">ctx</span> <span class="o">=</span> <span class="n">Context</span><span class="p">({</span><span class="s2">"now"</span><span class="p">:</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="s2">"user"</span><span class="p">:</span> <span class="s2">"Alice"</span><span class="p">})</span>
+
+<span class="c1"># Callables are invoked on access</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ctx</span><span class="p">[</span><span class="s2">"now"</span><span class="p">])</span>  <span class="c1"># Current time</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ctx</span><span class="p">[</span><span class="s2">"user"</span><span class="p">])</span>  <span class="c1"># 'Alice'</span>
+</pre></div>
+</div>
+</section>
+<section id="mapping-interfaces">
+<h3>Mapping Interfaces<a class="headerlink" href="#mapping-interfaces" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">embody.mappings</span><span class="w"> </span><span class="kn">import</span> <span class="n">AttributeMapping</span><span class="p">,</span> <span class="n">PathMapping</span>
+
+<span class="c1"># Attribute access (Box pattern)</span>
+<span class="n">attr_map</span> <span class="o">=</span> <span class="n">AttributeMapping</span><span class="p">({</span><span class="s2">"user"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Alice"</span><span class="p">}})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">attr_map</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># 'Alice'</span>
+
+<span class="c1"># Path-based access</span>
+<span class="n">path_map</span> <span class="o">=</span> <span class="n">PathMapping</span><span class="p">({</span><span class="s2">"a"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"b"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"c"</span><span class="p">:</span> <span class="mi">42</span><span class="p">}}})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">path_map</span><span class="p">[</span><span class="s2">"a.b.c"</span><span class="p">])</span>  <span class="c1"># Dot notation</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">path_map</span><span class="p">[</span><span class="s2">"/a/b/c"</span><span class="p">])</span>  <span class="c1"># JSON Pointer</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">path_map</span><span class="p">[(</span><span class="s2">"a"</span><span class="p">,</span> <span class="s2">"b"</span><span class="p">,</span> <span class="s2">"c"</span><span class="p">)])</span>  <span class="c1"># Tuple path</span>
+</pre></div>
+</div>
+</section>
+<section id="path-addressing">
+<h3>Path Addressing<a class="headerlink" href="#path-addressing" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">embody.paths</span><span class="w"> </span><span class="kn">import</span> <span class="n">JSONPointer</span><span class="p">,</span> <span class="n">resolve_path</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"users"</span><span class="p">:</span> <span class="p">[{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Alice"</span><span class="p">},</span> <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Bob"</span><span class="p">}]}</span>
+
+<span class="c1"># JSON Pointer (RFC 6901)</span>
+<span class="n">ptr</span> <span class="o">=</span> <span class="n">JSONPointer</span><span class="p">(</span><span class="s2">"/users/0/name"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ptr</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>  <span class="c1"># 'Alice'</span>
+
+<span class="c1"># Convenience function</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">resolve_path</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">"users.0.name"</span><span class="p">))</span>  <span class="c1"># 'Alice'</span>
+</pre></div>
+</div>
+</section>
+<section id="traversal-strategies">
+<h3>Traversal Strategies<a class="headerlink" href="#traversal-strategies" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">embody</span><span class="w"> </span><span class="kn">import</span> <span class="n">Embodier</span>
+
+<span class="n">template</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"data"</span><span class="p">:</span> <span class="s2">"$</span><span class="si">{value}</span><span class="s2">"</span><span class="p">}</span>
+
+<span class="c1"># Recursive visitor (default, best for one-off templates)</span>
+<span class="n">embodier1</span> <span class="o">=</span> <span class="n">Embodier</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s2">"recursive"</span><span class="p">)</span>
+
+<span class="c1"># Compiled path (best for repeated embodiment)</span>
+<span class="n">embodier2</span> <span class="o">=</span> <span class="n">Embodier</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s2">"compiled"</span><span class="p">)</span>
+
+<span class="c1"># Auto-select based on template complexity</span>
+<span class="n">embodier3</span> <span class="o">=</span> <span class="n">Embodier</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s2">"auto"</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">embodier1</span><span class="p">({</span><span class="s2">"value"</span><span class="p">:</span> <span class="mi">42</span><span class="p">})</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<section id="configuration-management">
+<h3>Configuration Management<a class="headerlink" href="#configuration-management" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">embody</span><span class="w"> </span><span class="kn">import</span> <span class="n">embody</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="n">config_template</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"database"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"host"</span><span class="p">:</span> <span class="s2">"$</span><span class="si">{db_host}</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"port"</span><span class="p">:</span> <span class="s2">"$</span><span class="si">{db_port}</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"$</span><span class="si">{db_name}</span><span class="s2">"</span><span class="p">},</span>
+    <span class="s2">"api"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"base_url"</span><span class="p">:</span> <span class="s2">"$</span><span class="si">{api_url}</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"timeout"</span><span class="p">:</span> <span class="s2">"$</span><span class="si">{timeout}</span><span class="s2">"</span><span class="p">},</span>
+<span class="p">}</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">embody</span><span class="p">(</span>
+    <span class="n">config_template</span><span class="p">,</span>
+    <span class="p">{</span>
+        <span class="s2">"db_host"</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"DB_HOST"</span><span class="p">,</span> <span class="s2">"localhost"</span><span class="p">),</span>
+        <span class="s2">"db_port"</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"DB_PORT"</span><span class="p">,</span> <span class="s2">"5432"</span><span class="p">)),</span>
+        <span class="s2">"db_name"</span><span class="p">:</span> <span class="s2">"myapp"</span><span class="p">,</span>
+        <span class="s2">"api_url"</span><span class="p">:</span> <span class="s2">"https://api.example.com"</span><span class="p">,</span>
+        <span class="s2">"timeout"</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="api-response-templates">
+<h3>API Response Templates<a class="headerlink" href="#api-response-templates" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">embody</span><span class="w"> </span><span class="kn">import</span> <span class="n">Embodier</span>
+
+<span class="n">response_template</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"status"</span><span class="p">:</span> <span class="s2">"success"</span><span class="p">,</span>
+    <span class="s2">"data"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"user_id"</span><span class="p">:</span> <span class="s2">"$</span><span class="si">{id}</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"$</span><span class="si">{name}</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"timestamp"</span><span class="p">:</span> <span class="s2">"$</span><span class="si">{ts}</span><span class="s2">"</span><span class="p">},</span>
+<span class="p">}</span>
+
+<span class="n">embodier</span> <span class="o">=</span> <span class="n">Embodier</span><span class="p">(</span><span class="n">response_template</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s2">"compiled"</span><span class="p">)</span>
+
+<span class="c1"># Efficiently generate many responses</span>
+<span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users</span><span class="p">:</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">embodier</span><span class="p">({</span><span class="s2">"id"</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">"ts"</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()})</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="backwards-compatibility">
+<h2>Backwards Compatibility<a class="headerlink" href="#backwards-compatibility" title="Link to this heading">¶</a></h2>
+<p>The original <code class="docutils literal notranslate"><span class="pre">Templater</span></code> API is fully preserved:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">embody.templater</span><span class="w"> </span><span class="kn">import</span> <span class="n">Templater</span>
+
+<span class="n">template</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"hello"</span><span class="p">:</span> <span class="s2">"</span><span class="si">{name}</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"how are you"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"</span><span class="si">{verb}</span><span class="s2">"</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">"</span><span class="si">{name}</span><span class="s2"> and </span><span class="si">{verb}</span><span class="s2"> again"</span><span class="p">]}</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">Templater</span><span class="o">.</span><span class="n">template_func</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="n">template</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">g</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"NAME"</span><span class="p">,</span> <span class="n">verb</span><span class="o">=</span><span class="s2">"VERB"</span><span class="p">)</span>
+<span class="c1"># {'hello': 'NAME', 'how are you': ['VERB', 2, 'NAME and VERB again']}</span>
+</pre></div>
+</div>
+</section>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://i2mint.github.io/embody/">Full Documentation</a></p></li>
+<li><p><a class="reference internal" href="#./EXAMPLES.md"><span class="xref myst">Advanced Examples</span></a></p></li>
+<li><p><a class="reference external" href="https://i2mint.github.io/embody/api/">API Reference</a></p></li>
+</ul>
+</section>
+<section id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">¶</a></h2>
+<p>Contributions are welcome! Please see our <a class="reference internal" href="#CONTRIBUTING.md"><span class="xref myst">contributing guidelines</span></a>.</p>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading">¶</a></h2>
+<p>Apache License 2.0 - see <a class="reference internal" href="#LICENSE"><span class="xref myst">LICENSE</span></a> file for details.</p>
+<p class="epythet-aggregates">This documentation as a single file: <a href="embody.md">embody.md</a> (Markdown, for agents).</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+<p class="epythet-provenance" style="font-size:.8em;opacity:.65;margin-top:2.5em;text-align:right">built 2026-11-21 17:39 UTC from <a href="https://github.com/i2mint/embody/commit/4b5c8635db102aa9c74350eaf985b51335e53d54">4b5c863</a> (master) · embody 0.1.11 · <a href="about-this-build.html">about this build</a></p>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="api.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">API reference</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            Made with 
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">embody</a><ul>
+<li><a class="reference internal" href="#what-is-embody">What is Embody?</a><ul>
+<li><a class="reference internal" href="#key-features">Key Features</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#quick-start">Quick Start</a><ul>
+<li><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li><a class="reference internal" href="#type-preservation">Type Preservation</a></li>
+<li><a class="reference internal" href="#nested-structures">Nested Structures</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#advanced-features">Advanced Features</a><ul>
+<li><a class="reference internal" href="#context-with-resolvers">Context with Resolvers</a></li>
+<li><a class="reference internal" href="#mapping-interfaces">Mapping Interfaces</a></li>
+<li><a class="reference internal" href="#path-addressing">Path Addressing</a></li>
+<li><a class="reference internal" href="#traversal-strategies">Traversal Strategies</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#configuration-management">Configuration Management</a></li>
+<li><a class="reference internal" href="#api-response-templates">API Response Templates</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#backwards-compatibility">Backwards Compatibility</a></li>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
+<li><a class="reference internal" href="#contributing">Contributing</a></li>
+<li><a class="reference internal" href="#license">License</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
         </div>
       </div>
-    </section>
+      
+      
+    </aside>
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+</div><script src="_static/documentation_options.js?v=932d0dab"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=fd10adb8"></script>
+    </body>
 </html>

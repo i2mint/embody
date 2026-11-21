@@ -1,0 +1,29 @@
+# embody
+
+> Generate templated objects
+
+
+## Pages
+
+- [embody](index.html.md): &#42;&#42;Structural Object Embodiment for Python&#42;&#42; - Transform skeletal templates into fully realized, type...
+- [API reference](api.html.md): | &#96;embody&#96;   | Generate templated objects with advanced structural embodiment features.   |
+- [embody](_autosummary/embody.html.md): Generate templated objects with advanced structural embodiment features.
+- [embody.base](_autosummary/embody.base.html.md): Core classes for embody: Context, Template, and Embodier.
+- [embody.graphviz_template](_autosummary/embody.graphviz_template.html.md): Graphviz templates
+- [embody.mappings](_autosummary/embody.mappings.html.md): Mapping interface wrappers for embodied objects.
+- [embody.naming](_autosummary/embody.naming.html.md): This module is about generating, validating, and operating on (parametrized) fields
+- [embody.paths](_autosummary/embody.paths.html.md): Path addressing for nested data structures.
+- [embody.strategies](_autosummary/embody.strategies.html.md): Traversal strategies for template embodiment.
+- [embody.substitution](_autosummary/embody.substitution.html.md): Pattern matching and type-preserving substitution logic for templates.
+- [embody.templater](_autosummary/embody.templater.html.md): Base objects for definding templates
+- [embody.templating](_autosummary/embody.templating.html.md): Making templates for various objects
+- [embody.util](_autosummary/embody.util.html.md): Utility functions for embody: flattening, unflattening, and cycle detection.
+- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-11-21 17:39 UTC&#42;&#42; from commit &lt;a href="https://github.com/i2m...
+
+## Optional
+
+- [embody.md](embody.md): Complete documentation in a single file.
+
+## Build
+
+- [build_info.json](build_info.json): build provenance (commit, version, tool versions, whether the docs match the package)

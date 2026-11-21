@@ -1,0 +1,20 @@
+embody.templating
+=================
+
+.. automodule:: embody.templating
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_specs
+      templated_gen
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Field
+      Literal
+   

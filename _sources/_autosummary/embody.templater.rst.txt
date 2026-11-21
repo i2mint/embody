@@ -1,0 +1,22 @@
+embody.templater
+================
+
+.. automodule:: embody.templater
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_generator_return
+      templated_dict_func
+      templated_list_func
+      templated_string_func
+      unique_list_conserving_order
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Templater
+   

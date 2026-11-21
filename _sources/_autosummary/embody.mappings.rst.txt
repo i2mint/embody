@@ -1,0 +1,24 @@
+embody.mappings
+===============
+
+.. automodule:: embody.mappings
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      as_mapping
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      AttributeMapping
+      EmbodiedMapping
+      FlatMapping
+      FrozenMapping
+      LazyEmbodiedMapping
+      MutableEmbodiedMapping
+      PathMapping
+   

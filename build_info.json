@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "built_at": "2026-11-21T17:39:29Z",
+  "package": {
+    "name": "embody",
+    "version": "0.1.11",
+    "display_name": "embody",
+    "source": "pyproject.toml"
+  },
+  "git": {
+    "available": true,
+    "commit": "4b5c8635db102aa9c74350eaf985b51335e53d54",
+    "short_commit": "4b5c863",
+    "branch": "master",
+    "tags": [
+      "0.1.11"
+    ],
+    "dirty": false,
+    "remote_url": "https://github.com/i2mint/embody",
+    "commit_url": "https://github.com/i2mint/embody/commit/4b5c8635db102aa9c74350eaf985b51335e53d54",
+    "error": null
+  },
+  "ci": {
+    "provider": "github",
+    "repository": "i2mint/embody",
+    "sha": "2c921f5f3f6ec8ab32a89dabc524bf5cd2f396a6",
+    "sha_in_history": true,
+    "ref": "refs/heads/master",
+    "ref_name": "master",
+    "run_id": "44931097266",
+    "run_url": "https://github.com/i2mint/embody/actions/runs/44931097266",
+    "server_url": "https://github.com"
+  },
+  "tools": {
+    "epythet": "0.2.22",
+    "sphinx": "9.1.1",
+    "docutils": "0.22.4",
+    "python": "3.12.16"
+  },
+  "config": {
+    "theme": "auto",
+    "html_theme": "furo",
+    "accent": "#694191",
+    "mode": "auto",
+    "api_generator": "autosummary",
+    "ignore": [
+      "tests/",
+      "scrap/",
+      "examples/"
+    ],
+    "agent_outputs": true,
+    "aggregates": [
+      "md"
+    ],
+    "ai_artifacts": true,
+    "provenance": true,
+    "docs_dir": "docsrc"
+  },
+  "site": {
+    "modules_documented": 11,
+    "objects_documented": 157
+  },
+  "pypi": {
+    "checked": true,
+    "latest": "0.1.11",
+    "relation": "same",
+    "error": null
+  },
+  "reproduce": "git clone https://github.com/i2mint/embody && cd embody\ngit checkout 4b5c8635db102aa9c74350eaf985b51335e53d54\npip install \"epythet==0.2.22\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "warnings": [],
+  "alignment": {
+    "aligned": true,
+    "notes": []
+  }
+}

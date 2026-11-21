@@ -1,0 +1,78 @@
+﻿embody
+======
+
+.. automodule:: embody
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      embody
+      get_engine
+      substitute
+      extract_template_vars
+      is_exact_match
+      flatten_dict
+      unflatten_dict
+      flatten_to_tuples
+      unflatten_from_tuples
+      detect_cycle
+      get_by_path
+      set_by_path
+      max_depth
+      count_template_markers
+      as_mapping
+      parse_path
+      resolve_path
+      set_path
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Embodier
+      Context
+      TemplateWrapper
+      Templater
+      RecursiveVisitorEngine
+      CompiledPathEngine
+      IterativeStackEngine
+      SubstitutionSyntax
+      EmbodiedMapping
+      LazyEmbodiedMapping
+      FlatMapping
+      AttributeMapping
+      FrozenMapping
+      MutableEmbodiedMapping
+      PathMapping
+      JSONPointer
+      DotPath
+      TuplePath
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      MissingParameterError
+      KeyCollisionError
+      CycleError
+      PathNotFoundError
+      InvalidPathError
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   base
+   graphviz_template
+   mappings
+   naming
+   paths
+   strategies
+   substitution
+   templater
+   templating
+   util

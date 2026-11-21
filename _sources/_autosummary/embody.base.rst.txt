@@ -1,0 +1,26 @@
+embody.base
+===========
+
+.. automodule:: embody.base
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      embody
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Context
+      Embodier
+      TemplateWrapper
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      MissingParameterError
+   

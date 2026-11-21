@@ -1,0 +1,23 @@
+embody.substitution
+===================
+
+.. automodule:: embody.substitution
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      extract_template_vars
+      is_exact_match
+      safe_format
+      substitute
+      substitute_all_syntaxes
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      SafeFormatter
+      SubstitutionSyntax
+   

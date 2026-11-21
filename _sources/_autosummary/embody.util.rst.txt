@@ -1,0 +1,27 @@
+embody.util
+===========
+
+.. automodule:: embody.util
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      count_template_markers
+      detect_cycle
+      flatten_dict
+      flatten_to_tuples
+      get_by_path
+      max_depth
+      set_by_path
+      unflatten_dict
+      unflatten_from_tuples
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      CycleError
+      PathNotFoundError
+   

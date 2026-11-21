@@ -1,0 +1,28 @@
+embody.paths
+============
+
+.. automodule:: embody.paths
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      parse_path
+      resolve_path
+      set_path
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      DotPath
+      JSONPointer
+      TuplePath
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      InvalidPathError
+   

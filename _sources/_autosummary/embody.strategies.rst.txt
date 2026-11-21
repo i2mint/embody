@@ -1,0 +1,27 @@
+embody.strategies
+=================
+
+.. automodule:: embody.strategies
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_engine
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      BaseEmbodimentEngine
+      CompiledPathEngine
+      IterativeStackEngine
+      RecursiveVisitorEngine
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      KeyCollisionError
+   
